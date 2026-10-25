@@ -34,3 +34,8 @@ dist-ssr
 # Research notes (not part of the site)
 research_notes/
 reports/
+
+# Sanity Studio build output
+studio/dist/
+studio/node_modules/
+studio/.sanity/

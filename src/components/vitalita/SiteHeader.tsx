@@ -5,7 +5,15 @@ import { cn } from "@/lib/utils";
 import { WhatsAppButton } from "./WhatsAppButton";
 
 /** Official Vitalita wordmark; `dark` swaps to the white version for dark/video backgrounds. */
-export function Logo({ dark, full }: { dark?: boolean; full?: boolean }) {
+export function Logo({
+  dark,
+  full,
+  href = "#top",
+}: {
+  dark?: boolean;
+  full?: boolean;
+  href?: string;
+}) {
   const src = full
     ? "/images/vitalita-logo-full-white.webp"
     : dark
@@ -13,7 +21,7 @@ export function Logo({ dark, full }: { dark?: boolean; full?: boolean }) {
       : "/images/vitalita-logo.webp";
   return (
     <a
-      href="#top"
+      href={href}
       className={cn("vitalita-logo", full && "vitalita-logo--full")}
       aria-label="Vitalita, centro de fisioterapia, inicio"
     >
@@ -28,8 +36,10 @@ export function Logo({ dark, full }: { dark?: boolean; full?: boolean }) {
   );
 }
 
-export function SiteHeader() {
-  const [scrolled, setScrolled] = useState(false);
+/** `solid` keeps the light header from the start (pages without a dark hero, e.g. the blog). */
+export function SiteHeader({ solid = false }: { solid?: boolean }) {
+  const [scrolledState, setScrolled] = useState(false);
+  const scrolled = solid || scrolledState;
   useEffect(() => {
     const on = () => setScrolled(window.scrollY > 12);
     on();
@@ -46,8 +56,19 @@ export function SiteHeader() {
       )}
     >
       <div className="site-header-inner flex items-center justify-between gap-3">
-        <Logo dark={!scrolled} />
+        <Logo dark={!scrolled} href={solid ? "/" : "#top"} />
         <div className="flex items-center gap-3">
+          <a
+            href="/blog"
+            className={cn(
+              "site-header-directions hidden min-h-11 items-center rounded-full px-3 text-sm font-medium transition-colors min-[640px]:inline-flex",
+              scrolled
+                ? "text-forest hover:bg-forest/5"
+                : "text-white drop-shadow-[0_1px_8px_rgb(0_0_0_/_35%)] hover:bg-white/10",
+            )}
+          >
+            Blog
+          </a>
           <a
             href={DIRECCION.mapsUrl}
             target="_blank"

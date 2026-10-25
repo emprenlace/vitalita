@@ -11,6 +11,7 @@ export type ButtonOrigin =
   | "testimonials"
   | "doctor"
   | "faq"
+  | "blog"
   | "pricing"
   | "location"
   | "closing"
