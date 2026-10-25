@@ -74,7 +74,7 @@ export const Route = createRootRoute({
       { name: "viewport", content: "width=device-width, initial-scale=1, viewport-fit=cover" },
       { name: "theme-color", content: "#f5f9f9" },
       { name: "format-detection", content: "telephone=no" },
-      { title: "Vitalita | Centro de Fisioterapia en Barranquilla" },
+      { title: "Vitalita | Fisioterapia y Rehabilitación en Barranquilla" },
       {
         name: "description",
         content: "Fisioterapia presencial en Barranquilla. Atención personalizada en Vitalita.",

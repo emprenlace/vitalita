@@ -29,10 +29,11 @@ import {
 
 const loadMotionFeatures = () => import("@/lib/motion-features").then((mod) => mod.default);
 
-// Brand first (tab, Google, link previews); keeps "fisioterapia" + "Barranquilla" for local search.
-const TITLE = "Vitalita | Centro de Fisioterapia en Barranquilla";
+// Brand first, then the two terms people search locally ("fisioterapia", "rehabilitación")
+// and the city. Title ≤ 60 chars and description ≤ 155 so Google shows them uncut.
+const TITLE = "Vitalita | Fisioterapia y Rehabilitación en Barranquilla";
 const DESC =
-  "Centro de fisioterapia en Barranquilla. Sesión de descarga muscular de 60 minutos, atención personalizada desde $100.000 COP. Agenda por WhatsApp.";
+  "Fisioterapia en Barranquilla enfocada en rehabilitación y dolor de espalda, cuello y hombros. Sesión de 60 min desde $100.000. Agenda hoy por WhatsApp.";
 const CANONICAL_URL = `${SITE_URL}/`;
 const SOCIAL_IMAGE_URL = `${PUBLIC_URL}/images/og-vitalita.jpg`;
 // Link previews (WhatsApp, redes): logo + brand line.
@@ -40,15 +41,36 @@ const SHARE_TITLE = "Vitalita";
 const SHARE_DESC = "Centro de Fisioterapia";
 const LOCAL_BUSINESS_SCHEMA = {
   "@context": "https://schema.org",
-  "@type": "MedicalBusiness",
+  "@type": "MedicalClinic",
   name: "Vitalita Centro de Fisioterapia",
+  medicalSpecialty: "PhysicalTherapy",
   url: SITE_URL,
   image: `${SITE_URL}/images/vitalita-fachada.webp`,
   logo: `${SITE_URL}/images/vitalita-logo-full.jpg`,
   telephone: `+${WHATSAPP_NUMBER}`,
   description:
-    "Centro de fisioterapia con atención presencial y personalizada en Barranquilla, Atlántico.",
-  priceRange: PRECIO_SESION.label,
+    "Centro de fisioterapia en Barranquilla enfocado en rehabilitación, masaje terapéutico y alivio del dolor lumbar, cervical y postural, con atención presencial y personalizada.",
+  hasMap: DIRECCION.mapsUrl,
+  availableService: [
+    "Sesión de descarga muscular",
+    "Rehabilitación",
+    "Masaje terapéutico y liberación miofascial",
+    "Presoterapia",
+    "Ventosas",
+    "Evaluación funcional",
+  ].map((name) => ({ "@type": "MedicalTherapy", name })),
+  makesOffer: {
+    "@type": "Offer",
+    name: "Sesión de descarga muscular (60 minutos)",
+    price: PRECIO_SESION.value,
+    priceCurrency: PRECIO_SESION.currency,
+    priceSpecification: {
+      "@type": "PriceSpecification",
+      minPrice: PRECIO_SESION.value,
+      priceCurrency: PRECIO_SESION.currency,
+    },
+  },
+  priceRange: PRECIO_SESION.fromLabel,
   address: {
     "@type": "PostalAddress",
     streetAddress: "Cl. 79 #43B - 45",
