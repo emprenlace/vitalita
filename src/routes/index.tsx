@@ -22,6 +22,7 @@ import {
   FACEBOOK_URL,
   INSTAGRAM_URL,
   PRECIO_SESION,
+  PUBLIC_URL,
   SITE_URL,
   WHATSAPP_NUMBER,
 } from "@/config/site";
@@ -32,7 +33,10 @@ const TITLE = "Sesión de descarga muscular en Barranquilla | Vitalita";
 const DESC =
   "Sesión personalizada de descarga muscular de 60 minutos en Barranquilla. Atención presencial desde $100.000 COP. Agenda por WhatsApp.";
 const CANONICAL_URL = `${SITE_URL}/`;
-const SOCIAL_IMAGE_URL = `${SITE_URL}/images/og-vitalita.jpg`;
+const SOCIAL_IMAGE_URL = `${PUBLIC_URL}/images/og-vitalita.jpg`;
+// Link previews (WhatsApp, redes): logo + brand line.
+const SHARE_TITLE = "Vitalita";
+const SHARE_DESC = "Centro de Fisioterapia";
 const LOCAL_BUSINESS_SCHEMA = {
   "@context": "https://schema.org",
   "@type": "MedicalBusiness",
@@ -93,10 +97,10 @@ export const Route = createFileRoute("/")({
     meta: [
       { title: TITLE },
       { name: "description", content: DESC },
-      { property: "og:title", content: TITLE },
-      { property: "og:description", content: DESC },
+      { property: "og:title", content: SHARE_TITLE },
+      { property: "og:description", content: SHARE_DESC },
       { property: "og:type", content: "website" },
-      { property: "og:url", content: CANONICAL_URL },
+      { property: "og:url", content: `${PUBLIC_URL}/` },
       { property: "og:site_name", content: "Vitalita Centro de Fisioterapia" },
       { property: "og:locale", content: "es_CO" },
       { property: "og:image", content: SOCIAL_IMAGE_URL },
@@ -104,11 +108,11 @@ export const Route = createFileRoute("/")({
       { property: "og:image:height", content: "630" },
       {
         property: "og:image:alt",
-        content: "Dr. Néstor Mullet realizando una descarga muscular en Vitalita, Barranquilla",
+        content: "Logo de Vitalita, Centro de Fisioterapia",
       },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:title", content: TITLE },
-      { name: "twitter:description", content: DESC },
+      { name: "twitter:title", content: SHARE_TITLE },
+      { name: "twitter:description", content: SHARE_DESC },
       { name: "twitter:image", content: SOCIAL_IMAGE_URL },
     ],
     links: [
