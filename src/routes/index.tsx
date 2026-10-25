@@ -29,9 +29,10 @@ import {
 
 const loadMotionFeatures = () => import("@/lib/motion-features").then((mod) => mod.default);
 
-const TITLE = "Sesión de descarga muscular en Barranquilla | Vitalita";
+// Brand first (tab, Google, link previews); keeps "fisioterapia" + "Barranquilla" for local search.
+const TITLE = "Vitalita | Centro de Fisioterapia en Barranquilla";
 const DESC =
-  "Sesión personalizada de descarga muscular de 60 minutos en Barranquilla. Atención presencial desde $100.000 COP. Agenda por WhatsApp.";
+  "Centro de fisioterapia en Barranquilla. Sesión de descarga muscular de 60 minutos, atención personalizada desde $100.000 COP. Agenda por WhatsApp.";
 const CANONICAL_URL = `${SITE_URL}/`;
 const SOCIAL_IMAGE_URL = `${PUBLIC_URL}/images/og-vitalita.jpg`;
 // Link previews (WhatsApp, redes): logo + brand line.
