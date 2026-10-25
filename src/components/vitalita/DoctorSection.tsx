@@ -37,7 +37,7 @@ export function DoctorSection() {
         <m.div className="doctor-copy" {...rise(0.1)}>
           <p className="section-label">Experiencia que acompaña tu recuperación</p>
           <h2 id="doctor-title" className="doctor-title">
-            <span className="pattern-title-soft">Dr.</span> Néstor Mullet
+            Néstor Mullet
           </h2>
           <p className="doctor-lede">
             Fisioterapeuta enfocado en rehabilitación y masaje terapéutico. Acompaña a personas con
@@ -67,7 +67,7 @@ export function DoctorSection() {
 
           <div className="doctor-actions">
             <WhatsAppButton origin="doctor" size="md">
-              Agendar con el Dr. Néstor
+              Agendar con Néstor
             </WhatsAppButton>
             <a
               href={INSTAGRAM_URL}

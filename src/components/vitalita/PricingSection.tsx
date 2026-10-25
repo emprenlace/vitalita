@@ -17,7 +17,7 @@ const FIELDS = [
   { label: "Duración", value: DATOS_SERVICIO.duracion },
   { label: "Modalidad", value: "Individual" },
   { label: "Lugar", value: "Barranquilla" },
-  { label: "Fisioterapeuta", value: "Dr. Néstor Mullet" },
+  { label: "Fisioterapeuta", value: "Néstor Mullet" },
 ];
 
 const CHECK_STEP_MS = 260;

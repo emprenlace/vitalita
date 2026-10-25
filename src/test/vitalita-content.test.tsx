@@ -146,14 +146,14 @@ describe("Vitalita landing content", () => {
     );
   });
 
-  it("shows the supplied portrait of Dr. Néstor Mullet", () => {
+  it("shows the supplied portrait of Néstor Mullet", () => {
     render(
       <AnalyticsProvider>
         <DoctorSection />
       </AnalyticsProvider>,
     );
 
-    expect(screen.getByRole("heading", { name: "Dr. Néstor Mullet" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "Néstor Mullet" })).toBeInTheDocument();
     expect(screen.getByRole("img", { name: MEDIA.nestor.alt })).toHaveAttribute(
       "src",
       "/images/dr-nestor-mullet.webp",

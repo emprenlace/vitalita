@@ -118,7 +118,11 @@ export const FAQS: Faq[] = [
   },
   { q: "¿Cuánto dura?", a: "La sesión dura 60 minutos.", confirmed: true },
   { q: "¿Necesito una orden médica?", a: "", confirmed: false },
-  { q: "¿Atienden con SOAT?", a: "", confirmed: false },
+  {
+    q: "¿Atienden con SOAT?",
+    a: "Sí. Si tuviste un accidente de tránsito, puedes hacer tu proceso de fisioterapia con el SOAT. Escríbenos por WhatsApp y te indicamos los documentos que necesitas para empezar.",
+    confirmed: true,
+  },
   { q: "¿Cómo puedo pagar?", a: "", confirmed: false },
   {
     q: "¿Atienden en otras ciudades?",
@@ -150,7 +154,7 @@ export const MEDIA = {
   },
   cierre: {
     src: "/images/nestor-sesion-espalda.webp",
-    alt: "Dr. Néstor Mullet realizando descarga muscular en la espalda de un paciente en Vitalita",
+    alt: "Néstor Mullet, fisioterapeuta, realizando descarga muscular en la espalda de un paciente en Vitalita",
     label: "Sesión de descarga muscular en Vitalita",
   },
   patron: {
@@ -166,7 +170,7 @@ export const MEDIA = {
     },
     atencion: {
       src: "/images/nestor-laser-cervical.webp",
-      alt: "Dr. Néstor Mullet aplicando terapia en la zona cervical de un paciente en Vitalita",
+      alt: "Néstor Mullet, fisioterapeuta, aplicando terapia en la zona cervical de un paciente en Vitalita",
     },
   },
   fachada: {
@@ -177,8 +181,8 @@ export const MEDIA = {
   },
   nestor: {
     src: "/images/dr-nestor-mullet.webp",
-    alt: "Dr. Néstor Mullet realizando una técnica de fisioterapia en Vitalita",
-    label: "Foto del Dr. Néstor Mullet",
+    alt: "Néstor Mullet, fisioterapeuta, realizando una técnica de fisioterapia en Vitalita",
+    label: "Foto de Néstor Mullet, fisioterapeuta",
   },
   /** Patient testimonials (vertical, burned-in subtitles). `name: null` shows a generic label. */
   testimonios: [

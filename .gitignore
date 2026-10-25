@@ -30,3 +30,7 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Research notes (not part of the site)
+research_notes/
+reports/

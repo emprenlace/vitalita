@@ -33,7 +33,7 @@ const loadMotionFeatures = () => import("@/lib/motion-features").then((mod) => m
 // shows it uncut; title stays within the 30–65 char range.
 const TITLE = "Vitalita | Centro de Fisioterapia en Barranquilla";
 const DESC =
-  "Especialistas en rehabilitación terapéutica y dolor muscular, cervical y postural. Sesiones personalizadas en Barranquilla desde $100.000. ¡Agenda hoy!";
+  "Rehabilitación terapéutica y alivio del dolor muscular, cervical y postural. Sesiones personalizadas con fisioterapeuta en Barranquilla desde $100.000.";
 const CANONICAL_URL = `${SITE_URL}/`;
 const SOCIAL_IMAGE_URL = `${PUBLIC_URL}/images/og-vitalita.jpg`;
 // Link previews (WhatsApp, redes): logo + brand line.
@@ -49,7 +49,7 @@ const LOCAL_BUSINESS_SCHEMA = {
   logo: `${SITE_URL}/images/vitalita-logo-full.jpg`,
   telephone: `+${WHATSAPP_NUMBER}`,
   description:
-    "Centro de fisioterapia en Barranquilla especializado en rehabilitación terapéutica y en el tratamiento del dolor muscular, cervical y postural, con atención presencial y personalizada.",
+    "Centro de fisioterapia en Barranquilla enfocado en rehabilitación terapéutica y en el tratamiento del dolor muscular, cervical y postural, con atención presencial y personalizada.",
   hasMap: DIRECCION.mapsUrl,
   availableService: [
     "Sesión de descarga muscular",
