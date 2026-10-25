@@ -120,7 +120,7 @@ export const post = defineType({
       of: [
         defineArrayMember({
           type: "object",
-          name: "reference",
+          name: "source",
           fields: [
             defineField({
               name: "label",
