@@ -9,7 +9,7 @@ import { cn } from "@/lib/utils";
 
 const TITLE = "Blog de fisioterapia | Vitalita Barranquilla";
 const DESC =
-  "Guías de fisioterapia escritas por fisioterapeutas y revisadas por Néstor Mullet: dolor cervical, lumbar, contracturas, descarga muscular y recuperación.";
+  "Guías de fisioterapia escritas y revisadas por fisioterapeutas de Vitalita: dolor cervical, lumbar, contracturas, descarga muscular y recuperación.";
 
 export const Route = createFileRoute("/blog/")({
   loader: () => getPosts(),
@@ -47,8 +47,8 @@ function BlogIndex() {
           <span className="pattern-title-soft">Aprende a cuidar</span> <span>tu cuerpo.</span>
         </h1>
         <p className="blog-hero-lede">
-          Guías claras sobre dolor muscular, postura y recuperación, escritas por fisioterapeutas y
-          revisadas por Néstor Mullet.
+          Guías claras sobre dolor muscular, postura y recuperación, escritas y revisadas por
+          fisioterapeutas.
         </p>
 
         {categories.length > 1 && (

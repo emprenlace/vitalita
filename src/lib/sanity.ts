@@ -33,6 +33,7 @@ export type Post = PostCard & {
   faqs?: { q: string; a: string }[];
   references?: { label: string; url?: string }[];
   reviewedAt?: string;
+  reviewer?: { name: string; role?: string };
   _updatedAt: string;
   author?: {
     name: string;
@@ -85,6 +86,7 @@ export const getPost = createServerFn({ method: "GET" })
       `*[${PUBLISHED} && slug.current == $slug][0]{
         ...${CARD},
         seoTitle, seoDescription, keyword, body, faqs, references, reviewedAt, _updatedAt,
+        "reviewer": reviewer->{ name, role },
         "author": author->{ name, role, university, bio, photo, links },
         "related": *[${PUBLISHED} && slug.current != $slug && category._ref == ^.category._ref]
           | order(publishedAt desc)[0...3] ${CARD}

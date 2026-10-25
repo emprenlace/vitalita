@@ -13,7 +13,7 @@ const structure: StructureResolver = (S) =>
         .title("Pendientes de revisión")
         .child(
           S.documentList()
-            .title("En revisión (Néstor)")
+            .title("En revisión")
             .filter('_type == "post" && reviewStatus == "revision"'),
         ),
       S.listItem()

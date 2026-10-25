@@ -1,10 +1,11 @@
 import { defineArrayMember, defineField, defineType } from "sanity";
+import { APPROVER_EMAILS } from "../approvers";
 
-/** Review states. Only "aprobado" posts ever appear on vitalita.com. */
+/** Review states. Only "aprobado" posts ever appear on vitalita.com; only APPROVER_EMAILS can set it. */
 export const REVIEW_STATES = [
   { title: "Borrador", value: "borrador" },
-  { title: "En revisión (Néstor)", value: "revision" },
-  { title: "Aprobado por Néstor", value: "aprobado" },
+  { title: "En revisión", value: "revision" },
+  { title: "Aprobado para publicar", value: "aprobado" },
   { title: "Requiere cambios", value: "cambios" },
 ];
 
@@ -169,14 +170,47 @@ export const post = defineType({
 
     // Clinical review
     defineField({
+      name: "reviewer",
+      title: "Revisado por (fisioterapeuta)",
+      description:
+        "El fisioterapeuta que verificó el contenido clínico. Aparece en la web como “Revisado por…”.",
+      type: "reference",
+      to: [{ type: "author" }],
+      options: { filter: "isReviewer == true" },
+      group: "revision",
+      validation: (r) =>
+        r.custom((value, ctx) =>
+          ctx.document?.reviewStatus === "aprobado" && !value
+            ? "Indica qué fisioterapeuta revisó el artículo"
+            : true,
+        ),
+    }),
+    defineField({
       name: "reviewStatus",
       title: "Estado de revisión",
-      description: "Solo los artículos aprobados por Néstor Mullet se publican en la web.",
+      description:
+        "Solo los artículos aprobados se publican en la web. Solo los aprobadores autorizados pueden marcar “Aprobado”.",
       type: "string",
       group: "revision",
       options: { list: REVIEW_STATES, layout: "radio" },
       initialValue: "borrador",
-      validation: (r) => r.required(),
+      // Once approved, only approvers can change the state again.
+      readOnly: ({ document, currentUser }) =>
+        document?.reviewStatus === "aprobado" &&
+        !APPROVER_EMAILS.includes(currentUser?.email?.toLowerCase() ?? ""),
+      validation: (r) => [
+        r.required(),
+        r.custom(async (value, ctx) => {
+          if (value !== "aprobado") return true;
+          const me = await ctx
+            .getClient({ apiVersion: "2025-01-01" })
+            .request<{ email?: string }>({ uri: "/users/me" })
+            .catch(() => ({ email: "" }));
+          return APPROVER_EMAILS.includes(me.email?.toLowerCase() ?? "")
+            ? true
+            : "Solo los aprobadores autorizados (Néstor o la administración) pueden aprobar. Usa “En revisión”.";
+        }),
+      ],
     }),
     defineField({
       name: "reviewNotes",
@@ -194,7 +228,7 @@ export const post = defineType({
       validation: (r) =>
         r.custom((value, ctx) =>
           ctx.document?.reviewStatus === "aprobado" && !value
-            ? "Indica la fecha en que Néstor aprobó el artículo"
+            ? "Indica la fecha de la revisión clínica"
             : true,
         ),
     }),

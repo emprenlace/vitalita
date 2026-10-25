@@ -11,8 +11,6 @@ import { PRECIO_SESION, SITE_URL } from "@/config/site";
 import { formatDate, getPost, imageUrl, type Post } from "@/lib/sanity";
 import { PostCardView } from "@/components/vitalita/PostCard";
 
-const REVIEWER = { name: "Néstor Mullet", role: "Fisioterapeuta" };
-
 export const Route = createFileRoute("/blog/$slug")({
   loader: async ({ params }) => {
     const post = await getPost({ data: params.slug });
@@ -71,6 +69,15 @@ function postSchema(post: Post, url: string) {
         logo: { "@type": "ImageObject", url: `${SITE_URL}/images/vitalita-logo-full.jpg` },
       },
       ...(post.keyword ? { keywords: post.keyword } : {}),
+      ...(post.reviewer
+        ? {
+            reviewedBy: {
+              "@type": "Person",
+              name: post.reviewer.name,
+              jobTitle: post.reviewer.role,
+            },
+          }
+        : {}),
     },
     {
       "@type": "BreadcrumbList",
@@ -194,12 +201,16 @@ function BlogPost() {
               <Clock3 aria-hidden /> {post.readingMinutes} min
             </span>
           </div>
-          <p className="post-reviewed">
-            <BadgeCheck aria-hidden />
-            {post.author?.name === REVIEWER.name ? "Escrito y revisado" : "Revisado"} por{" "}
-            {REVIEWER.name}, {REVIEWER.role.toLowerCase()}
-            {post.reviewedAt ? ` · ${formatDate(post.reviewedAt)}` : ""}
-          </p>
+          {post.reviewer && (
+            <p className="post-reviewed">
+              <BadgeCheck aria-hidden />
+              {post.reviewer.name === post.author?.name
+                ? "Escrito y revisado"
+                : "Revisado"} por {post.reviewer.name},{" "}
+              {(post.reviewer.role ?? "fisioterapeuta").toLowerCase()}
+              {post.reviewedAt ? ` · ${formatDate(post.reviewedAt)}` : ""}
+            </p>
+          )}
         </header>
 
         <figure className="post-hero container-x">

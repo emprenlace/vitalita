@@ -28,6 +28,13 @@ export const author = defineType({
     }),
     defineField({ name: "university", title: "Universidad", type: "string" }),
     defineField({
+      name: "isReviewer",
+      title: "Puede firmar como revisor clínico",
+      description: "Actívalo solo para fisioterapeutas con registro ReTHUS verificado.",
+      type: "boolean",
+      initialValue: false,
+    }),
+    defineField({
       name: "rethus",
       title: "Registro ReTHUS / Tarjeta profesional",
       description: "Interno: se verifica antes de aprobar al autor. No se publica.",
