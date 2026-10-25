@@ -2068,8 +2068,9 @@
   display: block;
 }
 
+/* First title line: same ink as the rest, only a lighter weight for rhythm. */
 .pattern-title-soft {
-  color: oklch(0.25 0.035 190 / 56%);
+  color: inherit;
   font-weight: 300;
 }
 
