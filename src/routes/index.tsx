@@ -30,8 +30,8 @@ import {
 const loadMotionFeatures = () => import("@/lib/motion-features").then((mod) => mod.default);
 
 // Brand first, then the terms people search locally. Description ≤ 155 chars so Google
-// shows it uncut; the title runs slightly long by choice (brand + full positioning).
-const TITLE = "Vitalita | Centro de Fisioterapia y Rehabilitación en Barranquilla";
+// shows it uncut; title stays within the 30–65 char range.
+const TITLE = "Vitalita | Centro de Fisioterapia en Barranquilla";
 const DESC =
   "Especialistas en rehabilitación terapéutica y dolor muscular, cervical y postural. Sesiones personalizadas en Barranquilla desde $100.000. ¡Agenda hoy!";
 const CANONICAL_URL = `${SITE_URL}/`;
