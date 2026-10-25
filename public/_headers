@@ -1,0 +1,17 @@
+/images/*
+  cache-control: public, max-age=2592000, stale-while-revalidate=86400
+
+/videos/*
+  cache-control: public, max-age=2592000, stale-while-revalidate=86400
+
+/*.png
+  cache-control: public, max-age=604800
+
+/favicon.ico
+  cache-control: public, max-age=604800
+
+/*
+  x-content-type-options: nosniff
+  referrer-policy: strict-origin-when-cross-origin
+  x-frame-options: SAMEORIGIN
+  permissions-policy: camera=(), microphone=(), geolocation=()
