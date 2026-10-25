@@ -196,7 +196,8 @@ function BlogPost() {
           </div>
           <p className="post-reviewed">
             <BadgeCheck aria-hidden />
-            Revisado por {REVIEWER.name}, {REVIEWER.role.toLowerCase()}
+            {post.author?.name === REVIEWER.name ? "Escrito y revisado" : "Revisado"} por{" "}
+            {REVIEWER.name}, {REVIEWER.role.toLowerCase()}
             {post.reviewedAt ? ` · ${formatDate(post.reviewedAt)}` : ""}
           </p>
         </header>

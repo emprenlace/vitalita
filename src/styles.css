@@ -4528,6 +4528,10 @@
   color: var(--ink);
 }
 
+.post-meta > span:first-child {
+  display: inline;
+}
+
 .post-meta span {
   display: inline-flex;
   align-items: center;
