@@ -123,7 +123,7 @@ const components: PortableTextComponents = {
   marks: {
     link: ({ children, value }) => {
       const href: string = value?.href ?? "#";
-      const external = /^https?:\/\//.test(href) && !href.includes("vitalita.com");
+      const external = /^https?:\/\//.test(href) && !href.includes("vitalita.com.co");
       return (
         <a href={href} {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}>
           {children}

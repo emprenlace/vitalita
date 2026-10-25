@@ -13,4 +13,4 @@ Allow: /
 User-agent: *
 Allow: /
 
-Sitemap: https://www.vitalita.com/sitemap.xml
+Sitemap: https://www.vitalita.com.co/sitemap.xml

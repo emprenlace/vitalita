@@ -1,7 +1,7 @@
 import { defineArrayMember, defineField, defineType } from "sanity";
 import { APPROVER_EMAILS } from "../approvers";
 
-/** Review states. Only "aprobado" posts ever appear on vitalita.com; only APPROVER_EMAILS can set it. */
+/** Review states. Only "aprobado" posts ever appear on vitalita.com.co; only APPROVER_EMAILS can set it. */
 export const REVIEW_STATES = [
   { title: "Borrador", value: "borrador" },
   { title: "En revisión", value: "revision" },
