@@ -153,9 +153,9 @@ export const MEDIA = {
     label: "Movimiento y recuperación",
   },
   cierre: {
-    src: "/images/nestor-sesion-espalda.webp",
-    alt: "Néstor Mullet, fisioterapeuta, realizando descarga muscular en la espalda de un paciente en Vitalita",
-    label: "Sesión de descarga muscular en Vitalita",
+    src: "/images/vitalita-fachada-local.webp",
+    alt: "Fachada de Vitalita Centro de Fisioterapia en el Norte Centro Histórico de Barranquilla",
+    label: "Fachada de Vitalita",
   },
   patron: {
     diaADia: "/images/pattern-dia-a-dia.webp",

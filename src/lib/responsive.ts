@@ -8,7 +8,7 @@ const VARIANTS: Record<string, [small: number, large: number]> = {
   "/images/technique-ventosas.webp": [400, 640],
   "/images/clinic-session.webp": [400, 640],
   "/images/active-recovery.webp": [400, 640],
-  "/images/nestor-sesion-espalda.webp": [700, 1200],
+  "/images/vitalita-fachada-local.webp": [700, 1200],
   "/images/dr-nestor-mullet.webp": [500, 768],
 };
 

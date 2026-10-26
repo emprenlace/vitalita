@@ -1770,16 +1770,19 @@
     min-height: max(580px, 80svh);
   }
 
+  /* Facade photo: only the top part of the card, so the sign is never behind the text. */
   .closing-photo {
-    object-position: center 12%;
+    bottom: auto;
+    height: 64%;
+    object-position: 30% 40%;
   }
 
   .closing-photo-shade {
     background: linear-gradient(
       180deg,
       rgb(8 48 52 / 0%) 0%,
-      rgb(8 48 52 / 10%) 32%,
-      rgb(8 48 52 / 78%) 62%,
+      rgb(8 48 52 / 0%) 34%,
+      var(--footer-bg) 64%,
       var(--footer-bg) 100%
     );
   }
@@ -1881,7 +1884,7 @@
 @media (min-width: 768px) {
   .closing-photo {
     width: 58%;
-    object-position: center 22%;
+    object-position: center 45%;
   }
 
   .closing-photo-shade {

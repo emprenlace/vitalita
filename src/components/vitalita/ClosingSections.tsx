@@ -238,8 +238,8 @@ export function ClosingSection() {
           src={MEDIA.cierre.src}
           {...responsive(MEDIA.cierre.src, "(max-width: 767px) 100vw, 800px")}
           alt=""
-          width={1280}
-          height={1600}
+          width={1200}
+          height={1189}
           loading="lazy"
           decoding="async"
           style={reduceMotion ? {} : { y: imageY }}
