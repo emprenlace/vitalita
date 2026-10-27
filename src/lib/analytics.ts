@@ -15,7 +15,12 @@ type PixelStub = ((...args: unknown[]) => void) & {
 };
 
 export type EventName =
-  "PageView" | "ViewContent" | "Contact" | "BookingDialogOpen" | "ServiceAreaNotice";
+  | "PageView"
+  | "ViewContent"
+  | "Contact"
+  | "BookingDialogOpen"
+  | "ServiceAreaNotice"
+  | "AgencyClick";
 
 const ALLOWED = new Set([
   "page_name",
@@ -36,6 +41,7 @@ const EVENT_KEYS: Record<EventName, string> = {
   Contact: "whatsapp_click",
   BookingDialogOpen: "booking_dialog_open",
   ServiceAreaNotice: "service_area_notice",
+  AgencyClick: "agency_click",
 };
 
 export function sanitize(p: Params = {}): Params {

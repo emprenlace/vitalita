@@ -13,6 +13,7 @@ import {
   PRECIO_SESION,
   TAMARA_NOTA,
 } from "@/config/site";
+import { track } from "@/lib/analytics";
 import { useVitalita } from "./AnalyticsProvider";
 import { Reveal, SectionTag } from "./primitives";
 import { Logo } from "./SiteHeader";
@@ -319,6 +320,10 @@ function WhatsAppGlyph() {
   );
 }
 
+/** Agency credit: UTMs let Emprenlace's GA4 attribute visits coming from this site. */
+const AGENCY_URL =
+  "https://emprenlace.com/?utm_source=vitalita.com.co&utm_medium=referral&utm_campaign=portafolio&utm_content=footer_credit";
+
 export function SiteFooter() {
   const { openBooking } = useVitalita();
   const [street, ...neighborhood] = DIRECCION.linea.split(", ");
@@ -404,6 +409,15 @@ export function SiteFooter() {
 
           <div className="footer-bottom">
             <p>© {new Date().getFullYear()} Vitalita · Fisioterapia en Barranquilla</p>
+            <a
+              href={AGENCY_URL}
+              target="_blank"
+              rel="noopener"
+              className="footer-agency"
+              onClick={() => track("AgencyClick", { cta_location: "footer" })}
+            >
+              Powered by <strong>Emprenlace</strong>
+            </a>
             <a href="#top" className="footer-top-link">
               Volver arriba
               <ArrowUp aria-hidden />

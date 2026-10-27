@@ -1736,6 +1736,26 @@
   margin: 0;
 }
 
+.footer-agency {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  gap: 4px;
+  margin-left: auto;
+  color: rgb(255 255 255 / 55%);
+  transition: color 200ms ease;
+}
+
+.footer-agency strong {
+  color: rgb(255 255 255 / 85%);
+  font-weight: 600;
+}
+
+.footer-agency:hover,
+.footer-agency:hover strong {
+  color: #fff;
+}
+
 .footer-top-link {
   display: inline-flex;
   min-height: 44px;
@@ -1858,6 +1878,10 @@
     gap: 0;
     margin-top: 36px;
     padding-top: 16px;
+  }
+
+  .footer-agency {
+    margin-left: 0;
   }
 }
 
