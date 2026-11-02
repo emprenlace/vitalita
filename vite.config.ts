@@ -17,8 +17,10 @@ export default defineConfig(({ command, isPreview }) => ({
         client: { files: ["**/server/**"], specifiers: ["server-only"] },
       },
     }),
-    // Production build (and `vite preview`) targets Cloudflare Workers.
-    ...(command === "build" || isPreview ? [nitro({ preset: "cloudflare-module" })] : []),
+    // Production build (and `vite preview`) targets Vercel when built there, Cloudflare Workers otherwise.
+    ...(command === "build" || isPreview
+      ? [nitro({ preset: process.env.VERCEL ? "vercel" : "cloudflare-module" })]
+      : []),
     viteReact(),
   ],
   // Same address as before: http://localhost:8080 (also reachable from the phone on the LAN).

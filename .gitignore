@@ -39,3 +39,5 @@ reports/
 studio/dist/
 studio/node_modules/
 studio/.sanity/
+
+.vercel
