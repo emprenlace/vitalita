@@ -12,7 +12,7 @@ export const SITE_URL = "https://www.vitalita.com.co";
  * Where the site is reachable today; link previews (WhatsApp, Facebook) fetch the
  * share image from here. Set it to SITE_URL once www.vitalita.com.co is connected.
  */
-export const PUBLIC_URL = "https://emprenlace-vitalita.vitalita.workers.dev";
+export const PUBLIC_URL = "https://vitalita-murex.vercel.app";
 
 export const PRECIO_SESION = {
   value: 100000,
