@@ -4,14 +4,14 @@
  * vive aquí. Los contenidos con `confirmed: false` NO se publican.
  */
 
-export const GTM_ID = ""; // Configura el contenedor de Google Tag Manager.
+export const GTM_ID = "GTM-K4NN7CKL";
 export const META_PIXEL_ID = ""; // Configura el Pixel directo solo si no se usa GTM.
 export const WHATSAPP_NUMBER = "573012376079";
 export const SITE_URL = "https://www.vitalita.com.co";
 /** Where link previews (WhatsApp, Facebook) fetch the share image from. */
 export const PUBLIC_URL = SITE_URL;
 /** Search Console HTML-tag verification code (only the `content` value). Empty = no tag. */
-export const GOOGLE_SITE_VERIFICATION = "";
+export const GOOGLE_SITE_VERIFICATION = "rp7lC939cQtxYG3fTVhWUwve9EFVc_bO0w_wHtGMGLw";
 
 export const PRECIO_SESION = {
   value: 100000,
