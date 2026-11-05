@@ -10,6 +10,7 @@ import {
 import type { ReactNode } from "react";
 
 import appCss from "../styles.css?url";
+import { GOOGLE_SITE_VERIFICATION } from "@/config/site";
 
 function NotFoundComponent() {
   return (
@@ -81,6 +82,9 @@ export const Route = createRootRoute({
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
+      ...(GOOGLE_SITE_VERIFICATION
+        ? [{ name: "google-site-verification", content: GOOGLE_SITE_VERIFICATION }]
+        : []),
     ],
     links: [
       {

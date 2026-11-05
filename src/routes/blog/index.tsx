@@ -2,29 +2,71 @@ import { createFileRoute } from "@tanstack/react-router";
 import { ArrowUpRight } from "lucide-react";
 import { useMemo, useState } from "react";
 import { BlogShell } from "@/components/vitalita/BlogShell";
-import { SITE_URL } from "@/config/site";
+import { PUBLIC_URL, SITE_URL } from "@/config/site";
 import { PostCardView } from "@/components/vitalita/PostCard";
-import { getPosts } from "@/lib/sanity";
+import { getPosts, type PostCard } from "@/lib/sanity";
 import { cn } from "@/lib/utils";
 
 const TITLE = "Blog de fisioterapia | Vitalita Barranquilla";
 const DESC =
   "Guías de fisioterapia escritas y revisadas por fisioterapeutas de Vitalita: dolor cervical, lumbar, contracturas, descarga muscular y recuperación.";
 
+const BLOG_URL = `${SITE_URL}/blog`;
+
 export const Route = createFileRoute("/blog/")({
   loader: () => getPosts(),
-  head: () => ({
+  head: ({ loaderData: posts }) => ({
     meta: [
       { title: TITLE },
       { name: "description", content: DESC },
       { property: "og:title", content: TITLE },
       { property: "og:description", content: DESC },
       { property: "og:type", content: "website" },
+      { property: "og:url", content: BLOG_URL },
+      { property: "og:image", content: `${PUBLIC_URL}/images/og-vitalita.jpg` },
+      { property: "og:image:width", content: "1200" },
+      { property: "og:image:height", content: "630" },
     ],
-    links: [{ rel: "canonical", href: `${SITE_URL}/blog` }],
+    links: [{ rel: "canonical", href: BLOG_URL }],
+    scripts: [{ type: "application/ld+json", children: JSON.stringify(blogSchema(posts ?? [])) }],
   }),
   component: BlogIndex,
 });
+
+function blogSchema(posts: PostCard[]) {
+  return {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Blog",
+        "@id": `${BLOG_URL}#blog`,
+        name: TITLE,
+        description: DESC,
+        url: BLOG_URL,
+        inLanguage: "es-CO",
+        publisher: {
+          "@type": "MedicalClinic",
+          name: "Vitalita Centro de Fisioterapia",
+          url: SITE_URL,
+          logo: { "@type": "ImageObject", url: `${SITE_URL}/images/vitalita-logo-full.jpg` },
+        },
+        blogPost: posts.map((p) => ({
+          "@type": "BlogPosting",
+          headline: p.title,
+          url: `${BLOG_URL}/${p.slug}`,
+          datePublished: p.publishedAt,
+        })),
+      },
+      {
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          { "@type": "ListItem", position: 1, name: "Inicio", item: `${SITE_URL}/` },
+          { "@type": "ListItem", position: 2, name: "Blog", item: BLOG_URL },
+        ],
+      },
+    ],
+  };
+}
 
 function BlogIndex() {
   const posts = Route.useLoaderData();

@@ -8,6 +8,7 @@ import {
   useState,
   type ReactNode,
 } from "react";
+import { useRouter } from "@tanstack/react-router";
 import { ArrowLeft, ArrowUpRight, MapPin } from "lucide-react";
 import {
   Dialog,
@@ -35,6 +36,14 @@ type Ctx = {
 
 const AppCtx = createContext<Ctx | null>(null);
 
+/** Stable analytics name per page: "landing_vitalita", "blog_index", "blog_<slug>". */
+function pageName(pathname: string) {
+  if (pathname === "/") return "landing_vitalita";
+  if (pathname.replace(/\/$/, "") === "/blog") return "blog_index";
+  const slug = pathname.match(/^\/blog\/([^/]+)/)?.[1];
+  return slug ? `blog_${slug}` : pathname;
+}
+
 export function AnalyticsProvider({ children }: { children: ReactNode }) {
   const [attribution, setAttribution] = useState<Attribution>({});
   const [bookingOrigin, setBookingOrigin] = useState<ButtonOrigin | null>(null);
@@ -42,22 +51,37 @@ export function AnalyticsProvider({ children }: { children: ReactNode }) {
   const [outsideCity, setOutsideCity] = useState(false);
   const lastClick = useRef(0);
 
+  // Optional router: tests render the provider without one.
+  const router = useRouter({ warn: false }) as ReturnType<typeof useRouter> | null;
+  const [pathname, setPathname] = useState<string | null>(null);
+
   useEffect(() => {
-    const a = captureAttribution();
-    setAttribution(a);
+    setAttribution(captureAttribution());
     initAnalytics();
-    track("PageView", { page_name: "landing_vitalita", segment: getSegment(a) });
+  }, []);
+
+  useEffect(() => {
+    setPathname(window.location.pathname);
+    return router?.subscribe("onResolved", (e) => setPathname(e.toLocation.pathname));
+  }, [router]);
+
+  // One PageView / ViewContent per path, so client-side navigation between blog pages counts.
+  useEffect(() => {
+    if (!pathname) return;
+    const seg = getSegment(captureAttribution());
+    const page = { page_name: pageName(pathname), page_path: pathname, segment: seg };
+    track("PageView", page, `PageView:${pathname}`);
 
     const onScroll = () => {
       const max = document.documentElement.scrollHeight - window.innerHeight;
       if (max > 0 && window.scrollY / max >= 0.5) {
-        track("ViewContent", { page_name: "landing_vitalita", segment: getSegment(a) });
+        track("ViewContent", page, `ViewContent:${pathname}`);
         window.removeEventListener("scroll", onScroll);
       }
     };
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+  }, [pathname]);
 
   const segment = getSegment(attribution);
 

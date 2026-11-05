@@ -24,6 +24,7 @@ export type EventName =
 
 const ALLOWED = new Set([
   "page_name",
+  "page_path",
   "cta_location",
   "city_status",
   "segment",
