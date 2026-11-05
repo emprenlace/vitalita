@@ -1787,21 +1787,27 @@
 
 @media (max-width: 767px) {
   .closing-surface {
-    min-height: max(580px, 80svh);
+    min-height: 480px;
   }
 
   /* Facade photo: only the top part of the card, so the sign is never behind the text. */
   .closing-photo {
     bottom: auto;
     height: 64%;
-    object-position: 30% 40%;
+    object-position: 30% 85%;
+  }
+
+  /* The title says it already; dropping the label keeps the text clear of the facade sign. */
+  .closing-eyebrow {
+    display: none;
   }
 
   .closing-photo-shade {
     background: linear-gradient(
       180deg,
       rgb(8 48 52 / 0%) 0%,
-      rgb(8 48 52 / 0%) 34%,
+      rgb(8 48 52 / 0%) 30%,
+      rgb(8 48 52 / 60%) 44%,
       var(--footer-bg) 64%,
       var(--footer-bg) 100%
     );
@@ -1868,27 +1874,111 @@
     border-radius: 28px;
   }
 
+  /* Mobile: the whole footer fits in one screen without scrolling. */
   .footer-body {
-    padding: 12px 20px 12px;
+    padding: 8px 20px 4px;
+  }
+
+  .footer-grid {
+    gap: 20px 16px;
+  }
+
+  /* Logo and social icons share one row; the tagline is already said above. */
+  .footer-brand {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  .footer-brand > p {
+    display: none;
+  }
+
+  .footer-brand .vitalita-logo--full img {
+    height: 36px;
+  }
+
+  .footer-socials {
+    gap: 8px;
+    margin-top: 0;
+  }
+
+  .footer-heading {
+    margin-bottom: 8px;
+    font-size: 11px;
+  }
+
+  .footer-text {
+    font-size: 14px;
+    line-height: 1.45;
+  }
+
+  /* "Cómo llegar" and the WhatsApp CTA sit right above; no need to repeat them here. */
+  .footer-link,
+  .footer-note {
+    display: none;
+  }
+
+  .footer-hours > div {
+    display: block;
+    border: 0;
+    padding: 0 0 6px;
+    font-size: 14px;
+    line-height: 1.45;
+  }
+
+  .footer-hours dt {
+    color: rgb(255 255 255 / 60%);
+    font-size: 13px;
+  }
+
+  .footer-hours dd {
+    color: rgb(255 255 255 / 90%);
+    text-align: left;
+    white-space: normal;
   }
 
   .footer-bottom {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0;
-    margin-top: 36px;
-    padding-top: 16px;
+    flex-wrap: wrap;
+    gap: 0 16px;
+    margin-top: 16px;
+    padding-top: 4px;
+    font-size: 12px;
+  }
+
+  .footer-bottom p {
+    flex-basis: 100%;
+    padding-top: 8px;
   }
 
   .footer-agency {
     margin-left: 0;
   }
+
+  .footer-top-link {
+    margin-left: auto;
+  }
 }
 
-@media (max-width: 479px) {
+/* Narrow phones: hours never break mid-time; the address column takes what is left. */
+@media (max-width: 389px) {
   .footer-grid {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 32px;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 20px 12px;
+  }
+
+  .footer-text,
+  .footer-hours > div {
+    font-size: 13px;
+  }
+
+  .footer-hours dt {
+    font-size: 12px;
+  }
+
+  .footer-hours dd {
+    white-space: nowrap;
   }
 }
 
