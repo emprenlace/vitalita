@@ -165,7 +165,9 @@ export function PatternSection() {
             style={reduceMotion ? {} : { y: photoY }}
           />
           <div className="pattern-band-shade" aria-hidden />
-          <p className="pattern-band-quote">Una hora para que el cuerpo vuelva a sentirse tuyo.</p>
+          <p className="pattern-band-quote">
+            50 minutos para que el cuerpo vuelva a sentir vitalidad.
+          </p>
         </m.div>
       </div>
     </section>

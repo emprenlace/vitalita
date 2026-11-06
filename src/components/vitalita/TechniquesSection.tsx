@@ -1,5 +1,5 @@
 import { m, useReducedMotion, useScroll, useTransform, type MotionValue } from "framer-motion";
-import { ArrowUpRight, CircleDot, Footprints, Hand, Waves } from "lucide-react";
+import { ArrowUpRight, CircleDot, Hand, Vibrate, Waves } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { PRECIO_SESION } from "@/config/site";
 import { WhatsAppButton } from "./WhatsAppButton";
@@ -7,42 +7,41 @@ import { responsive } from "@/lib/responsive";
 
 const TECHNIQUES = [
   {
-    name: "Descarga muscular",
-    description:
-      "Trabajo sobre cuello, hombros y espalda para soltar la tensión que se acumula en el día a día.",
-    image: "/images/technique-descarga.webp",
-    alt: "Masaje manual en la espalda durante una sesión terapéutica",
-    icon: Hand,
+    name: "Ventosas",
+    description: "Succión suave que ayuda a soltar la tensión acumulada en el músculo.",
+    image: "/images/tecnica-ventosas.webp",
+    alt: "Ventosas terapéuticas de vidrio sobre la espalda de una paciente",
+    icon: CircleDot,
     angle: -6,
     offset: "outer",
     position: "center",
   },
   {
-    name: "Tracción cervical",
-    description: "Una tracción suave que le da espacio y descanso a tu cuello.",
-    image: "/images/clinic-session.webp",
-    alt: "Fisioterapeuta guiando un ejercicio de movilidad con una paciente",
-    icon: Waves,
+    name: "Masoterapia",
+    description: "Masaje manual para relajar el músculo y aliviar la carga del día.",
+    image: "/images/tecnica-masoterapia.webp",
+    alt: "Masaje manual en la espalda durante una sesión de masoterapia",
+    icon: Hand,
     angle: -2,
     offset: "raised",
     position: "center",
   },
   {
-    name: "Piernas y pies",
-    description: "Cuidado complementario para cerrar la sesión con todo el cuerpo más ligero.",
-    image: "/images/active-recovery.webp",
-    alt: "Deportista realizando un ejercicio de recuperación muscular",
-    icon: Footprints,
+    name: "Liberación miofascial",
+    description: "Presión sostenida sobre la fascia para recuperar movilidad.",
+    image: "/images/nestor-sesion-espalda.webp",
+    alt: "Fisioterapeuta de Vitalita aplicando liberación miofascial en la espalda de un paciente",
+    icon: Waves,
     angle: 2,
     offset: "raised",
-    position: "center",
+    position: "center 30%",
   },
   {
-    name: "Ventosas",
-    description: "Una técnica que usamos según tu caso para aliviar zonas de tensión.",
-    image: "/images/technique-ventosas.webp",
-    alt: "Aplicación de ventosas terapéuticas en la espalda",
-    icon: CircleDot,
+    name: "Masaje vibropercutor",
+    description: "Vibración focalizada para descargar el músculo en profundidad.",
+    image: "/images/tecnica-vibropercutor.webp",
+    alt: "Fisioterapeuta de Vitalita usando un masajeador vibropercutor en la espalda de un paciente",
+    icon: Vibrate,
     angle: 6,
     offset: "outer",
     position: "center",

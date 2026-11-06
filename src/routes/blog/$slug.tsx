@@ -160,7 +160,7 @@ function BookingBlock({ title }: { title: string }) {
     <aside className="post-cta">
       <p className="post-cta-title">{title}</p>
       <p>
-        Sesión de descarga muscular de 60 minutos con fisioterapeuta en Barranquilla,{" "}
+        Sesión de descarga muscular de 50 minutos con fisioterapeuta en Barranquilla,{" "}
         {PRECIO_SESION.fromLabel.toLowerCase()}.
       </p>
       <button type="button" className="post-cta-button" onClick={() => openBooking("blog")}>

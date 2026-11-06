@@ -4,7 +4,12 @@ import { INSTAGRAM_URL, MEDIA } from "@/config/site";
 import { WhatsAppButton } from "./WhatsAppButton";
 import { responsive } from "@/lib/responsive";
 
-const FOCUS = ["Rehabilitación", "Masaje terapéutico", "Dolor lumbar, cervical y postural"];
+const FOCUS = [
+  "Alivio del dolor",
+  "Recuperación de la movilidad",
+  "Rehabilitación funcional",
+  "Masaje terapéutico",
+];
 const EASE = [0.16, 1, 0.3, 1] as const;
 
 export function DoctorSection() {
@@ -40,14 +45,19 @@ export function DoctorSection() {
             Néstor Mullet
           </h2>
           <p className="doctor-lede">
-            Fisioterapeuta enfocado en rehabilitación y masaje terapéutico. Acompaña a personas con
-            molestias lumbares, cervicales y posturales con atención personalizada.
+            Fisioterapeuta con más de 14 años de experiencia, enfocado en el alivio del dolor, la
+            recuperación de la movilidad y la rehabilitación funcional. Brinda atención
+            personalizada para ayudar a cada paciente a recuperar su bienestar y calidad de vida.
           </p>
 
           <dl className="doctor-facts">
             <div>
               <dt>Profesión</dt>
               <dd>Fisioterapeuta</dd>
+            </div>
+            <div>
+              <dt>Experiencia</dt>
+              <dd>Más de 14 años de trayectoria profesional</dd>
             </div>
             <div>
               <dt>Formación</dt>
@@ -67,7 +77,7 @@ export function DoctorSection() {
 
           <div className="doctor-actions">
             <WhatsAppButton origin="doctor" size="md">
-              Agendar con Néstor
+              Agendar mi sesión
             </WhatsAppButton>
             <a
               href={INSTAGRAM_URL}

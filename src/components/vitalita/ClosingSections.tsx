@@ -252,7 +252,7 @@ export function ClosingSection() {
           <div className="closing-copy">
             <p className="closing-eyebrow">Tu próximo paso</p>
             <h2 id="cierre-title" className="closing-title">
-              {["Regálate una hora", "para sentir la", "diferencia."].map((line, index) => (
+              {["Regálate una sesión", "para sentir la", "diferencia."].map((line, index) => (
                 <span className="closing-title-mask" key={line}>
                   <m.span
                     className="closing-title-line"

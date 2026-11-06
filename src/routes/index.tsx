@@ -17,10 +17,12 @@ import { TechniquesSection } from "@/components/vitalita/TechniquesSection";
 import { TimelineSection } from "@/components/vitalita/TimelineSection";
 import { TestimonialsSection } from "@/components/vitalita/TestimonialsSection";
 import {
+  DATOS_SERVICIO,
   DIRECCION,
   FAQS,
   FACEBOOK_URL,
   INSTAGRAM_URL,
+  OPCIONES_SESION,
   PRECIO_SESION,
   PUBLIC_URL,
   SITE_URL,
@@ -55,13 +57,15 @@ const LOCAL_BUSINESS_SCHEMA = {
     "Sesión de descarga muscular",
     "Rehabilitación",
     "Masaje terapéutico y liberación miofascial",
+    "Masaje vibropercutor",
+    "Tracción cervical manual",
     "Presoterapia",
     "Ventosas",
     "Evaluación funcional",
   ].map((name) => ({ "@type": "MedicalTherapy", name })),
-  makesOffer: {
+  makesOffer: OPCIONES_SESION.map((option) => ({
     "@type": "Offer",
-    name: "Sesión de descarga muscular (60 minutos)",
+    name: `${option.titulo} (${DATOS_SERVICIO.duracion})`,
     price: PRECIO_SESION.value,
     priceCurrency: PRECIO_SESION.currency,
     priceSpecification: {
@@ -69,7 +73,7 @@ const LOCAL_BUSINESS_SCHEMA = {
       minPrice: PRECIO_SESION.value,
       priceCurrency: PRECIO_SESION.currency,
     },
-  },
+  })),
   priceRange: PRECIO_SESION.fromLabel,
   address: {
     "@type": "PostalAddress",

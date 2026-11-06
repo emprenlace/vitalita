@@ -8,6 +8,7 @@ import {
   SiteFooter,
 } from "@/components/vitalita/ClosingSections";
 import { HeroSection } from "@/components/vitalita/HeroSection";
+import { PricingSection } from "@/components/vitalita/PricingSection";
 import { TechniquesSection } from "@/components/vitalita/TechniquesSection";
 import { TestimonialsSection } from "@/components/vitalita/TestimonialsSection";
 import { FACEBOOK_URL, INSTAGRAM_URL, MEDIA } from "@/config/site";
@@ -49,9 +50,9 @@ describe("Vitalita landing content", () => {
       screen.getByRole("heading", { name: "Cada tensión tiene su técnica" }),
     ).toBeInTheDocument();
     expect(screen.getAllByRole("article")).toHaveLength(4);
-    expect(screen.getByText("Tracción cervical")).toBeInTheDocument();
+    expect(screen.getByText("Masaje vibropercutor")).toBeInTheDocument();
     expect(
-      screen.getByText("Una tracción suave que le da espacio y descanso a tu cuello."),
+      screen.getByText("Vibración focalizada para descargar el músculo en profundidad."),
     ).toBeInTheDocument();
     expect(document.querySelector(".techniques-action > p")).toHaveTextContent("$100.000 COP");
     const bookingButton = screen.getByRole("button", { name: /Agenda tu sesión/ });
@@ -84,7 +85,7 @@ describe("Vitalita landing content", () => {
       }),
     ).toBeInTheDocument();
     expect(screen.getByLabelText("Detalles de la sesión")).toHaveTextContent(
-      "5,0en Google60 minindividual$100.000desde, por sesión",
+      "5,0en Google50 minindividual$100.000desde, por sesión",
     );
     const bookingButton = screen.getByRole("button", { name: /Agenda tu sesión/ });
     expect(
@@ -164,8 +165,11 @@ describe("Vitalita landing content", () => {
       "/images/dr-nestor-mullet.webp",
     );
     expect(screen.getByText("Universidad Simón Bolívar · Barranquilla")).toBeInTheDocument();
+    expect(screen.getByText("Más de 14 años de trayectoria profesional")).toBeInTheDocument();
+    // Other physiotherapists also attend, so booking is never promised with Néstor.
+    expect(screen.queryByText("Agendar con Néstor")).not.toBeInTheDocument();
     expect(screen.getByRole("list", { name: "Áreas de enfoque" })).toHaveTextContent(
-      "RehabilitaciónMasaje terapéuticoDolor lumbar, cervical y postural",
+      "Alivio del dolorRecuperación de la movilidadRehabilitación funcionalMasaje terapéutico",
     );
   });
 
@@ -177,7 +181,7 @@ describe("Vitalita landing content", () => {
     );
 
     expect(
-      screen.getByRole("heading", { name: "Regálate una hora para sentir la diferencia." }),
+      screen.getByRole("heading", { name: "Regálate una sesión para sentir la diferencia." }),
     ).toBeInTheDocument();
     expect(screen.getByRole("button", { name: /Agenda tu sesión/ })).toBeInTheDocument();
     expect(screen.getByRole("link", { name: /Cómo llegar/ })).toHaveAttribute(
@@ -208,6 +212,37 @@ describe("Vitalita landing content", () => {
     expect(screen.getByRole("link", { name: /Abrir en Google Maps/ })).toHaveAttribute(
       "href",
       "https://maps.app.goo.gl/kQ61hVHLugeYfQk89",
+    );
+  });
+
+  it("offers one pass per zone, each booking its own zone without changing tracking", () => {
+    const dataLayer: Record<string, unknown>[] = [];
+    Object.assign(window, { dataLayer });
+
+    render(
+      <AnalyticsProvider>
+        <PricingSection />
+      </AnalyticsProvider>,
+    );
+
+    expect(
+      screen.getByRole("heading", { name: "Sesión en cuello, hombros y espalda" }),
+    ).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "Sesión en piernas y pies" })).toBeInTheDocument();
+    expect(screen.getByText("Tracción cervical manual")).toBeInTheDocument();
+    expect(screen.getByText("Presoterapia")).toBeInTheDocument();
+    expect(screen.getAllByText("50 minutos")).toHaveLength(2);
+    expect(screen.getAllByText("Por un fisioterapeuta")).toHaveLength(2);
+
+    fireEvent.click(screen.getByRole("button", { name: /Agendar sesión en piernas y pies/ }));
+    expect(dataLayer.at(-1)).toMatchObject({
+      event: "vitalita_booking_dialog_open",
+      cta_location: "pricing",
+    });
+    expect(JSON.stringify(dataLayer)).not.toContain("piernas");
+    expect(screen.getByRole("link", { name: /Estoy en Barranquilla/ })).toHaveAttribute(
+      "href",
+      expect.stringContaining(encodeURIComponent("piernas y pies")),
     );
   });
 });

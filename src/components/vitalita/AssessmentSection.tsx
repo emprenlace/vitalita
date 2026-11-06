@@ -1,6 +1,7 @@
 import { AnimatePresence, m, useReducedMotion } from "framer-motion";
 import { ArrowUpRight, Check, Lock } from "lucide-react";
 import { useState } from "react";
+import { PRECIO_SESION } from "@/config/site";
 import { cn } from "@/lib/utils";
 import { joinList } from "@/lib/whatsapp";
 import { useVitalita } from "./AnalyticsProvider";
@@ -50,7 +51,7 @@ const ZONES: Zone[] = [
   {
     id: "piernas",
     label: "Piernas y pies",
-    detail: "Presoterapia en piernas y pies para cerrar la sesión con el cuerpo más ligero.",
+    detail: "Descarga muscular y presoterapia en piernas y pies, en una sesión dedicada a ellas.",
     spots: [
       [81, 330],
       [120, 330],
@@ -132,6 +133,8 @@ export function AssessmentSection() {
 
   const chosen = ZONES.filter((zone) => selected.includes(zone.id));
   const labels = chosen.map((zone) => zone.label.toLowerCase());
+  // Each session treats one zone group: upper body, or legs and feet.
+  const splitSessions = selected.includes("piernas") && selected.some((id) => id !== "piernas");
 
   const rise = reduceMotion
     ? {}
@@ -188,7 +191,7 @@ export function AssessmentSection() {
             <div className="assessment-result" aria-live="polite">
               {chosen.length === 0 ? (
                 <p className="assessment-empty">
-                  Elige una o varias zonas y te mostramos cómo las trabajamos en tu sesión de 60
+                  Elige una o varias zonas y te mostramos cómo las trabajamos en tu sesión de 50
                   minutos.
                 </p>
               ) : (
@@ -209,6 +212,12 @@ export function AssessmentSection() {
                     ))}
                   </AnimatePresence>
                 </ul>
+              )}
+              {splitSessions && (
+                <p className="assessment-note">
+                  Cuello, hombros y espalda, y piernas y pies se trabajan en sesiones distintas,
+                  cada una desde {PRECIO_SESION.label}.
+                </p>
               )}
             </div>
 

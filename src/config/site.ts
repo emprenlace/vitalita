@@ -58,15 +58,41 @@ export const HORARIO = [
 ];
 
 export const DATOS_SERVICIO = {
-  duracion: "60 minutos",
-  incluye: [
-    "Descarga muscular en cuello, hombros y espalda",
-    "Presoterapia para piernas y pies",
-    "Evaluación funcional antes y después",
-    "Masaje manual y liberación miofascial",
-    "Ventosas, vibropercusión y termoterapia según tu caso",
-  ],
+  duracion: "50 minutos",
+  minutos: 50,
+  realizado: "Por un fisioterapeuta",
 };
+
+/**
+ * The session is booked for ONE zone. Both options cost the same and last the same;
+ * the techniques shared by both are applied according to the initial assessment.
+ */
+export const OPCIONES_SESION = [
+  {
+    id: "superior",
+    zona: "cuello, hombros y espalda",
+    titulo: "Sesión en cuello, hombros y espalda",
+    incluye: [
+      "Descarga muscular en cuello, hombros y espalda",
+      "Tracción cervical manual",
+      "Evaluación funcional antes y después",
+      "Ventosas + masoterapia",
+      "Liberación miofascial + masaje vibropercutor",
+    ],
+  },
+  {
+    id: "piernas",
+    zona: "piernas y pies",
+    titulo: "Sesión en piernas y pies",
+    incluye: [
+      "Descarga muscular en piernas y pies",
+      "Presoterapia",
+      "Evaluación funcional antes y después",
+      "Ventosas + masoterapia",
+      "Liberación miofascial + masaje vibropercutor",
+    ],
+  },
+] as const;
 
 /** Flags de contenido pendiente de confirmación. */
 export const FLAGS = {
@@ -80,8 +106,8 @@ export const TAMARA_NOTA =
 export type Benefit = { title: string; body: string; confirmed: boolean };
 export const BENEFICIOS: Benefit[] = [
   {
-    title: "Una hora dedicada a ti",
-    body: "Tu sesión dura 60 minutos y se adapta a cómo llegas y a lo que necesitas.",
+    title: "Una sesión dedicada a ti",
+    body: "Tu sesión dura 50 minutos y se adapta a cómo llegas y a lo que necesitas.",
     confirmed: true,
   },
   {
@@ -115,10 +141,10 @@ export type Faq = { q: string; a: string; confirmed: boolean };
 export const FAQS: Faq[] = [
   {
     q: "¿Qué incluye la sesión de descarga?",
-    a: "Trabajo muscular en cuello, hombros y espalda, presoterapia en piernas y pies, y una evaluación funcional antes y después. Las técnicas se eligen según lo que necesites.",
+    a: "Atención personalizada para aliviar tensiones musculares, favorecer la recuperación y mejorar tu bienestar, con técnicas seleccionadas según tus necesidades. Cada sesión se enfoca en una zona: cuello, hombros y espalda, o piernas y pies.",
     confirmed: true,
   },
-  { q: "¿Cuánto dura?", a: "La sesión dura 60 minutos.", confirmed: true },
+  { q: "¿Cuánto dura?", a: "La sesión dura 50 minutos.", confirmed: true },
   { q: "¿Necesito una orden médica?", a: "", confirmed: false },
   {
     q: "¿Atienden con SOAT?",

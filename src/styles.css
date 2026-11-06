@@ -2564,6 +2564,17 @@
   line-height: 1.6;
 }
 
+/* Shown when upper body and legs are both picked: they are two separate sessions. */
+.assessment-note {
+  margin-top: 14px;
+  border-radius: 14px;
+  background: oklch(0.45 0.08 195 / 8%);
+  padding: 10px 14px;
+  color: var(--forest-deep);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
 .assessment-list {
   display: grid;
   gap: 14px;
@@ -3043,6 +3054,14 @@
   text-align: center;
 }
 
+.pass-lede {
+  max-width: 36ch;
+  margin: 18px auto 0;
+  color: var(--muted-foreground);
+  font-size: 17px;
+  line-height: 1.5;
+}
+
 .pass-title {
   max-width: 16ch;
   margin: 20px auto 0;
@@ -3064,7 +3083,7 @@
   white-space: nowrap;
 }
 
-/* Hand-drawn style underline under "una hora". */
+/* Hand-drawn style underline under "el alivio". */
 .pass-title em::after {
   content: "";
   position: absolute;
@@ -3079,8 +3098,17 @@
 }
 
 .pass-stage {
-  margin-top: 48px;
+  height: 100%;
   perspective: 1400px;
+}
+
+/* Two passes, one per zone: each is a vertical ticket whose stub tears off below. */
+.pass-pair {
+  display: grid;
+  max-width: 1100px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 28px;
+  margin: 48px auto 0;
 }
 
 .pass {
@@ -3088,9 +3116,9 @@
   --notch: 22px;
   position: relative;
   display: grid;
-  max-width: 1040px;
-  grid-template-columns: minmax(0, 1fr) 0 minmax(0, 360px);
-  margin-inline: auto;
+  height: 100%;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: 1fr 0 auto;
   filter: drop-shadow(0 30px 50px rgb(7 50 52 / 16%));
   transform-style: preserve-3d;
 }
@@ -3098,39 +3126,37 @@
 .pass-main,
 .pass-stub {
   position: relative;
-  padding: clamp(28px, 3.5vw, 44px);
+  padding: clamp(28px, 3vw, 40px);
 }
 
-/* Notches cut out at the perforation, top and bottom. */
+/* Notches cut out at the perforation, left and right. */
 .pass-main {
-  border-radius: var(--pass-radius) 0 0 var(--pass-radius);
+  border-radius: var(--pass-radius) var(--pass-radius) 0 0;
   background: #fff;
   -webkit-mask:
-    radial-gradient(circle var(--notch) at 100% 0, transparent 98%, #000) top / 100% 51% no-repeat,
-    radial-gradient(circle var(--notch) at 100% 100%, transparent 98%, #000) bottom / 100% 51%
+    radial-gradient(circle var(--notch) at 0 100%, transparent 98%, #000) left / 51% 100% no-repeat,
+    radial-gradient(circle var(--notch) at 100% 100%, transparent 98%, #000) right / 51% 100%
       no-repeat;
   mask:
-    radial-gradient(circle var(--notch) at 100% 0, transparent 98%, #000) top / 100% 51% no-repeat,
-    radial-gradient(circle var(--notch) at 100% 100%, transparent 98%, #000) bottom / 100% 51%
+    radial-gradient(circle var(--notch) at 0 100%, transparent 98%, #000) left / 51% 100% no-repeat,
+    radial-gradient(circle var(--notch) at 100% 100%, transparent 98%, #000) right / 51% 100%
       no-repeat;
 }
 
 .pass-stub {
   display: flex;
   flex-direction: column;
-  border-radius: 0 var(--pass-radius) var(--pass-radius) 0;
+  border-radius: 0 0 var(--pass-radius) var(--pass-radius);
   background:
     radial-gradient(80% 50% at 100% 0%, rgb(25 145 146 / 45%), transparent 65%),
     oklch(0.27 0.045 195);
   color: #fff;
   -webkit-mask:
-    radial-gradient(circle var(--notch) at 0 0, transparent 98%, #000) top / 100% 51% no-repeat,
-    radial-gradient(circle var(--notch) at 0 100%, transparent 98%, #000) bottom / 100% 51%
-      no-repeat;
+    radial-gradient(circle var(--notch) at 0 0, transparent 98%, #000) left / 51% 100% no-repeat,
+    radial-gradient(circle var(--notch) at 100% 0, transparent 98%, #000) right / 51% 100% no-repeat;
   mask:
-    radial-gradient(circle var(--notch) at 0 0, transparent 98%, #000) top / 100% 51% no-repeat,
-    radial-gradient(circle var(--notch) at 0 100%, transparent 98%, #000) bottom / 100% 51%
-      no-repeat;
+    radial-gradient(circle var(--notch) at 0 0, transparent 98%, #000) left / 51% 100% no-repeat,
+    radial-gradient(circle var(--notch) at 100% 0, transparent 98%, #000) right / 51% 100% no-repeat;
 }
 
 .pass-perforation {
@@ -3141,10 +3167,10 @@
 .pass-perforation::before {
   content: "";
   position: absolute;
-  top: calc(var(--notch) + 10px);
-  bottom: calc(var(--notch) + 10px);
-  left: -1px;
-  border-left: 2px dashed oklch(0.45 0.08 195 / 30%);
+  top: -1px;
+  right: calc(var(--notch) + 10px);
+  left: calc(var(--notch) + 10px);
+  border-top: 2px dashed oklch(0.45 0.08 195 / 30%);
 }
 
 .pass-topline {
@@ -3169,7 +3195,7 @@
 
 .pass-fields {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 16px;
   margin: 22px 0 0;
   border-block: 1px solid oklch(0.25 0.035 190 / 9%);
@@ -3297,13 +3323,14 @@
 }
 
 .pass-stamp {
-  align-self: flex-end;
-  margin: 18px 4px 22px 0;
-  border: 2.5px solid rgb(110 231 220);
-  border-radius: 14px;
-  padding: 8px 14px;
+  position: absolute;
+  top: 22px;
+  right: 22px;
+  border: 2px solid rgb(110 231 220);
+  border-radius: 12px;
+  padding: 6px 11px;
   color: rgb(110 231 220);
-  font-size: 13px;
+  font-size: 11px;
   font-weight: 800;
   letter-spacing: 0.16em;
   line-height: 1.15;
@@ -3324,7 +3351,7 @@
 .pass-stub .pass-cta {
   width: 100%;
   min-height: 52px;
-  margin-top: auto;
+  margin-top: 22px;
   background: #fff;
   color: var(--forest-deep);
 }
@@ -3355,46 +3382,13 @@
   );
 }
 
-/* Mobile: the stub tears off below, perforation runs horizontally. */
+/* Mobile: the two passes stack. */
 @media (max-width: 899px) {
-  .pass {
+  .pass-pair {
+    max-width: 560px;
     grid-template-columns: minmax(0, 1fr);
-    grid-template-rows: auto 0 auto;
-  }
-
-  .pass-main {
-    border-radius: var(--pass-radius) var(--pass-radius) 0 0;
-    -webkit-mask:
-      radial-gradient(circle var(--notch) at 0 100%, transparent 98%, #000) left / 51% 100%
-        no-repeat,
-      radial-gradient(circle var(--notch) at 100% 100%, transparent 98%, #000) right / 51% 100%
-        no-repeat;
-    mask:
-      radial-gradient(circle var(--notch) at 0 100%, transparent 98%, #000) left / 51% 100%
-        no-repeat,
-      radial-gradient(circle var(--notch) at 100% 100%, transparent 98%, #000) right / 51% 100%
-        no-repeat;
-  }
-
-  .pass-stub {
-    border-radius: 0 0 var(--pass-radius) var(--pass-radius);
-    -webkit-mask:
-      radial-gradient(circle var(--notch) at 0 0, transparent 98%, #000) left / 51% 100% no-repeat,
-      radial-gradient(circle var(--notch) at 100% 0, transparent 98%, #000) right / 51% 100%
-        no-repeat;
-    mask:
-      radial-gradient(circle var(--notch) at 0 0, transparent 98%, #000) left / 51% 100% no-repeat,
-      radial-gradient(circle var(--notch) at 100% 0, transparent 98%, #000) right / 51% 100%
-        no-repeat;
-  }
-
-  .pass-perforation::before {
-    top: -1px;
-    right: calc(var(--notch) + 10px);
-    bottom: auto;
-    left: calc(var(--notch) + 10px);
-    border-top: 2px dashed oklch(0.45 0.08 195 / 30%);
-    border-left: 0;
+    gap: 24px;
+    margin-top: 36px;
   }
 
   .pass-main,
@@ -3402,23 +3396,18 @@
     padding: 26px 22px;
   }
 
-  .pass-fields {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+  .pass-topline {
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    white-space: nowrap;
   }
 
   .pass-stamp {
-    position: absolute;
     top: 16px;
     right: 16px;
-    margin: 0;
-    border-width: 2px;
     border-radius: 10px;
     padding: 5px 9px;
     font-size: 10px;
-  }
-
-  .pass-stub .pass-cta {
-    margin-top: 22px;
   }
 }
 

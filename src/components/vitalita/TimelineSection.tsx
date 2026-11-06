@@ -38,9 +38,10 @@ const STEPS: { t: string; d: string; icon: LucideIcon }[] = [
 ];
 
 const EASE = [0.16, 1, 0.3, 1] as const;
-const TICKS = Array.from({ length: 60 }, (_, i) => i);
+const SESSION_MIN = 50;
+const TICKS = Array.from({ length: SESSION_MIN }, (_, i) => i);
 
-/** One bar per step that fills while its quarter of the hour plays. */
+/** One bar per step that fills while its part of the session plays. */
 function StepBar({ progress, index }: { progress: MotionValue<number>; index: number }) {
   const fill = useTransform(progress, (p) => Math.min(1, Math.max(0, p * STEPS.length - index)));
   return (
@@ -68,13 +69,13 @@ function HourDial({ progress, minutes }: { progress: MotionValue<number>; minute
             key={tick}
             className={cn(
               "hour-tick",
-              tick % 15 === 0 ? "is-quarter" : tick % 5 === 0 && "is-five",
+              tick % 10 === 0 ? "is-quarter" : tick % 5 === 0 && "is-five",
             )}
             x1="100"
             y1={tick % 5 === 0 ? 8 : 10}
             x2="100"
-            y2={tick % 15 === 0 ? 20 : 15}
-            transform={`rotate(${tick * 6} 100 100)`}
+            y2={tick % 10 === 0 ? 20 : 15}
+            transform={`rotate(${(tick * 360) / SESSION_MIN} 100 100)`}
           />
         ))}
         <circle className="hour-track" cx="100" cy="100" r="78" />
@@ -90,7 +91,7 @@ function HourDial({ progress, minutes }: { progress: MotionValue<number>; minute
       </svg>
       <div className="hour-center">
         <span className="hour-minutes">{String(minutes).padStart(2, "0")}</span>
-        <span className="hour-unit">de 60 min</span>
+        <span className="hour-unit">de {SESSION_MIN} min</span>
       </div>
     </div>
   );
@@ -109,7 +110,7 @@ export function TimelineSection() {
 
   useMotionValueEvent(progress, "change", (value) => {
     const p = Math.min(1, Math.max(0, value));
-    setMinutes(Math.round(p * 60));
+    setMinutes(Math.round(p * SESSION_MIN));
     setActive(Math.min(STEPS.length - 1, Math.floor(p * STEPS.length)));
   });
 
@@ -121,7 +122,7 @@ export function TimelineSection() {
           <header className="pattern-head">
             <p className="section-label">Así se vive la sesión</p>
             <h2 id="sesion-title" className="pattern-title">
-              <span className="pattern-title-soft">Una hora de cuidado,</span>{" "}
+              <span className="pattern-title-soft">50 minutos de cuidado,</span>{" "}
               <span>paso a paso.</span>
             </h2>
           </header>
@@ -136,7 +137,7 @@ export function TimelineSection() {
           </ol>
           <div className="hour-action">
             <WhatsAppButton origin="timeline" size="md">
-              Reservar mi hora
+              Reservar mi sesión
             </WhatsAppButton>
           </div>
         </div>
@@ -161,7 +162,7 @@ export function TimelineSection() {
               <header className="hour-head">
                 <p className="section-label">Así se vive la sesión</p>
                 <h2 id="sesion-title" className="hour-title">
-                  <span className="pattern-title-soft">Una hora de cuidado,</span>{" "}
+                  <span className="pattern-title-soft">50 minutos de cuidado,</span>{" "}
                   <span>paso a paso.</span>
                 </h2>
               </header>
@@ -207,7 +208,7 @@ export function TimelineSection() {
 
               <div className="hour-action">
                 <WhatsAppButton origin="timeline" size="md" className="hour-cta">
-                  Reservar mi hora
+                  Reservar mi sesión
                 </WhatsAppButton>
               </div>
             </div>

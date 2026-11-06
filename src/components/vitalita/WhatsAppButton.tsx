@@ -26,6 +26,8 @@ type Props = VariantProps<typeof cta> & {
   className?: string;
   hideIcon?: boolean;
   ariaLabel?: string;
+  /** Zones written into the WhatsApp message only (never sent to analytics). */
+  zones?: string[];
   onClick?: () => void;
 };
 
@@ -37,6 +39,7 @@ export function WhatsAppButton({
   className,
   hideIcon,
   ariaLabel,
+  zones,
   onClick,
 }: Props) {
   const { openBooking } = useVitalita();
@@ -45,7 +48,7 @@ export function WhatsAppButton({
       type="button"
       onClick={() => {
         onClick?.();
-        openBooking(origin);
+        openBooking(origin, zones);
       }}
       className={cn(cta({ size, block }), className)}
       aria-label={

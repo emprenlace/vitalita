@@ -10,7 +10,7 @@ const COPY = {
   general: {
     title: "La tensión diaria también merece atención.",
     lines: ["La tensión diaria", "también merece", "atención."],
-    body: "Una sesión individual de descarga muscular para cuello, hombros y espalda, con cuidado complementario para tus piernas y pies.",
+    body: "Una sesión individual de descarga muscular enfocada en tu principal zona de tensión, para aliviar el dolor, recuperar la sensación de bienestar y favorecer el descanso de tu cuerpo desde la primera sesión.",
   },
   deporte: {
     title: "Tu entrenamiento merece un cuerpo bien cuidado.",
@@ -123,7 +123,7 @@ export function HeroSection() {
                 <dd>en Google</dd>
               </div>
               <div>
-                <dt>60 min</dt>
+                <dt>50 min</dt>
                 <dd>individual</dd>
               </div>
               <div>
