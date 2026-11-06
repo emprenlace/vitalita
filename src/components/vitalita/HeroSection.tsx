@@ -1,7 +1,7 @@
 import { m, useReducedMotion, useScroll, useTransform } from "framer-motion";
-import { ArrowUpRight, MapPin } from "lucide-react";
+import { ArrowUpRight, MapPin, Star } from "lucide-react";
 import { useRef, type CSSProperties } from "react";
-import { DIRECCION, MEDIA, PRECIO_SESION } from "@/config/site";
+import { DIRECCION, GOOGLE_RATING, PRECIO_SESION } from "@/config/site";
 import { useVitalita } from "./AnalyticsProvider";
 import { prefersLightMedia, useAfterLoad } from "@/lib/defer";
 import { WhatsAppButton } from "./WhatsAppButton";
@@ -18,12 +18,6 @@ const COPY = {
     body: "Una sesión individual para acompañar tu recuperación muscular, con atención a cómo te mueves antes y después.",
   },
 };
-
-const DETAILS = [
-  { title: "60 min", detail: "atención individual" },
-  { title: "Técnicas incluidas", detail: "según tu caso" },
-  { title: "Barranquilla", detail: "presencial" },
-];
 
 export function HeroSection() {
   const { segment } = useVitalita();
@@ -68,6 +62,7 @@ export function HeroSection() {
         </m.div>
         <div className="hero-backdrop-shade" aria-hidden />
 
+        {/* Mobile: title at the top, action and facts at the bottom, the video as a window between. */}
         <div className="hero-stage-content relative z-10">
           <div className="hero-copy">
             <p {...enter(0)} className="hero-in eyebrow text-white/90">
@@ -75,7 +70,10 @@ export function HeroSection() {
             </p>
             <h1 className="hero-title text-white" aria-label={copy.title}>
               {copy.lines.map((line, index) => (
-                <span className="hero-title-line" key={line}>
+                <span
+                  className={index === 0 ? "hero-title-line hero-title-soft" : "hero-title-line"}
+                  key={line}
+                >
                   <span
                     className="hero-line-in"
                     style={{ "--hero-delay": `${0.12 + index * 0.12}s` } as CSSProperties}
@@ -85,7 +83,10 @@ export function HeroSection() {
                 </span>
               ))}
             </h1>
-            <div {...enter(0.5)} className="hero-in hero-main-action">
+            <p {...enter(0.45)} className="hero-in hero-lede">
+              {copy.body}
+            </p>
+            <div {...enter(0.6)} className="hero-in hero-main-action">
               <WhatsAppButton
                 origin="hero"
                 size="lg"
@@ -100,47 +101,37 @@ export function HeroSection() {
                   </span>
                 </>
               </WhatsAppButton>
+              <a
+                href={DIRECCION.mapsUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hero-location"
+                aria-label="Cómo llegar a Vitalita en Barranquilla"
+              >
+                <MapPin aria-hidden />
+                Cómo llegar
+              </a>
             </div>
-          </div>
 
-          <a
-            href={DIRECCION.mapsUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            {...enter(0.7)}
-            className="hero-in hero-map-card"
-            aria-label="Cómo llegar a Vitalita en Barranquilla"
-          >
-            <img src={MEDIA.fachada.thumb} alt="" width="64" height="64" />
-            <span>
-              Cómo llegar
-              <ArrowUpRight aria-hidden />
-            </span>
-          </a>
-
-          <aside {...enter(0.85)} className="hero-in hero-session-note">
-            <p className="hero-session-label">
-              <MapPin aria-hidden />
-              <span className="hero-session-name">
-                <span className="hero-session-prefix">Sesión de </span>descarga muscular
-              </span>
-              <span className="hero-session-price">{PRECIO_SESION.fromLabel}</span>
-            </p>
-            <p>{copy.body}</p>
-          </aside>
-
-          <dl
-            {...enter(1)}
-            className="hero-in hero-details relative z-10"
-            aria-label="Detalles de la sesión"
-          >
-            {DETAILS.map((item) => (
-              <div key={item.title} className="hero-detail">
-                <dt className="hero-detail-title">{item.title}</dt>
-                <dd className="hero-detail-description">{item.detail}</dd>
+            {/* Proof, time and price: the three answers people look for before writing. */}
+            <dl {...enter(0.8)} className="hero-in hero-stats" aria-label="Detalles de la sesión">
+              <div>
+                <dt>
+                  {GOOGLE_RATING.score}
+                  <Star aria-hidden />
+                </dt>
+                <dd>en Google</dd>
               </div>
-            ))}
-          </dl>
+              <div>
+                <dt>60 min</dt>
+                <dd>individual</dd>
+              </div>
+              <div>
+                <dt className="hero-session-name">{PRECIO_SESION.label.replace(" COP", "")}</dt>
+                <dd>desde, por sesión</dd>
+              </div>
+            </dl>
+          </div>
         </div>
       </m.div>
     </section>

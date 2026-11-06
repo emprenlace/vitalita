@@ -21,6 +21,9 @@ export const PRECIO_SESION = {
   fromLabel: "Desde $100.000 COP",
 };
 
+/** Google Business Profile rating, as shown on Google Maps. Update when it changes. */
+export const GOOGLE_RATING = { score: "5,0" };
+
 export const SERVICIO_NOMBRE = "Sesión de Descarga Muscular";
 
 export const DIRECCION = {

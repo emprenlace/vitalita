@@ -356,10 +356,6 @@
   display: block;
 }
 
-.hero-main-action {
-  margin-top: var(--content-gap);
-}
-
 .hero-main-button {
   min-height: var(--button-height);
   gap: 1rem;
@@ -468,148 +464,6 @@
 
 .site-header .site-header-cta:hover .site-header-arrow svg {
   transform: translateX(4px);
-}
-
-.hero-map-card {
-  position: absolute;
-  top: 6.5rem;
-  right: 3rem;
-  display: flex;
-  min-height: 4rem;
-  align-items: center;
-  gap: 0.875rem;
-  border-radius: var(--glass-radius);
-  background: rgb(4 40 45 / 50%);
-  padding: 0.5rem 1rem 0.5rem 0.5rem;
-  color: #fff;
-  font-size: var(--size-small);
-  font-weight: 600;
-  -webkit-backdrop-filter: blur(24px);
-  backdrop-filter: blur(24px);
-  box-shadow:
-    inset 0 1px 0 rgb(255 255 255 / 16%),
-    0 16px 40px rgb(0 0 0 / 18%);
-}
-
-.hero-map-card img {
-  height: 2.75rem;
-  width: 2.75rem;
-  border-radius: 0.875rem;
-  object-fit: cover;
-}
-
-.hero-map-card span {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.hero-map-card svg {
-  height: 1rem;
-  width: 1rem;
-}
-
-.hero-session-note {
-  position: absolute;
-  right: 3rem;
-  bottom: 8.25rem;
-  width: min(25rem, 34%);
-  border-radius: var(--glass-radius);
-  background: rgb(4 40 45 / 56%);
-  padding: var(--glass-padding);
-  color: #fff;
-  box-shadow:
-    inset 0 1px 0 rgb(255 255 255 / 16%),
-    0 12px 36px rgb(0 0 0 / 20%);
-  -webkit-backdrop-filter: blur(20px) saturate(130%);
-  backdrop-filter: blur(20px) saturate(130%);
-}
-
-.hero-session-label {
-  display: flex;
-  align-items: center;
-  flex-wrap: nowrap;
-  gap: 0.35rem;
-  white-space: nowrap;
-  letter-spacing: 0.02em;
-  font-size: 12px;
-  font-weight: 600;
-  line-height: 1.4;
-  text-transform: uppercase;
-}
-
-.hero-session-name,
-.hero-session-price {
-  flex: 0 0 auto;
-}
-
-.hero-session-price::before {
-  content: "·";
-  margin-right: 0.4rem;
-}
-
-.hero-session-label svg {
-  height: 1rem;
-  width: 1rem;
-  flex: 0 0 auto;
-}
-
-.hero-session-note > p:last-child {
-  margin-top: 0.625rem;
-  color: rgb(255 255 255 / 90%);
-  font-size: var(--size-small);
-  line-height: 1.5;
-}
-
-.hero-details {
-  position: absolute;
-  right: 0;
-  bottom: calc(1.5rem + env(safe-area-inset-bottom));
-  left: 0;
-  display: flex;
-  width: max-content;
-  max-width: calc(100% - 2.5rem);
-  margin: 0 auto;
-  align-items: stretch;
-  border: 1px solid rgb(255 255 255 / 14%);
-  border-radius: 999px;
-  background: rgb(4 40 45 / 56%);
-  padding: 0.5rem 0.75rem;
-  box-shadow:
-    inset 0 1px 0 rgb(255 255 255 / 18%),
-    0 8px 32px rgb(0 0 0 / 20%);
-  -webkit-backdrop-filter: blur(24px) saturate(140%);
-  backdrop-filter: blur(24px) saturate(140%);
-}
-
-.hero-detail {
-  display: flex;
-  min-width: 0;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 0.375rem 1.25rem;
-  color: #fff;
-  text-align: center;
-}
-
-.hero-detail + .hero-detail {
-  border-left: 1px solid rgb(255 255 255 / 16%);
-}
-
-.hero-detail-title {
-  font-size: var(--size-small);
-  font-weight: 600;
-  line-height: 1.2;
-  white-space: nowrap;
-}
-
-.hero-detail-description {
-  margin: 0.125rem 0 0;
-  color: rgb(255 255 255 / 68%);
-  font-size: var(--size-caption);
-  line-height: 1.2;
-  white-space: nowrap;
 }
 
 .techniques-section {
@@ -1084,7 +938,7 @@
   }
 
   .hero-stage {
-    min-height: max(calc(100svh - 2rem), 660px);
+    min-height: max(calc(100svh - 2rem), 560px);
   }
 
   .hero-backdrop {
@@ -1104,46 +958,31 @@
     );
   }
 
+  /* Mobile: copy anchored to the bottom, the video breathes above it. */
   .hero-stage-content {
-    min-height: max(calc(100svh - 2rem), 660px);
+    min-height: max(calc(100svh - 2rem), 560px);
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
+    justify-content: flex-end;
     align-items: center;
     gap: 0;
-    padding: calc(6.5rem + env(safe-area-inset-top)) 16px 16px;
+    padding: calc(6.5rem + env(safe-area-inset-top)) 20px 20px;
   }
 
   .hero-copy {
     width: 100%;
     max-width: 30rem;
-    text-align: center;
     transform: none;
   }
 
-  .hero-copy .eyebrow {
-    max-width: 100%;
-    margin-bottom: 1rem;
-    font-size: 11px;
-    letter-spacing: 0.1em;
-  }
-
   .hero-title {
-    max-width: 12ch;
-    margin-inline: auto;
-    font-size: clamp(2rem, 8vw, 2.5rem);
-    line-height: 1.08;
-    text-align: center;
+    max-width: none;
+    font-size: clamp(2.25rem, 10vw, 2.75rem);
+    line-height: 1.04;
   }
 
   .hero-title-line {
     padding-bottom: 0.08em;
-  }
-
-  .hero-main-action {
-    display: flex;
-    justify-content: center;
-    margin-top: 1.5rem;
   }
 
   .hero-main-button,
@@ -1157,131 +996,11 @@
     align-items: center;
   }
 
-  /* Label centered like "Cómo llegar" below; the arrow is pinned right. */
+  /* Sized to its label, like the header pill: label, then the arrow circle. */
   .hero-main-button {
-    position: relative;
-    width: min(100%, 20rem);
-    justify-content: center;
-    padding-inline: 3rem;
-  }
-
-  .hero-main-button > span {
-    justify-content: center;
-  }
-
-  .hero-main-arrow {
-    position: absolute;
-    top: 50%;
-    right: 0.5rem;
-    translate: 0 -50%;
-  }
-
-  .hero-map-card {
-    position: relative;
-    top: auto;
-    right: auto;
-    width: min(100%, 20rem);
-    min-height: 3rem;
-    justify-content: center;
-    gap: 0.625rem;
-    margin-top: 0.625rem;
-    border: 1px solid rgb(255 255 255 / 16%);
-    border-radius: 999px;
-    background: rgb(4 40 45 / 40%);
-    padding: 0.25rem 1rem 0.25rem 0.25rem;
-    box-shadow: none;
-  }
-
-  .hero-map-card img {
-    height: 2.5rem;
-    width: 2.5rem;
-    border-radius: 999px;
-  }
-
-  .hero-map-card span {
-    flex: 1;
-    justify-content: center;
-    padding-right: 2.25rem;
-  }
-
-  .hero-session-note {
-    position: relative;
-    right: auto;
-    bottom: auto;
-    width: 100%;
-    max-width: 30rem;
-    margin-top: auto;
-    border: 1px solid rgb(255 255 255 / 14%);
-    border-bottom: 0;
-    border-radius: 20px 20px 0 0;
-    padding: 16px 16px 14px;
-    box-shadow: none;
-    text-align: left;
-  }
-
-  .hero-session-label {
-    justify-content: space-between;
-    gap: 8px;
-    font-size: 11px;
-    letter-spacing: 0.04em;
-  }
-
-  .hero-session-label svg {
-    display: none;
-  }
-
-  .hero-session-prefix {
-    display: none;
-  }
-
-  .hero-session-price {
-    flex: 0 0 auto;
-    letter-spacing: 0;
-    font-size: 13px;
-  }
-
-  .hero-session-price::before {
-    content: none;
-  }
-
-  .hero-session-note > p:last-child {
-    margin-top: 8px;
-    color: rgb(255 255 255 / 82%);
-    font-size: 13.5px;
-    line-height: 1.45;
-  }
-
-  .hero-details {
-    position: relative;
-    right: auto;
-    bottom: auto;
-    left: auto;
-    display: grid;
-    width: 100%;
-    max-width: 30rem;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    margin: 0;
-    border-top-color: rgb(255 255 255 / 10%);
-    border-radius: 0 0 20px 20px;
-    padding: 10px 4px;
-    box-shadow: none;
-  }
-
-  .hero-detail {
-    padding: 4px 6px;
-  }
-
-  .hero-detail-title,
-  .hero-detail-description {
-    white-space: normal;
-  }
-
-  .hero-detail-title {
-    font-size: 13px;
-  }
-
-  .hero-detail-description {
-    font-size: 11px;
+    min-height: 44px;
+    padding-inline: 1.25rem 0.375rem;
+    font-size: 15px;
   }
 
   .instagram-grid {
@@ -1344,11 +1063,6 @@
   .hero-title {
     font-size: var(--size-h1);
   }
-
-  .hero-session-note {
-    right: 3rem;
-    width: min(20rem, 34%);
-  }
 }
 
 /* Width-only: iOS Safari changes the viewport height while scrolling, so the
@@ -1357,14 +1071,30 @@
   .hero-stage-content {
     padding-inline: 14px;
   }
+}
+
+/* Narrow phones: the hero still fits in the first screen. */
+@media (max-width: 389px) {
+  .hero-stage-content {
+    padding-top: calc(5.25rem + env(safe-area-inset-top));
+    padding-bottom: 1rem;
+  }
+
+  .hero-lede {
+    font-size: 14px;
+  }
+
+  .hero-stats dt {
+    font-size: 1rem;
+  }
+
+  .hero-stats dd {
+    font-size: 10.5px;
+  }
 
   .hero-copy .eyebrow {
     font-size: 10px;
     letter-spacing: 0.07em;
-  }
-
-  .hero-title {
-    font-size: 1.9rem;
   }
 }
 
@@ -1989,12 +1719,6 @@
   }
 }
 
-@media (min-width: 640px) {
-  .hero-map-card {
-    display: none;
-  }
-}
-
 @media (min-width: 768px) {
   .closing-photo {
     width: 58%;
@@ -2059,101 +1783,197 @@
   }
 }
 
-/* Hero session note: bare text over a darkened video (all breakpoints). */
+/* Hero copy: one centered composition (eyebrow, title, lede, action, facts) placed in the
+   optical middle of the stage, so the space above and below it is always the same.
+   Spacing scale: 8 / 16 / 24 / 32. */
 .hero-backdrop-video {
   filter: brightness(0.95) contrast(1.05) saturate(0.88) hue-rotate(-7deg);
 }
 
-.hero-session-note {
-  border: 0;
-  border-radius: 0;
-  background: none;
-  padding: 0;
-  box-shadow: none;
-  -webkit-backdrop-filter: none;
-  backdrop-filter: none;
-  text-shadow: 0 1px 18px rgb(0 0 0 / 45%);
+.hero-copy {
+  text-shadow: 0 1px 18px rgb(0 0 0 / 35%);
 }
 
-.hero-session-note > p:last-child {
-  color: #fff;
+/* Same rhythm as the section titles: a lighter first line, then the statement. */
+.hero-title-line:not(.hero-title-soft) {
   font-weight: 400;
-  line-height: 1.45;
+}
+
+.hero-lede {
+  max-width: 34rem;
+  margin-top: 1.5rem;
+  color: rgb(255 255 255 / 88%);
+  font-size: 1.125rem;
+  line-height: 1.5;
   letter-spacing: -0.01em;
+}
+
+.hero-main-action {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 1.5rem;
+  margin-top: 2rem;
+}
+
+.hero-main-button {
+  text-shadow: none;
+}
+
+.hero-location {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  gap: 0.4rem;
+  color: #fff;
+  font-size: var(--size-small);
+  font-weight: 500;
+  text-decoration: underline;
+  text-decoration-color: rgb(255 255 255 / 35%);
+  text-underline-offset: 4px;
+}
+
+.hero-location:hover {
+  text-decoration-color: #fff;
+}
+
+.hero-location svg {
+  height: 15px;
+  width: 15px;
+}
+
+/* Facts in the same glass material as the header, closing the composition. */
+.hero-stats {
+  display: grid;
+  width: fit-content;
+  grid-template-columns: repeat(3, auto);
+  margin: 2rem 0 0;
+  border: 1px solid rgb(255 255 255 / 14%);
+  border-radius: 20px;
+  background: rgb(3 28 32 / 38%);
+  padding: 0.875rem 0;
+  text-shadow: none;
+  -webkit-backdrop-filter: blur(18px) saturate(130%);
+  backdrop-filter: blur(18px) saturate(130%);
+}
+
+.hero-stats > div {
+  padding-inline: 1.5rem;
+}
+
+.hero-stats > div + div {
+  border-left: 1px solid rgb(255 255 255 / 14%);
+}
+
+.hero-stats dt {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  color: #fff;
+  font-size: 1.25rem;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+
+.hero-stats dt svg {
+  height: 0.8em;
+  width: 0.8em;
+  fill: #fbbf24;
+  stroke: none;
+}
+
+.hero-stats dd {
+  margin: 0.25rem 0 0;
+  color: rgb(255 255 255 / 70%);
+  font-size: var(--size-caption);
+  white-space: nowrap;
 }
 
 @media (min-width: 768px) {
   .hero-backdrop-shade {
     background:
-      radial-gradient(ellipse 55% 60% at 85% 82%, rgb(3 28 32 / 62%) 0%, transparent 70%),
-      linear-gradient(0deg, rgb(3 28 32 / 45%) 0%, transparent 40%),
-      linear-gradient(90deg, rgb(4 40 45 / 55%) 0%, rgb(4 40 45 / 36%) 38%, transparent 60%);
+      linear-gradient(0deg, rgb(3 28 32 / 40%) 0%, transparent 35%),
+      linear-gradient(90deg, rgb(3 28 32 / 72%) 0%, rgb(3 28 32 / 45%) 40%, transparent 66%);
   }
 
-  .hero-session-note {
-    width: min(30rem, 38%);
-  }
-
-  .hero-session-label {
-    gap: 0.5rem;
-    font-size: 13px;
-    letter-spacing: 0.08em;
-  }
-
-  .hero-session-label svg {
-    height: 1.125rem;
-    width: 1.125rem;
-  }
-
-  .hero-session-note > p:last-child {
-    margin-top: 0.875rem;
-    font-size: 1.25rem;
+  /* Header takes ~6rem; the bottom padding mirrors the free space so the block sits centered. */
+  .hero-stage-content {
+    padding-block: 6rem 3rem;
   }
 }
 
 @media (max-width: 767px) {
+  /* Even veil with a soft vignette: the text reads anywhere, the video stays alive. */
   .hero-backdrop-shade {
-    background: linear-gradient(
-      180deg,
-      rgb(3 28 32 / 34%) 0%,
-      rgb(3 28 32 / 14%) 34%,
-      rgb(3 28 32 / 62%) 66%,
-      rgb(3 28 32 / 88%) 100%
-    );
+    background:
+      radial-gradient(ellipse 90% 55% at 50% 55%, rgb(3 28 32 / 38%) 0%, transparent 100%),
+      linear-gradient(
+        180deg,
+        rgb(3 28 32 / 50%) 0%,
+        rgb(3 28 32 / 42%) 40%,
+        rgb(3 28 32 / 62%) 75%,
+        rgb(3 28 32 / 82%) 100%
+      );
   }
 
-  .hero-session-note {
+  .hero-stage-content {
+    justify-content: center;
+    padding: calc(5.5rem + env(safe-area-inset-top)) 20px 1.5rem;
+  }
+
+  .hero-copy {
     text-align: center;
   }
 
-  .hero-session-label {
+  .hero-copy .eyebrow {
+    margin-bottom: 1rem;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+  }
+
+  .hero-title {
+    margin-inline: auto;
+    font-size: clamp(2.4rem, 10.5vw, 2.85rem);
+    line-height: 1.04;
+    letter-spacing: -0.03em;
+  }
+
+  .hero-lede {
+    max-width: 32ch;
+    margin: 1rem auto 0;
+    font-size: 15px;
+    line-height: 1.45;
+  }
+
+  .hero-main-action {
+    gap: 0;
+    margin-top: 1.5rem;
+  }
+
+  .hero-location {
     justify-content: center;
-    gap: 6px;
-    font-size: 12px;
-    letter-spacing: 0.08em;
+    margin-top: 0.25rem;
   }
 
-  .hero-session-label svg {
-    display: block;
-    height: 14px;
-    width: 14px;
+  .hero-stats {
+    width: min(100%, 20rem);
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    margin: 1rem auto 0;
+    padding: 0.75rem 0;
   }
 
-  .hero-session-price::before {
-    content: "·";
-    margin-right: 6px;
+  .hero-stats > div {
+    padding-inline: 0.25rem;
   }
 
-  .hero-session-note > p:last-child {
-    max-width: 34ch;
-    margin: 8px auto 0;
-    font-size: 16px;
+  .hero-stats dt {
+    justify-content: center;
+    font-size: 1.125rem;
   }
 
-  .hero-details {
-    margin-top: 18px;
-    border-top-color: rgb(255 255 255 / 14%);
-    border-radius: 20px;
+  .hero-stats dd {
+    font-size: 11px;
   }
 }
 
@@ -2558,39 +2378,6 @@
   .pattern-band-quote {
     max-width: 16ch;
     text-shadow: none;
-  }
-}
-
-/* Hero details as bare text (all breakpoints), like the session note above. */
-.hero-details {
-  border: 0;
-  border-radius: 0;
-  background: none;
-  padding: 0;
-  box-shadow: none;
-  -webkit-backdrop-filter: none;
-  backdrop-filter: none;
-  text-shadow: 0 1px 14px rgb(0 0 0 / 45%);
-}
-
-.hero-detail + .hero-detail {
-  border-left: 0;
-}
-
-.hero-detail-description {
-  color: rgb(255 255 255 / 78%);
-}
-
-@media (min-width: 768px) {
-  .hero-details {
-    gap: 2rem;
-  }
-}
-
-@media (max-width: 767px) {
-  .hero-details {
-    margin-top: 20px;
-    padding: 0;
   }
 }
 

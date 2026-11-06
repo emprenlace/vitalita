@@ -69,6 +69,9 @@ describe("Vitalita landing content", () => {
   });
 
   it("presents the session and price in the immersive hero with the WhatsApp booking action", () => {
+    const dataLayer: Record<string, unknown>[] = [];
+    Object.assign(window, { dataLayer });
+
     render(
       <AnalyticsProvider>
         <HeroSection />
@@ -80,17 +83,19 @@ describe("Vitalita landing content", () => {
         name: "La tensión diaria también merece atención.",
       }),
     ).toBeInTheDocument();
-    expect(document.querySelector(".hero-session-name")).toHaveTextContent(
-      "Sesión de descarga muscular",
+    expect(screen.getByLabelText("Detalles de la sesión")).toHaveTextContent(
+      "5,0en Google60 minindividual$100.000desde, por sesión",
     );
-    expect(screen.getByText(/100\.000 COP/)).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: /Agenda tu sesión/ })).toBeInTheDocument();
+    const bookingButton = screen.getByRole("button", { name: /Agenda tu sesión/ });
     expect(
       screen.getByRole("link", { name: "Cómo llegar a Vitalita en Barranquilla" }),
     ).toHaveAttribute("href", "https://maps.app.goo.gl/kQ61hVHLugeYfQk89");
-    expect(screen.getByLabelText("Detalles de la sesión")).toHaveTextContent(
-      "60 minatención individualTécnicas incluidassegún tu casoBarranquillapresencial",
-    );
+    // Campaign conversions depend on this: the hero click keeps cta_location "hero".
+    fireEvent.click(bookingButton);
+    expect(dataLayer.at(-1)).toMatchObject({
+      event: "vitalita_booking_dialog_open",
+      cta_location: "hero",
+    });
     expect(document.querySelector(".hero-backdrop-video")).toHaveAttribute(
       "poster",
       "/images/hero-poster.webp",
