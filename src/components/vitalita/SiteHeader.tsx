@@ -151,12 +151,22 @@ function ServicesPanel({ onPick }: { onPick: () => void }) {
 }
 
 /**
- * `solid` keeps the light header from the start (pages without a dark hero, e.g. the blog).
- * `logoHref` defaults to "#top" on the landing; other pages send the logo home.
+ * One glass bar: logo left, plain text links centered, booking button right.
+ * Dark glass over a dark hero, light glass once scrolled (or when `solid`).
+ * `current` marks the section the visitor is in.
  */
-export function SiteHeader({ solid = false, logoHref }: { solid?: boolean; logoHref?: string }) {
+export function SiteHeader({
+  solid = false,
+  logoHref,
+  current,
+}: {
+  solid?: boolean;
+  logoHref?: string;
+  current?: "servicios" | "blog";
+}) {
   const [scrolledState, setScrolled] = useState(false);
   const [menu, setMenu] = useState<"none" | "services" | "mobile">("none");
+  const [hover, setHover] = useState<string | null>(null);
   const headerRef = useRef<HTMLElement>(null);
   const scrolled = solid || scrolledState || menu === "mobile";
   const close = () => setMenu("none");
@@ -169,7 +179,7 @@ export function SiteHeader({ solid = false, logoHref }: { solid?: boolean; logoH
   const hoverClose = () => {
     window.clearTimeout(closeTimer.current);
     closeTimer.current = window.setTimeout(
-      () => setMenu((current) => (current === "services" ? "none" : current)),
+      () => setMenu((m) => (m === "services" ? "none" : m)),
       180,
     );
   };
@@ -196,56 +206,79 @@ export function SiteHeader({ solid = false, logoHref }: { solid?: boolean; logoH
     };
   }, [menu]);
 
-  const linkClass = cn(
-    "site-header-directions hidden min-h-11 items-center gap-1.5 rounded-full px-3 text-sm font-medium transition-colors min-[640px]:inline-flex",
-    scrolled
-      ? "text-forest hover:bg-forest/5"
-      : "text-white drop-shadow-[0_1px_8px_rgb(0_0_0_/_35%)] hover:bg-white/10",
-  );
+  /** Sliding highlight shared by the three links. */
+  const highlight = (id: string) =>
+    hover === id && (
+      <m.span
+        layoutId="nav-link-hover"
+        className="nav-link-hover"
+        transition={{ duration: 0.28, ease: EASE }}
+        aria-hidden
+      />
+    );
 
   return (
     <header
       ref={headerRef}
-      className={cn(
-        "site-header fixed z-50 transition-[background-color,border-color,backdrop-filter] duration-300",
-        scrolled
-          ? "site-header-scrolled border border-ink/10 bg-bone/90 shadow-sm backdrop-blur-md"
-          : "border border-transparent bg-transparent",
-      )}
+      className={cn("site-header nav-bar fixed z-50", scrolled ? "is-light" : "is-dark")}
     >
-      <div className="site-header-inner flex items-center justify-between gap-3">
+      <div className="nav-row">
         <Logo dark={!scrolled} href={logoHref ?? (solid ? "/" : "#top")} />
-        <div className="flex items-center gap-3">
+
+        <nav className="nav-links" aria-label="Principal" onMouseLeave={() => setHover(null)}>
           <button
             type="button"
-            className={cn(linkClass, "site-header-services")}
+            className={cn("nav-link", current === "servicios" && "is-current")}
             aria-expanded={menu === "services"}
             aria-controls="nav-services-panel"
             onClick={() => setMenu(menu === "services" ? "none" : "services")}
-            onMouseEnter={hoverOpen}
+            onMouseEnter={() => {
+              setHover("servicios");
+              hoverOpen();
+            }}
             onMouseLeave={hoverClose}
           >
+            {highlight("servicios")}
             Servicios
             <ChevronDown
-              className={cn("h-4 w-4 transition-transform", menu === "services" && "rotate-180")}
+              className={cn("nav-link-chevron", menu === "services" && "is-open")}
               aria-hidden
             />
           </button>
-          <a href="/blog" className={linkClass}>
+          <a
+            href="/blog"
+            className={cn("nav-link", current === "blog" && "is-current")}
+            onMouseEnter={() => setHover("blog")}
+          >
+            {highlight("blog")}
             Blog
           </a>
           <a
             href={DIRECCION.mapsUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className={linkClass}
+            className="nav-link nav-link--directions"
+            onMouseEnter={() => setHover("llegar")}
           >
+            {highlight("llegar")}
             Cómo llegar
-            <ArrowUpRight className="h-4 w-4" aria-hidden />
+            <ArrowUpRight className="nav-link-ext" aria-hidden />
           </a>
-          <WhatsAppButton origin="header" size="sm" hideIcon className="site-header-cta">
+        </nav>
+
+        <div className="nav-actions">
+          <WhatsAppButton
+            origin="header"
+            size="sm"
+            hideIcon
+            className="site-header-cta"
+            ariaLabel="Agenda mi sesión. Abre opciones para agendar."
+          >
             <>
-              <span>Agenda mi sesión</span>
+              <span>
+                <span className="nav-cta-full">Agenda mi sesión</span>
+                <span className="nav-cta-short">Agendar</span>
+              </span>
               <span className="site-header-arrow">
                 <ArrowUpRight aria-hidden />
               </span>
@@ -253,7 +286,7 @@ export function SiteHeader({ solid = false, logoHref }: { solid?: boolean; logoH
           </WhatsAppButton>
           <button
             type="button"
-            className={cn("site-header-menu", scrolled ? "is-light" : "is-dark")}
+            className="site-header-menu"
             aria-label={menu === "mobile" ? "Cerrar menú" : "Abrir menú"}
             aria-expanded={menu === "mobile"}
             aria-controls="nav-mobile-panel"

@@ -20,7 +20,11 @@ export function BlogShell({
   return (
     <LazyMotion features={loadMotionFeatures} strict>
       <AnalyticsProvider>
-        {variant === "blog" ? <SiteHeader solid /> : <SiteHeader logoHref="/" />}
+        {variant === "blog" ? (
+          <SiteHeader solid current="blog" />
+        ) : (
+          <SiteHeader logoHref="/" current="servicios" />
+        )}
         <a href="#main-content" className="skip-link">
           Saltar al contenido
         </a>

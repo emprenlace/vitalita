@@ -5785,3 +5785,189 @@
     min-height: 32px;
   }
 }
+
+/* ───────────── Navbar: one glass bar ───────────── */
+.nav-bar {
+  border: 1px solid transparent;
+  transition:
+    background-color 300ms ease,
+    border-color 300ms ease,
+    box-shadow 300ms ease;
+  -webkit-backdrop-filter: blur(20px) saturate(140%);
+  backdrop-filter: blur(20px) saturate(140%);
+}
+
+.nav-bar.is-dark {
+  border-color: rgb(255 255 255 / 14%);
+  background: rgb(6 38 42 / 34%);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 10%);
+}
+
+.nav-bar.is-light {
+  border-color: oklch(0.25 0.035 190 / 8%);
+  background: rgb(250 252 252 / 86%);
+  box-shadow: 0 10px 30px -18px rgb(7 50 52 / 35%);
+}
+
+.nav-row {
+  display: grid;
+  width: 100%;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 16px;
+}
+
+.nav-row > .vitalita-logo {
+  justify-self: start;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.nav-link {
+  position: relative;
+  isolation: isolate;
+  display: inline-flex;
+  height: 40px;
+  align-items: center;
+  gap: 6px;
+  border-radius: 999px;
+  padding: 0 14px;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: -0.005em;
+  transition: color 200ms ease;
+}
+
+.nav-bar.is-dark .nav-link {
+  color: rgb(255 255 255 / 82%);
+}
+
+.nav-bar.is-dark .nav-link:hover,
+.nav-bar.is-dark .nav-link[aria-expanded="true"] {
+  color: #fff;
+}
+
+.nav-bar.is-light .nav-link {
+  color: oklch(0.25 0.035 190 / 72%);
+}
+
+.nav-bar.is-light .nav-link:hover,
+.nav-bar.is-light .nav-link[aria-expanded="true"] {
+  color: var(--ink);
+}
+
+.nav-link-hover {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  border-radius: 999px;
+}
+
+.nav-bar.is-dark .nav-link-hover {
+  background: rgb(255 255 255 / 12%);
+}
+
+.nav-bar.is-light .nav-link-hover {
+  background: oklch(0.45 0.08 195 / 8%);
+}
+
+/* Current section: a short bar under the label. */
+.nav-link.is-current::after {
+  content: "";
+  position: absolute;
+  bottom: 5px;
+  left: 50%;
+  height: 2px;
+  width: 16px;
+  translate: -50% 0;
+  border-radius: 999px;
+  background: var(--lime);
+}
+
+.nav-bar.is-light .nav-link.is-current {
+  color: var(--ink);
+}
+
+.nav-bar.is-light .nav-link.is-current::after {
+  background: var(--forest);
+}
+
+.nav-link-chevron {
+  height: 15px;
+  width: 15px;
+  opacity: 0.7;
+  transition: transform 300ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.nav-link-chevron.is-open {
+  transform: rotate(180deg);
+}
+
+.nav-link-ext {
+  height: 14px;
+  width: 14px;
+  opacity: 0.7;
+}
+
+.nav-actions {
+  display: flex;
+  justify-self: end;
+  align-items: center;
+  gap: 8px;
+}
+
+.nav-bar.is-dark .site-header-menu {
+  background: rgb(255 255 255 / 12%);
+  color: #fff;
+}
+
+.nav-bar.is-light .site-header-menu {
+  background: oklch(0.45 0.08 195 / 8%);
+  color: var(--forest-deep);
+}
+
+/* The services panel opens centered under the bar. */
+.nav-panel--services {
+  right: auto;
+  left: 50%;
+  translate: -50% 0;
+}
+
+@media (max-width: 899px) {
+  .nav-link--directions {
+    display: none;
+  }
+}
+
+/* The logo never shrinks; narrow phones get a shorter button label. */
+.nav-row > .vitalita-logo img {
+  max-width: none;
+}
+
+.nav-cta-short {
+  display: none;
+}
+
+@media (max-width: 449px) {
+  .nav-cta-full {
+    display: none;
+  }
+
+  .nav-cta-short {
+    display: inline;
+  }
+}
+
+@media (max-width: 639px) {
+  .nav-row {
+    grid-template-columns: auto 1fr;
+  }
+
+  .nav-links {
+    display: none;
+  }
+}
