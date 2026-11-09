@@ -65,10 +65,11 @@ export function HeroSection() {
         {/* Mobile: title at the top, action and facts at the bottom, the video as a window between. */}
         <div className="hero-stage-content relative z-10">
           <div className="hero-copy">
-            <p {...enter(0)} className="hero-in eyebrow text-white/90">
-              Centro de Fisioterapia · Barranquilla
-            </p>
-            <h1 className="hero-title text-white" aria-label={copy.title}>
+            {/* The H1 is what the page is about for search; the big line below is the brand promise. */}
+            <h1 {...enter(0)} className="hero-in eyebrow text-white/90">
+              Centro de fisioterapia en Barranquilla
+            </h1>
+            <p className="hero-title text-white">
               {copy.lines.map((line, index) => (
                 <span
                   className={index === 0 ? "hero-title-line hero-title-soft" : "hero-title-line"}
@@ -82,7 +83,7 @@ export function HeroSection() {
                   </span>
                 </span>
               ))}
-            </h1>
+            </p>
             <p {...enter(0.45)} className="hero-in hero-lede">
               {copy.body}
             </p>

@@ -80,10 +80,11 @@ describe("Vitalita landing content", () => {
     );
 
     expect(
-      screen.getByRole("heading", {
-        name: "La tensión diaria también merece atención.",
-      }),
+      screen.getByRole("heading", { level: 1, name: "Centro de fisioterapia en Barranquilla" }),
     ).toBeInTheDocument();
+    expect(document.querySelector(".hero-title")).toHaveTextContent(
+      /La tensión diaria\s*también merece\s*atención\./,
+    );
     expect(screen.getByLabelText("Detalles de la sesión")).toHaveTextContent(
       "5,0en Google50 minindividual$100.000desde, por sesión",
     );
