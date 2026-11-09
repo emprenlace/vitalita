@@ -6166,3 +6166,77 @@
     transition: none;
   }
 }
+
+/* ───────────── Mobile hero: one column, one width ─────────────
+   Eyebrow, title, text, button and facts share the same edges, like a single column.
+   Title at the section-title scale, text at body size. */
+@media (max-width: 767px) {
+  .hero-copy {
+    width: 100%;
+    max-width: 26rem;
+    margin-inline: auto;
+  }
+
+  .hero-copy .eyebrow {
+    margin-bottom: 14px;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+  }
+
+  .hero-title {
+    max-width: none;
+    font-size: clamp(1.95rem, 8.6vw, 2.2rem);
+    font-weight: 400;
+    letter-spacing: -0.035em;
+    line-height: 1.06;
+  }
+
+  .hero-title-soft {
+    font-weight: 300;
+  }
+
+  .hero-lede {
+    max-width: none;
+    margin: 14px 0 0;
+    font-size: 16px;
+    line-height: 1.5;
+    letter-spacing: -0.005em;
+    text-wrap: balance;
+  }
+
+  .hero-main-action {
+    align-items: stretch;
+    margin-top: 22px;
+  }
+
+  /* Same width as the facts panel below. */
+  .hero-main-button {
+    width: 100%;
+    min-height: 52px;
+    justify-content: center;
+    position: relative;
+    padding-inline: 3.25rem;
+    font-size: 16px;
+  }
+
+  .hero-main-button > span {
+    justify-content: center;
+  }
+
+  .hero-main-arrow {
+    position: absolute;
+    top: 50%;
+    right: 7px;
+    translate: 0 -50%;
+  }
+
+  .hero-location {
+    align-self: center;
+    margin-top: 6px;
+  }
+
+  .hero-stats {
+    width: 100%;
+    margin-top: 14px;
+  }
+}
