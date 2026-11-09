@@ -3419,6 +3419,171 @@
   }
 }
 
+/* Compact pass: each ticket fits one phone screen, and both fit one desktop screen.
+   The stub is a single row (price, then the button), the stamp sits on the ticket's corner. */
+.pass-pair {
+  margin-top: 32px;
+}
+
+.pass-main {
+  padding: 24px 26px 20px;
+}
+
+.pass-service {
+  margin-top: 10px;
+  padding-right: 96px;
+  font-size: clamp(1.3rem, 1.1rem + 0.6vw, 1.6rem);
+}
+
+.pass-fields {
+  grid-template-columns: repeat(4, minmax(0, auto));
+  gap: 8px 18px;
+  margin-top: 14px;
+  padding-block: 12px;
+}
+
+.pass-fields dt {
+  font-size: 10px;
+}
+
+.pass-fields dd {
+  margin-top: 2px;
+  font-size: 14px;
+}
+
+.pass-list-title {
+  margin-top: 14px;
+  font-size: 11px;
+}
+
+.pass-list {
+  gap: 7px;
+  margin-top: 8px;
+}
+
+.pass-list li {
+  gap: 10px;
+  font-size: 14.5px;
+  line-height: 1.35;
+}
+
+.pass-check {
+  height: 20px;
+  width: 20px;
+  border-radius: 7px;
+}
+
+.pass-check svg {
+  height: 12px;
+  width: 12px;
+}
+
+.pass-stub {
+  display: grid;
+  position: static;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 4px 16px;
+  padding: 18px 26px 18px;
+}
+
+.pass-from {
+  font-size: 11px;
+}
+
+.pass-price {
+  margin-top: 2px;
+  font-size: clamp(2rem, 1.6rem + 1vw, 2.5rem);
+}
+
+.pass-price small {
+  font-size: 12px;
+}
+
+.pass-stub .pass-cta {
+  width: auto;
+  min-height: 48px;
+  margin: 0;
+  padding-inline: 22px;
+}
+
+.pass-stub-foot {
+  grid-column: 1 / -1;
+  margin-top: 6px;
+  font-size: 12.5px;
+  text-align: left;
+}
+
+/* The stamp sits on the white part, beside the title. */
+.pass-main {
+  position: relative;
+}
+
+.pass-stamp {
+  top: 58px;
+  right: 22px;
+  border-color: var(--forest);
+  color: var(--forest);
+}
+
+.pass-barcode {
+  display: none;
+}
+
+@media (max-width: 899px) {
+  .pass-pair {
+    gap: 20px;
+    margin-top: 24px;
+  }
+
+  .pass-main {
+    padding: 20px 20px 16px;
+  }
+
+  .pass-topline {
+    display: none;
+  }
+
+  .pass-service {
+    margin-top: 0;
+    padding-right: 84px;
+  }
+
+  .pass-fields {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px 12px;
+  }
+
+  .pass-list {
+    gap: 6px;
+  }
+
+  .pass-list li {
+    font-size: 13.5px;
+  }
+
+  .pass-stub {
+    padding: 14px 20px;
+  }
+
+  .pass-price {
+    font-size: 1.9rem;
+  }
+
+  .pass-stub .pass-cta {
+    padding-inline: 18px;
+  }
+
+  .pass-stamp {
+    top: 18px;
+    right: 16px;
+  }
+
+  .pass-price {
+    font-size: 1.75rem;
+  }
+}
+
 /* Testimonials: vertical "stories" carousel */
 .stories-section {
   padding-block: var(--section-space);

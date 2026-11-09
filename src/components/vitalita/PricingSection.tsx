@@ -92,6 +92,11 @@ function SessionPass({ option, index }: { option: Option; index: number }) {
             <span>Admite 1 persona</span>
           </div>
           <h3 className="pass-service">{option.titulo}</h3>
+          <span className={cn("pass-stamp", stamped && "is-on")} aria-hidden>
+            Todo
+            <br />
+            incluido
+          </span>
 
           <dl className="pass-fields">
             {FIELDS.map((field) => (
@@ -121,21 +126,14 @@ function SessionPass({ option, index }: { option: Option; index: number }) {
         <div className="pass-perforation" aria-hidden />
 
         <div className="pass-stub">
-          <p className="pass-from">Desde</p>
-          <p className="pass-price">
-            <span className="sr-only">{PRECIO_SESION.fromLabel}</span>
-            <span aria-hidden>{formatCOP(price)}</span>
-            <small aria-hidden>{PRECIO_SESION.currency}</small>
-          </p>
-          <p className="pass-stub-note">
-            Por sesión. Técnicas según valoración, sin cobros aparte.
-          </p>
-
-          <span className={cn("pass-stamp", stamped && "is-on")} aria-hidden>
-            Todo
-            <br />
-            incluido
-          </span>
+          <div className="pass-stub-price">
+            <p className="pass-from">Desde</p>
+            <p className="pass-price">
+              <span className="sr-only">{PRECIO_SESION.fromLabel}</span>
+              <span aria-hidden>{formatCOP(price)}</span>
+              <small aria-hidden>{PRECIO_SESION.currency}</small>
+            </p>
+          </div>
 
           <WhatsAppButton
             origin="pricing"
@@ -144,11 +142,13 @@ function SessionPass({ option, index }: { option: Option; index: number }) {
             zones={[option.zona]}
             ariaLabel={`Agendar ${option.titulo.toLowerCase()}. Abre opciones para agendar.`}
           >
-            Agendar esta sesión
+            Agendar
           </WhatsAppButton>
-          <p className="pass-stub-foot">Coordinas tu horario por WhatsApp.</p>
-          {FLAGS.cuposLimitados && <p className="pass-stub-foot">Cupos limitados por semana</p>}
-          <span className="pass-barcode" aria-hidden />
+
+          <p className="pass-stub-foot">
+            Por sesión. Técnicas según valoración, sin cobros aparte.
+            {FLAGS.cuposLimitados && " Cupos limitados por semana."}
+          </p>
         </div>
       </m.div>
     </div>
@@ -157,7 +157,8 @@ function SessionPass({ option, index }: { option: Option; index: number }) {
 
 export function PricingSection() {
   return (
-    <section className="pass-section" aria-labelledby="precio-title" id="precio">
+    // data-hide-sticky: each pass has its own button, so the sticky bar steps aside here.
+    <section className="pass-section" aria-labelledby="precio-title" id="precio" data-hide-sticky>
       <div className="container-x">
         <div className="pass-intro">
           <p className="section-label">Lo que incluye tu sesión</p>
