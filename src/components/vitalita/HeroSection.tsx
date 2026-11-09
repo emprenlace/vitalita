@@ -10,7 +10,7 @@ const COPY = {
   general: {
     title: "La tensión diaria también merece atención.",
     lines: ["La tensión diaria", "también merece", "atención."],
-    body: "Una sesión individual de descarga muscular enfocada en tu principal zona de tensión, para aliviar el dolor, recuperar la sensación de bienestar y favorecer el descanso de tu cuerpo desde la primera sesión.",
+    body: "Una sesión individual de descarga muscular enfocada en tu zona de tensión, para aliviar el dolor y ayudarte a descansar mejor.",
   },
   deporte: {
     title: "Tu entrenamiento merece un cuerpo bien cuidado.",
