@@ -17,15 +17,20 @@ import { TechniquesSection } from "@/components/vitalita/TechniquesSection";
 import { TimelineSection } from "@/components/vitalita/TimelineSection";
 import { TestimonialsSection } from "@/components/vitalita/TestimonialsSection";
 import {
+  BRAND_ALT_NAMES,
+  BRAND_NAME,
+  CLINIC_ID,
   DATOS_SERVICIO,
   DIRECCION,
   FAQS,
   FACEBOOK_URL,
+  FRESHA_URL,
   INSTAGRAM_URL,
   OPCIONES_SESION,
   PRECIO_SESION,
   PUBLIC_URL,
   SITE_URL,
+  WEBSITE_ID,
   WHATSAPP_NUMBER,
 } from "@/config/site";
 
@@ -44,7 +49,9 @@ const SHARE_DESC = "Centro de Fisioterapia";
 const LOCAL_BUSINESS_SCHEMA = {
   "@context": "https://schema.org",
   "@type": "MedicalClinic",
+  "@id": CLINIC_ID,
   name: "Vitalita Centro de Fisioterapia",
+  alternateName: [BRAND_NAME, ...BRAND_ALT_NAMES.slice(1)],
   medicalSpecialty: "PhysicalTherapy",
   url: SITE_URL,
   image: `${SITE_URL}/images/vitalita-fachada.webp`,
@@ -100,13 +107,25 @@ const LOCAL_BUSINESS_SCHEMA = {
     "@type": "AdministrativeArea",
     name: "Barranquilla y su área metropolitana",
   },
-  sameAs: [INSTAGRAM_URL, FACEBOOK_URL],
+  sameAs: [INSTAGRAM_URL, FACEBOOK_URL, FRESHA_URL, DIRECCION.mapsUrl],
   contactPoint: {
     "@type": "ContactPoint",
     telephone: `+${WHATSAPP_NUMBER}`,
     contactType: "reservas",
     availableLanguage: "Spanish",
   },
+};
+
+/** Site name for Google results: the official website of the "Vitalita" brand. */
+const WEBSITE_SCHEMA = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "@id": WEBSITE_ID,
+  name: BRAND_NAME,
+  alternateName: BRAND_ALT_NAMES,
+  url: `${SITE_URL}/`,
+  inLanguage: "es-CO",
+  publisher: { "@id": CLINIC_ID },
 };
 
 const FAQ_SCHEMA = {
@@ -128,7 +147,7 @@ export const Route = createFileRoute("/")({
       { property: "og:description", content: SHARE_DESC },
       { property: "og:type", content: "website" },
       { property: "og:url", content: `${PUBLIC_URL}/` },
-      { property: "og:site_name", content: "Vitalita Centro de Fisioterapia" },
+      { property: "og:site_name", content: BRAND_NAME },
       { property: "og:locale", content: "es_CO" },
       { property: "og:image", content: SOCIAL_IMAGE_URL },
       { property: "og:image:width", content: "1200" },
@@ -148,6 +167,10 @@ export const Route = createFileRoute("/")({
       { rel: "preload", as: "image", href: "/images/hero-poster.webp", fetchPriority: "high" },
     ],
     scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify(WEBSITE_SCHEMA),
+      },
       {
         type: "application/ld+json",
         children: JSON.stringify(LOCAL_BUSINESS_SCHEMA),

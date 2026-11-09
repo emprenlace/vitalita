@@ -36,6 +36,18 @@ export const DIRECCION = {
 
 export const INSTAGRAM_URL = "https://www.instagram.com/vitalitabaq/";
 export const FACEBOOK_URL = "https://www.facebook.com/vitalitabaq/";
+export const FRESHA_URL =
+  "https://www.fresha.com/a/vitalita-centro-de-fisioterapia-barranquilla-norte-centro-historico-calle-79-43b45-c1ukehdx";
+/** Brand names people search for; tells Google they all mean this clinic. */
+export const BRAND_NAME = "Vitalita";
+export const BRAND_ALT_NAMES = [
+  "Vitalita Centro de Fisioterapia",
+  "Vitalita Barranquilla",
+  "Vitalita Fisioterapia",
+];
+/** Stable ids that tie the website, the clinic and the blog together in structured data. */
+export const CLINIC_ID = "https://www.vitalita.com.co/#clinica";
+export const WEBSITE_ID = "https://www.vitalita.com.co/#website";
 
 export const OPINIONES_PUBLICAS = [
   {

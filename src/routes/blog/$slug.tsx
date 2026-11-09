@@ -7,7 +7,7 @@ import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { ArrowLeft, ArrowUpRight, BadgeCheck, Clock3 } from "lucide-react";
 import { BlogShell } from "@/components/vitalita/BlogShell";
 import { useVitalita } from "@/components/vitalita/AnalyticsProvider";
-import { PRECIO_SESION, SITE_URL } from "@/config/site";
+import { CLINIC_ID, PRECIO_SESION, SITE_URL } from "@/config/site";
 import { formatDate, getPost, imageUrl, type Post } from "@/lib/sanity";
 import { PostCardView } from "@/components/vitalita/PostCard";
 
@@ -65,6 +65,7 @@ function postSchema(post: Post, url: string) {
       },
       publisher: {
         "@type": "MedicalClinic",
+        "@id": CLINIC_ID,
         name: "Vitalita Centro de Fisioterapia",
         logo: { "@type": "ImageObject", url: `${SITE_URL}/images/vitalita-logo-full.jpg` },
       },
