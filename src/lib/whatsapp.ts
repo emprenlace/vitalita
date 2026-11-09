@@ -12,6 +12,7 @@ export type ButtonOrigin =
   | "doctor"
   | "faq"
   | "blog"
+  | "service"
   | "pricing"
   | "location"
   | "closing"
