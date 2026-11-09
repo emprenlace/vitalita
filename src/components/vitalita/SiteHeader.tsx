@@ -1,4 +1,4 @@
-import { AnimatePresence, m, useReducedMotion } from "framer-motion";
+import { AnimatePresence, m, MotionConfig, useReducedMotion } from "framer-motion";
 import {
   ArrowRight,
   ArrowUpRight,
@@ -6,8 +6,6 @@ import {
   Dumbbell,
   Footprints,
   Hand,
-  Menu,
-  X,
   type LucideIcon,
 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
@@ -71,7 +69,13 @@ function ServiceLinks({
         const Icon = SERVICE_ICONS[page.path] ?? Hand;
         const on = active === index;
         return (
-          <li key={page.path} onMouseEnter={() => onHover?.(index)}>
+          <m.li
+            key={page.path}
+            onMouseEnter={() => onHover?.(index)}
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.35, delay: 0.06 + index * 0.05, ease: EASE }}
+          >
             <a
               href={page.path}
               className={cn("nav-service", on && "is-active")}
@@ -95,10 +99,20 @@ function ServiceLinks({
               </span>
               <ArrowRight className="nav-service-arrow" aria-hidden />
             </a>
-          </li>
+          </m.li>
         );
       })}
     </ul>
+  );
+}
+
+/** Label that rolls up on hover: the copy below slides in as the original leaves. */
+function Roll({ children }: { children: string }) {
+  return (
+    <span className="nav-roll">
+      <span>{children}</span>
+      <span aria-hidden>{children}</span>
+    </span>
   );
 }
 
@@ -128,8 +142,8 @@ function ServicesPanel({ onPick }: { onPick: () => void }) {
             src={page.photo}
             alt=""
             className="nav-mega-photo"
-            initial={reduce ? false : { opacity: 0, scale: 1.06 }}
-            animate={{ opacity: 1, scale: 1 }}
+            initial={reduce ? false : { opacity: 0 }}
+            animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.45, ease: EASE }}
           />
@@ -167,6 +181,8 @@ export function SiteHeader({
   const [scrolledState, setScrolled] = useState(false);
   const [menu, setMenu] = useState<"none" | "services" | "mobile">("none");
   const [hover, setHover] = useState<string | null>(null);
+  // Hides while reading down the page, comes back as soon as the visitor scrolls up.
+  const [hidden, setHidden] = useState(false);
   const headerRef = useRef<HTMLElement>(null);
   const scrolled = solid || scrolledState || menu === "mobile";
   const close = () => setMenu("none");
@@ -185,7 +201,15 @@ export function SiteHeader({
   };
 
   useEffect(() => {
-    const on = () => setScrolled(window.scrollY > 12);
+    let lastY = window.scrollY;
+    const on = () => {
+      const y = window.scrollY;
+      setScrolled(y > 12);
+      if (Math.abs(y - lastY) > 6) {
+        setHidden(y > lastY && y > 480);
+        lastY = y;
+      }
+    };
     on();
     window.addEventListener("scroll", on, { passive: true });
     return () => window.removeEventListener("scroll", on);
@@ -218,104 +242,133 @@ export function SiteHeader({
     );
 
   return (
-    <header
-      ref={headerRef}
-      className={cn("site-header nav-bar fixed z-50", scrolled ? "is-light" : "is-dark")}
-    >
-      <div className="nav-row">
-        <Logo dark={!scrolled} href={logoHref ?? (solid ? "/" : "#top")} />
+    // reducedMotion="user": framer animations follow the visitor's "reduce motion" setting.
+    <MotionConfig reducedMotion="user">
+      <header
+        ref={headerRef}
+        className={cn(
+          "site-header nav-bar fixed z-50",
+          scrolled ? "is-light" : "is-dark",
+          scrolledState && "is-compact",
+          hidden && menu === "none" && "is-hidden",
+        )}
+      >
+        <div className="nav-row">
+          <Logo dark={!scrolled} href={logoHref ?? (solid ? "/" : "#top")} />
 
-        <nav className="nav-links" aria-label="Principal" onMouseLeave={() => setHover(null)}>
-          <button
-            type="button"
-            className={cn("nav-link", current === "servicios" && "is-current")}
-            aria-expanded={menu === "services"}
-            aria-controls="nav-services-panel"
-            onClick={() => setMenu(menu === "services" ? "none" : "services")}
-            onMouseEnter={() => {
-              setHover("servicios");
-              hoverOpen();
-            }}
-            onMouseLeave={hoverClose}
-          >
-            {highlight("servicios")}
-            Servicios
-            <ChevronDown
-              className={cn("nav-link-chevron", menu === "services" && "is-open")}
-              aria-hidden
-            />
-          </button>
-          <a
-            href="/blog"
-            className={cn("nav-link", current === "blog" && "is-current")}
-            onMouseEnter={() => setHover("blog")}
-          >
-            {highlight("blog")}
-            Blog
-          </a>
-          <a
-            href={DIRECCION.mapsUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="nav-link nav-link--directions"
-            onMouseEnter={() => setHover("llegar")}
-          >
-            {highlight("llegar")}
-            Cómo llegar
-            <ArrowUpRight className="nav-link-ext" aria-hidden />
-          </a>
-        </nav>
-
-        <div className="nav-actions">
-          <WhatsAppButton
-            origin="header"
-            size="sm"
-            hideIcon
-            className="site-header-cta"
-            ariaLabel="Agenda mi sesión. Abre opciones para agendar."
-          >
-            <>
-              <span>
-                <span className="nav-cta-full">Agenda mi sesión</span>
-                <span className="nav-cta-short">Agendar</span>
-              </span>
-              <span className="site-header-arrow">
-                <ArrowUpRight aria-hidden />
-              </span>
-            </>
-          </WhatsAppButton>
-          <button
-            type="button"
-            className="site-header-menu"
-            aria-label={menu === "mobile" ? "Cerrar menú" : "Abrir menú"}
-            aria-expanded={menu === "mobile"}
-            aria-controls="nav-mobile-panel"
-            onClick={() => setMenu(menu === "mobile" ? "none" : "mobile")}
-          >
-            {menu === "mobile" ? <X aria-hidden /> : <Menu aria-hidden />}
-          </button>
-        </div>
-      </div>
-
-      <div className="nav-services-anchor" onMouseEnter={hoverOpen} onMouseLeave={hoverClose}>
-        <AnimatePresence>{menu === "services" && <ServicesPanel onPick={close} />}</AnimatePresence>
-      </div>
-
-      {menu === "mobile" && (
-        <nav id="nav-mobile-panel" className="nav-panel nav-panel--mobile" aria-label="Menú">
-          <p className="nav-panel-label">Servicios</p>
-          <ServiceLinks onPick={close} />
-          <div className="nav-panel-links">
-            <a href="/blog" onClick={close}>
-              Blog
+          <nav className="nav-links" aria-label="Principal" onMouseLeave={() => setHover(null)}>
+            <button
+              type="button"
+              className={cn("nav-link", current === "servicios" && "is-current")}
+              aria-expanded={menu === "services"}
+              aria-controls="nav-services-panel"
+              onClick={() => setMenu(menu === "services" ? "none" : "services")}
+              onMouseEnter={() => {
+                setHover("servicios");
+                hoverOpen();
+              }}
+              onMouseLeave={hoverClose}
+            >
+              {highlight("servicios")}
+              <Roll>Servicios</Roll>
+              <ChevronDown
+                className={cn("nav-link-chevron", menu === "services" && "is-open")}
+                aria-hidden
+              />
+            </button>
+            <a
+              href="/blog"
+              className={cn("nav-link", current === "blog" && "is-current")}
+              onMouseEnter={() => setHover("blog")}
+            >
+              {highlight("blog")}
+              <Roll>Blog</Roll>
             </a>
-            <a href={DIRECCION.mapsUrl} target="_blank" rel="noopener noreferrer" onClick={close}>
-              Cómo llegar
-              <ArrowUpRight aria-hidden />
+            <a
+              href={DIRECCION.mapsUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="nav-link nav-link--directions"
+              onMouseEnter={() => setHover("llegar")}
+            >
+              {highlight("llegar")}
+              <Roll>Cómo llegar</Roll>
+              <ArrowUpRight className="nav-link-ext" aria-hidden />
             </a>
+          </nav>
+
+          <div className="nav-actions">
+            <WhatsAppButton
+              origin="header"
+              size="sm"
+              hideIcon
+              className="site-header-cta"
+              ariaLabel="Agenda mi sesión. Abre opciones para agendar."
+            >
+              <>
+                <span>
+                  <span className="nav-cta-full">Agenda mi sesión</span>
+                  <span className="nav-cta-short">Agendar</span>
+                </span>
+                <span className="site-header-arrow">
+                  <ArrowUpRight aria-hidden />
+                </span>
+              </>
+            </WhatsAppButton>
+            <button
+              type="button"
+              className="site-header-menu"
+              aria-label={menu === "mobile" ? "Cerrar menú" : "Abrir menú"}
+              aria-expanded={menu === "mobile"}
+              aria-controls="nav-mobile-panel"
+              onClick={() => setMenu(menu === "mobile" ? "none" : "mobile")}
+            >
+              <span className="nav-burger" aria-hidden>
+                <span />
+                <span />
+                <span />
+              </span>
+            </button>
           </div>
-        </nav>
-      )}
-    </header>
+        </div>
+
+        <div className="nav-services-anchor" onMouseEnter={hoverOpen} onMouseLeave={hoverClose}>
+          <AnimatePresence>
+            {menu === "services" && <ServicesPanel onPick={close} />}
+          </AnimatePresence>
+        </div>
+
+        <AnimatePresence>
+          {menu === "mobile" && (
+            <m.nav
+              id="nav-mobile-panel"
+              className="nav-panel nav-panel--mobile"
+              aria-label="Menú"
+              initial={{ opacity: 0, y: -10, scale: 0.97 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: -8, scale: 0.98 }}
+              transition={{ duration: 0.28, ease: EASE }}
+            >
+              <p className="nav-panel-label">Servicios</p>
+              <ServiceLinks onPick={close} />
+              <div className="nav-panel-links">
+                <a href="/blog" onClick={close}>
+                  Blog
+                </a>
+                <a
+                  href={DIRECCION.mapsUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={close}
+                >
+                  Cómo llegar
+                  <ArrowUpRight aria-hidden />
+                </a>
+              </div>
+            </m.nav>
+          )}
+        </AnimatePresence>
+      </header>
+    </MotionConfig>
   );
 }
