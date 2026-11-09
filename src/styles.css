@@ -5298,3 +5298,24 @@
     font-size: 12px;
   }
 }
+
+.svc-related {
+  margin-top: 48px;
+  border-top: 1px solid oklch(0.25 0.035 190 / 10%);
+  padding-top: 24px;
+}
+
+.svc-related-title {
+  color: var(--muted-foreground);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.svc-related > div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 28px;
+  margin-top: 8px;
+}

@@ -10,7 +10,9 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as FisioterapiaDeportivaBarranquillaRouteImport } from './routes/fisioterapia-deportiva-barranquilla'
 import { Route as MasajesTerapeuticosBarranquillaRouteImport } from './routes/masajes-terapeuticos-barranquilla'
+import { Route as PresoterapiaBarranquillaRouteImport } from './routes/presoterapia-barranquilla'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as BlogIndexRouteImport } from './routes/blog/index'
 import { Route as BlogSlugRouteImport } from './routes/blog/$slug'
@@ -20,10 +22,22 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const FisioterapiaDeportivaBarranquillaRoute =
+  FisioterapiaDeportivaBarranquillaRouteImport.update({
+    id: '/fisioterapia-deportiva-barranquilla',
+    path: '/fisioterapia-deportiva-barranquilla',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const MasajesTerapeuticosBarranquillaRoute =
   MasajesTerapeuticosBarranquillaRouteImport.update({
     id: '/masajes-terapeuticos-barranquilla',
     path: '/masajes-terapeuticos-barranquilla',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const PresoterapiaBarranquillaRoute =
+  PresoterapiaBarranquillaRouteImport.update({
+    id: '/presoterapia-barranquilla',
+    path: '/presoterapia-barranquilla',
     getParentRoute: () => rootRouteImport,
   } as any)
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
@@ -44,14 +58,18 @@ const BlogSlugRoute = BlogSlugRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/fisioterapia-deportiva-barranquilla': typeof FisioterapiaDeportivaBarranquillaRoute
   '/masajes-terapeuticos-barranquilla': typeof MasajesTerapeuticosBarranquillaRoute
+  '/presoterapia-barranquilla': typeof PresoterapiaBarranquillaRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/blog/': typeof BlogIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/fisioterapia-deportiva-barranquilla': typeof FisioterapiaDeportivaBarranquillaRoute
   '/masajes-terapeuticos-barranquilla': typeof MasajesTerapeuticosBarranquillaRoute
+  '/presoterapia-barranquilla': typeof PresoterapiaBarranquillaRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/blog': typeof BlogIndexRoute
@@ -59,7 +77,9 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/fisioterapia-deportiva-barranquilla': typeof FisioterapiaDeportivaBarranquillaRoute
   '/masajes-terapeuticos-barranquilla': typeof MasajesTerapeuticosBarranquillaRoute
+  '/presoterapia-barranquilla': typeof PresoterapiaBarranquillaRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/blog/': typeof BlogIndexRoute
@@ -68,21 +88,27 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/fisioterapia-deportiva-barranquilla'
     | '/masajes-terapeuticos-barranquilla'
+    | '/presoterapia-barranquilla'
     | '/sitemap.xml'
     | '/blog/$slug'
     | '/blog/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/fisioterapia-deportiva-barranquilla'
     | '/masajes-terapeuticos-barranquilla'
+    | '/presoterapia-barranquilla'
     | '/sitemap.xml'
     | '/blog/$slug'
     | '/blog'
   id:
     | '__root__'
     | '/'
+    | '/fisioterapia-deportiva-barranquilla'
     | '/masajes-terapeuticos-barranquilla'
+    | '/presoterapia-barranquilla'
     | '/sitemap.xml'
     | '/blog/$slug'
     | '/blog/'
@@ -90,7 +116,9 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  FisioterapiaDeportivaBarranquillaRoute: typeof FisioterapiaDeportivaBarranquillaRoute
   MasajesTerapeuticosBarranquillaRoute: typeof MasajesTerapeuticosBarranquillaRoute
+  PresoterapiaBarranquillaRoute: typeof PresoterapiaBarranquillaRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   BlogSlugRoute: typeof BlogSlugRoute
   BlogIndexRoute: typeof BlogIndexRoute
@@ -105,11 +133,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/fisioterapia-deportiva-barranquilla': {
+      id: '/fisioterapia-deportiva-barranquilla'
+      path: '/fisioterapia-deportiva-barranquilla'
+      fullPath: '/fisioterapia-deportiva-barranquilla'
+      preLoaderRoute: typeof FisioterapiaDeportivaBarranquillaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/masajes-terapeuticos-barranquilla': {
       id: '/masajes-terapeuticos-barranquilla'
       path: '/masajes-terapeuticos-barranquilla'
       fullPath: '/masajes-terapeuticos-barranquilla'
       preLoaderRoute: typeof MasajesTerapeuticosBarranquillaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/presoterapia-barranquilla': {
+      id: '/presoterapia-barranquilla'
+      path: '/presoterapia-barranquilla'
+      fullPath: '/presoterapia-barranquilla'
+      preLoaderRoute: typeof PresoterapiaBarranquillaRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/sitemap.xml': {
@@ -138,7 +180,10 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  FisioterapiaDeportivaBarranquillaRoute:
+    FisioterapiaDeportivaBarranquillaRoute,
   MasajesTerapeuticosBarranquillaRoute: MasajesTerapeuticosBarranquillaRoute,
+  PresoterapiaBarranquillaRoute: PresoterapiaBarranquillaRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   BlogSlugRoute: BlogSlugRoute,
   BlogIndexRoute: BlogIndexRoute,
