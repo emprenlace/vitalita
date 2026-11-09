@@ -181,8 +181,6 @@ export function SiteHeader({
   const [scrolledState, setScrolled] = useState(false);
   const [menu, setMenu] = useState<"none" | "services" | "mobile">("none");
   const [hover, setHover] = useState<string | null>(null);
-  // Hides while reading down the page, comes back as soon as the visitor scrolls up.
-  const [hidden, setHidden] = useState(false);
   const headerRef = useRef<HTMLElement>(null);
   const scrolled = solid || scrolledState || menu === "mobile";
   const close = () => setMenu("none");
@@ -201,15 +199,7 @@ export function SiteHeader({
   };
 
   useEffect(() => {
-    let lastY = window.scrollY;
-    const on = () => {
-      const y = window.scrollY;
-      setScrolled(y > 12);
-      if (Math.abs(y - lastY) > 6) {
-        setHidden(y > lastY && y > 480);
-        lastY = y;
-      }
-    };
+    const on = () => setScrolled(window.scrollY > 12);
     on();
     window.addEventListener("scroll", on, { passive: true });
     return () => window.removeEventListener("scroll", on);
@@ -250,7 +240,6 @@ export function SiteHeader({
           "site-header nav-bar fixed z-50",
           scrolled ? "is-light" : "is-dark",
           scrolledState && "is-compact",
-          hidden && menu === "none" && "is-hidden",
         )}
       >
         <div className="nav-row">
