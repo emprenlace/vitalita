@@ -6240,3 +6240,64 @@
     margin-top: 14px;
   }
 }
+
+/* Mobile navbar: same edges as the hero column (36px in), compact height. */
+@media (max-width: 639px) {
+  .site-header.nav-bar {
+    top: 24px;
+    width: calc(100% - 72px);
+    padding: 4px 4px 4px 14px;
+  }
+
+  .nav-bar.is-compact {
+    top: 14px;
+  }
+
+  .site-header.nav-bar .vitalita-logo {
+    min-height: 40px;
+  }
+
+  .site-header.nav-bar .vitalita-logo img {
+    height: 19px;
+  }
+
+  .site-header.nav-bar .site-header-cta {
+    height: 40px;
+    min-height: 40px;
+    gap: 8px;
+    padding: 0 4px 0 14px;
+    font-size: 14px;
+  }
+
+  .site-header.nav-bar .site-header-arrow {
+    height: 30px;
+    width: 30px;
+  }
+
+  .site-header.nav-bar .site-header-arrow svg {
+    height: 14px;
+    width: 14px;
+  }
+
+  .site-header.nav-bar .site-header-menu {
+    height: 40px;
+    width: 40px;
+  }
+
+  .nav-actions {
+    gap: 6px;
+  }
+}
+
+/* Mobile cards (hero and footer) share one rhythm: 12px outside, content at 32px. */
+@media (max-width: 767px) {
+  .hero-surface {
+    padding: 12px;
+  }
+}
+
+@media (max-width: 639px) {
+  .site-header.nav-bar {
+    width: calc(100% - 64px);
+  }
+}
