@@ -7,7 +7,7 @@ import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { ArrowLeft, ArrowUpRight, BadgeCheck, Clock3 } from "lucide-react";
 import { BlogShell } from "@/components/vitalita/BlogShell";
 import { useVitalita } from "@/components/vitalita/AnalyticsProvider";
-import { CLINIC_ID, PRECIO_SESION, SITE_URL } from "@/config/site";
+import { CLINIC_ID, PRECIO_SESION, SERVICE_PAGES, SITE_URL } from "@/config/site";
 import { formatDate, getPost, imageUrl, type Post } from "@/lib/sanity";
 import { PostCardView } from "@/components/vitalita/PostCard";
 
@@ -161,13 +161,21 @@ function BookingBlock({ title }: { title: string }) {
     <aside className="post-cta">
       <p className="post-cta-title">{title}</p>
       <p>
-        Sesión de descarga muscular de 50 minutos con fisioterapeuta en Barranquilla,{" "}
-        {PRECIO_SESION.fromLabel.toLowerCase()}.
+        Sesión de descarga muscular de 50 minutos con fisioterapeuta en Barranquilla, desde{" "}
+        {PRECIO_SESION.label}.
       </p>
       <button type="button" className="post-cta-button" onClick={() => openBooking("blog")}>
         Agendar mi sesión
         <ArrowUpRight aria-hidden />
       </button>
+      <nav className="post-cta-services" aria-label="Servicios">
+        {SERVICE_PAGES.map((page) => (
+          <a key={page.path} href={page.path}>
+            {page.name}
+            <ArrowUpRight aria-hidden />
+          </a>
+        ))}
+      </nav>
     </aside>
   );
 }

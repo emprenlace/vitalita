@@ -6,16 +6,25 @@ import { SiteHeader } from "./SiteHeader";
 
 const loadMotionFeatures = () => import("@/lib/motion-features").then((mod) => mod.default);
 
-/** Shared frame for blog pages: light header, footer with booking CTA, sticky mobile CTA. */
-export function BlogShell({ children }: { children: ReactNode }) {
+/**
+ * Shared frame for inner pages: header, footer with booking CTA, sticky mobile CTA.
+ * `blog` uses the light header over a light page; `service` starts on a dark hero like the home.
+ */
+export function BlogShell({
+  children,
+  variant = "blog",
+}: {
+  children: ReactNode;
+  variant?: "blog" | "service";
+}) {
   return (
     <LazyMotion features={loadMotionFeatures} strict>
       <AnalyticsProvider>
-        <SiteHeader solid />
+        {variant === "blog" ? <SiteHeader solid /> : <SiteHeader logoHref="/" />}
         <a href="#main-content" className="skip-link">
           Saltar al contenido
         </a>
-        <main id="main-content" className="blog-main">
+        <main id="main-content" className={variant === "blog" ? "blog-main" : undefined}>
           {children}
         </main>
         <SiteFooter />

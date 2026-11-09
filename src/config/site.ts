@@ -10,9 +10,24 @@ export const WHATSAPP_NUMBER = "573012376079";
 export const SITE_URL = "https://www.vitalita.com.co";
 /** Service landing pages (also listed in the sitemap). */
 export const SERVICE_PAGES = [
-  { path: "/masajes-terapeuticos-barranquilla", name: "Masajes terapéuticos" },
-  { path: "/presoterapia-barranquilla", name: "Presoterapia" },
-  { path: "/fisioterapia-deportiva-barranquilla", name: "Fisioterapia deportiva" },
+  {
+    path: "/masajes-terapeuticos-barranquilla",
+    name: "Masajes terapéuticos",
+    desc: "Descontracturante y descarga muscular",
+    photo: "/images/tecnica-masoterapia-sm.webp",
+  },
+  {
+    path: "/presoterapia-barranquilla",
+    name: "Presoterapia",
+    desc: "Para piernas y pies",
+    photo: "/images/vitalita-fachada-local-sm.webp",
+  },
+  {
+    path: "/fisioterapia-deportiva-barranquilla",
+    name: "Fisioterapia deportiva",
+    desc: "Recuperación para quienes entrenan",
+    photo: "/images/pattern-band-estiramiento-sm.webp",
+  },
 ];
 /** Where link previews (WhatsApp, Facebook) fetch the share image from. */
 export const PUBLIC_URL = SITE_URL;

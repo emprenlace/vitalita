@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { Briefcase, Dumbbell, Footprints, Laptop } from "lucide-react";
 import {
   ServiceLanding,
   serviceHead,
@@ -11,41 +12,30 @@ const PAGE: ServicePage = {
   metaTitle: "Masajes terapéuticos en Barranquilla | Vitalita",
   metaDescription: `Masaje descontracturante y descarga muscular con fisioterapeuta en Barranquilla. Sesión individual de ${DATOS_SERVICIO.duracion}, desde ${PRECIO_SESION.label}. Agenda por WhatsApp.`,
   label: "Masajes terapéuticos",
-  h1: "Masajes terapéuticos en Barranquilla",
+  h1Lines: ["Masajes terapéuticos", "en Barranquilla."],
   lede: (
     <>
       Masaje descontracturante y descarga muscular con fisioterapeuta, en una sesión individual de{" "}
-      {DATOS_SERVICIO.duracion}. En el Norte Centro Histórico, desde {PRECIO_SESION.label}.
+      {DATOS_SERVICIO.duracion}.
     </>
   ),
-  photo: {
-    src: "/images/tecnica-masoterapia.webp",
-    alt: "Masaje terapéutico manual en la espalda durante una sesión de masoterapia",
-    width: 640,
-    height: 854,
-  },
+  photo: { src: "/images/tecnica-masoterapia.webp", position: "center 40%" },
   intro: {
     label: "Un masaje con criterio clínico",
-    title: "Un masaje hecho por un fisioterapeuta",
+    title: ["Un masaje hecho", "por un fisioterapeuta."],
     body: (
       <>
-        <p>
-          Un masaje terapéutico no es un masaje de spa. Antes de empezar, el fisioterapeuta revisa
-          cómo te mueves y dónde está la tensión, y con eso decide qué técnicas usar y con qué
-          intensidad. Al final vuelve a evaluar tu movilidad y te da recomendaciones para continuar
-          en casa.
+        <p className="pattern-lede svc-lede">
+          Antes de empezar, el fisioterapeuta revisa cómo te mueves y dónde está la tensión, y con
+          eso decide qué técnicas usar y con qué intensidad. Al final vuelve a evaluar tu movilidad
+          y te da recomendaciones para continuar en casa.
         </p>
-        <p>
-          Cada sesión se enfoca en una zona: <strong>cuello, hombros y espalda</strong>, con
-          tracción cervical manual, o <strong>piernas y pies</strong>, con presoterapia. Las
-          técnicas que se indiquen en la valoración están incluidas, sin cobros aparte.
-        </p>
-        <p className="svc-more">
-          ¿Dudas entre una descarga y un masaje descontracturante?{" "}
-          <a href="/blog/descarga-muscular-vs-masaje-descontracturante">
-            Te explicamos la diferencia
+        <p className="pattern-lede svc-lede">
+          Cada sesión se enfoca en una zona: <strong>cuello, hombros y espalda</strong>, o{" "}
+          <strong>piernas y pies</strong>. Las técnicas de la valoración están incluidas.{" "}
+          <a href="/blog/descarga-muscular-vs-masaje-descontracturante" className="svc-inline-link">
+            Descarga vs. masaje descontracturante
           </a>
-          .
         </p>
       </>
     ),
@@ -54,30 +44,59 @@ const PAGE: ServicePage = {
     title: "Cuándo te puede servir",
     items: [
       {
+        icon: Laptop,
         title: "Cuello y hombros cargados",
-        body: "Por horas frente al computador o el celular, cuando la tensión sube hasta la nuca.",
+        body: "Horas frente al computador o el celular.",
       },
       {
+        icon: Briefcase,
         title: "Espalda tensa al final del día",
-        body: "Jornadas largas sentado o de pie que se acumulan en la espalda alta y la zona lumbar.",
+        body: "Jornadas largas sentado o de pie.",
       },
       {
+        icon: Footprints,
         title: "Piernas pesadas",
-        body: "Si pasas mucho tiempo de pie, con descarga muscular y presoterapia en piernas y pies.",
+        body: "Descarga muscular y presoterapia en piernas y pies.",
       },
       {
+        icon: Dumbbell,
         title: "Después de entrenar",
-        body: "Para acompañar la recuperación muscular cuando entrenas con frecuencia.",
+        body: "Para acompañar tu recuperación muscular.",
+      },
+    ],
+  },
+  feature: {
+    kind: "compare",
+    label: "No es un masaje de spa",
+    title: ["Relajante o terapéutico:", "la diferencia."],
+    columns: ["Masaje relajante", "Masaje terapéutico en Vitalita"],
+    rows: [
+      {
+        label: "Cómo empieza",
+        a: "Directamente con el masaje",
+        b: "Con una evaluación de cómo te mueves",
+      },
+      {
+        label: "En qué se enfoca",
+        a: "Bienestar general y relajación",
+        b: "La zona donde sientes la tensión",
+      },
+      {
+        label: "Técnicas",
+        a: "Masaje manual",
+        b: "Masoterapia, liberación miofascial, ventosas o masaje vibropercutor",
+      },
+      { label: "Quién lo hace", a: "Spa o centro de estética", b: "Un fisioterapeuta" },
+      {
+        label: "Al terminar",
+        a: "Sensación de relajación",
+        b: "Nueva evaluación y recomendaciones para casa",
       },
     ],
   },
   faq: {
-    title: "Sobre los masajes terapéuticos",
+    title: ["Sobre los masajes", "terapéuticos."],
     items: [
-      {
-        q: "¿Qué diferencia hay entre un masaje terapéutico y uno relajante?",
-        a: "El masaje relajante busca bienestar general. El terapéutico lo realiza un fisioterapeuta: empieza con una evaluación funcional, se enfoca en la zona donde sientes la tensión y usa técnicas como masoterapia, liberación miofascial, ventosas o masaje vibropercutor según lo que encuentre.",
-      },
       {
         q: "¿Es lo mismo que un masaje descontracturante?",
         a: "En Vitalita el trabajo descontracturante hace parte de la sesión de descarga muscular: el fisioterapeuta trabaja las contracturas de la zona que elijas, con la presión adecuada para ti.",

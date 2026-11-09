@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { Activity, Bike, CalendarDays, Dumbbell, Footprints, Trophy } from "lucide-react";
 import {
   ServiceLanding,
   serviceHead,
@@ -6,71 +7,96 @@ import {
 } from "@/components/vitalita/ServiceLanding";
 import { DATOS_SERVICIO, DIRECCION, HORARIO, PRECIO_SESION } from "@/config/site";
 
+const LEGS = { session: "Sesión en piernas y pies", zona: "piernas y pies" };
+const UPPER = { session: "Sesión en cuello, hombros y espalda", zona: "cuello, hombros y espalda" };
+
 const PAGE: ServicePage = {
   path: "/fisioterapia-deportiva-barranquilla",
   metaTitle: "Fisioterapia deportiva en Barranquilla | Vitalita",
   metaDescription: `Recuperación muscular para deportistas con fisioterapeuta en Barranquilla: descarga muscular, liberación miofascial y masaje vibropercutor. ${DATOS_SERVICIO.duracion}, desde ${PRECIO_SESION.label}.`,
   label: "Fisioterapia deportiva",
-  h1: "Fisioterapia deportiva en Barranquilla",
+  h1Lines: ["Fisioterapia deportiva", "en Barranquilla."],
   lede: (
     <>
-      Recuperación muscular para deportistas, con fisioterapeuta, en una sesión individual de{" "}
-      {DATOS_SERVICIO.duracion}. En el Norte Centro Histórico, desde {PRECIO_SESION.label}.
+      Recuperación muscular para quienes entrenan, con fisioterapeuta, en una sesión individual de{" "}
+      {DATOS_SERVICIO.duracion}.
     </>
   ),
-  photo: {
-    src: "/images/pattern-band-estiramiento.webp",
-    alt: "Paciente realizando un estiramiento de cadera en el área de ejercicio de Vitalita",
-    width: 1000,
-    height: 1250,
-  },
+  photo: { src: "/images/pattern-band-estiramiento.webp", position: "center 45%" },
   intro: {
     label: "Para quienes entrenan",
-    title: "Una sesión pensada para tu recuperación",
+    title: ["Una sesión pensada", "para tu recuperación."],
     body: (
       <>
-        <p>
-          Cuando entrenas seguido, la carga se acumula: piernas pesadas después de correr, espalda y
-          hombros tensos después del gimnasio. En la sesión, el fisioterapeuta revisa cómo te
-          mueves, trabaja la zona que más se carga con tu deporte y vuelve a evaluar tu movilidad al
-          final.
+        <p className="pattern-lede svc-lede">
+          Cuando entrenas seguido, la carga se acumula. El fisioterapeuta revisa cómo te mueves,
+          trabaja la zona que más se carga con tu deporte y vuelve a evaluar tu movilidad al final.
         </p>
-        <p>
+        <p className="pattern-lede svc-lede">
           Usamos{" "}
           <strong>masoterapia, liberación miofascial, ventosas y masaje vibropercutor</strong> según
-          lo que encuentre en la valoración. Cada sesión se enfoca en una zona: cuello, hombros y
-          espalda, o piernas y pies.
-        </p>
-        <p className="svc-more">
-          Si tienes una lesión o un dolor que no mejora, cuéntanos por WhatsApp antes de agendar: el
-          fisioterapeuta te orienta sobre si esta sesión es adecuada para ti.
+          la valoración. Si tienes una lesión o un dolor que no mejora, cuéntanos por WhatsApp antes
+          de agendar.
         </p>
       </>
     ),
   },
   cases: {
-    title: "Para qué deportistas",
+    title: "Cuándo te puede servir",
     items: [
       {
-        title: "Running",
-        body: "Gemelos, isquiotibiales y pies cargados después de rodajes largos o competencias.",
+        icon: Activity,
+        title: "Carga acumulada",
+        body: "Cuando sientes el cuerpo pesado por entrenar seguido.",
       },
       {
-        title: "Gimnasio y CrossFit",
-        body: "Espalda, hombros y piernas tensos por el entrenamiento de fuerza.",
+        icon: CalendarDays,
+        title: "Semanas de mucho volumen",
+        body: "Preparación de una carrera, torneo o competencia.",
       },
       {
-        title: "Fútbol y deportes de equipo",
-        body: "Piernas cargadas por partidos y entrenamientos seguidos.",
+        icon: Trophy,
+        title: "Después de competir",
+        body: "Para acompañar la recuperación tras el esfuerzo.",
       },
       {
-        title: "Ciclismo",
-        body: "Cuádriceps, zona lumbar y cuello tensos después de salidas largas.",
+        icon: Dumbbell,
+        title: "Fuerza y gimnasio",
+        body: "Espalda, hombros y piernas tensos por el entrenamiento.",
       },
     ],
   },
+  feature: {
+    kind: "sports",
+    label: "Según tu deporte",
+    title: ["Elige tu deporte,", "te decimos qué trabajar."],
+    sports: [
+      {
+        id: "running",
+        name: "Running",
+        icon: Footprints,
+        zones: "Gemelos, isquiotibiales y pies",
+        ...LEGS,
+      },
+      {
+        id: "gym",
+        name: "Gimnasio y CrossFit",
+        icon: Dumbbell,
+        zones: "Espalda, hombros y cuello",
+        ...UPPER,
+      },
+      {
+        id: "futbol",
+        name: "Fútbol",
+        icon: Trophy,
+        zones: "Cuádriceps, isquiotibiales y gemelos",
+        ...LEGS,
+      },
+      { id: "ciclismo", name: "Ciclismo", icon: Bike, zones: "Cuádriceps y gemelos", ...LEGS },
+    ],
+  },
   faq: {
-    title: "Sobre la fisioterapia deportiva",
+    title: ["Sobre la fisioterapia", "deportiva."],
     items: [
       {
         q: "¿Qué incluye la sesión para deportistas?",

@@ -11,6 +11,7 @@ import {
   MEDIA,
   OPINIONES_PUBLICAS,
   PRECIO_SESION,
+  SERVICE_PAGES,
   TAMARA_NOTA,
 } from "@/config/site";
 import { track } from "@/lib/analytics";
@@ -49,8 +50,15 @@ function GoogleMark() {
   );
 }
 
-export function FaqSection() {
-  const faqs = FAQS.filter((f) => f.confirmed && f.a);
+/** Home FAQs by default; service pages pass their own questions and title. */
+export function FaqSection({
+  items,
+  title = ["Resolvamos", "tus dudas."],
+}: {
+  items?: { q: string; a: string }[];
+  title?: [string, string];
+} = {}) {
+  const faqs = items ?? FAQS.filter((f) => f.confirmed && f.a);
   const { openBooking } = useVitalita();
   const reduceMotion = useReducedMotion();
   const [open, setOpen] = useState(0);
@@ -61,7 +69,7 @@ export function FaqSection() {
         <div className="faq-aside">
           <SectionTag label="Antes de agendar" />
           <h2 id="faq-title" className="faq-title">
-            <span className="pattern-title-soft">Resolvamos</span> <span>tus dudas.</span>
+            <span className="pattern-title-soft">{title[0]}</span> <span>{title[1]}</span>
           </h2>
           <p className="faq-help">
             ¿Tienes otra pregunta? Escríbenos y te respondemos antes de que agendes.
@@ -395,6 +403,15 @@ export function SiteFooter() {
               </p>
             </div>
           </div>
+
+          <nav className="footer-services" aria-label="Servicios">
+            <span>Servicios</span>
+            {SERVICE_PAGES.map((page) => (
+              <a key={page.path} href={page.path}>
+                {page.name}
+              </a>
+            ))}
+          </nav>
 
           <div className="footer-bottom">
             <p>© {new Date().getFullYear()} Vitalita · Fisioterapia en Barranquilla</p>
