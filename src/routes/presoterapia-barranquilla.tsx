@@ -19,8 +19,7 @@ const PAGE: ServicePage = {
       {DATOS_SERVICIO.duracion} con fisioterapeuta.
     </>
   ),
-  // Placeholder until there is a real photo of the pressotherapy equipment in use.
-  photo: { src: "/images/vitalita-fachada-local.webp", position: "center 35%" },
+  photo: { src: "/images/tecnica-presoterapia.webp", position: "60% center" },
   intro: {
     label: "Para piernas que se sienten pesadas",
     title: ["Qué es", "la presoterapia."],

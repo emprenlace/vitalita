@@ -13,6 +13,7 @@ const VARIANTS: Record<string, [small: number, large: number]> = {
   "/images/nestor-sesion-espalda.webp": [700, 1200],
   "/images/tecnica-masoterapia.webp": [400, 640],
   "/images/tecnica-vibropercutor.webp": [400, 640],
+  "/images/tecnica-presoterapia.webp": [700, 1250],
 };
 
 /** `srcSet`/`sizes` props so phones download the small variant. */

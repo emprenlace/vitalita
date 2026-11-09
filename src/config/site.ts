@@ -20,7 +20,7 @@ export const SERVICE_PAGES = [
     path: "/presoterapia-barranquilla",
     name: "Presoterapia",
     desc: "Para piernas y pies",
-    photo: "/images/vitalita-fachada-local-sm.webp",
+    photo: "/images/tecnica-presoterapia-sm.webp",
   },
   {
     path: "/fisioterapia-deportiva-barranquilla",
