@@ -5229,21 +5229,17 @@
 }
 
 @media (min-width: 768px) {
-  /* Photo on the right; the copy sits on the solid teal of the stage. */
+  /* Photo in its own crisp, rounded frame on the right: no fade, no stretching. */
+  /* Exactly the second grid column: right edge on the content line, like the text on the left. */
   .svc-backdrop {
-    left: 38%;
+    --edge: calc((100% - min(100%, var(--container-width))) / 2 + var(--container-gutter));
+    inset: 112px var(--edge) 56px calc(50% + 1rem);
+    overflow: hidden;
+    border-radius: 26px;
   }
 
   .svc-backdrop-shade {
-    background:
-      linear-gradient(0deg, rgb(3 28 32 / 35%) 0%, transparent 35%),
-      linear-gradient(
-        90deg,
-        var(--forest-deep) 0%,
-        var(--forest-deep) 38%,
-        rgb(34 74 78 / 70%) 50%,
-        transparent 72%
-      );
+    background: none;
   }
 }
 
@@ -6300,4 +6296,19 @@
   .site-header.nav-bar {
     width: calc(100% - 64px);
   }
+}
+
+/* Tablet: the copy keeps to its half so it never runs over the framed photo. */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .svc-hero-surface .hero-copy {
+    max-width: calc(50% - 1.5rem);
+  }
+
+  .svc-hero-surface .hero-stats > div {
+    padding-inline: 0.875rem;
+  }
+}
+
+.hero-stats dt {
+  white-space: nowrap;
 }
