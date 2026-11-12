@@ -5218,31 +5218,7 @@
   }
 }
 
-/* ───────────── Service pages: same language as the home ───────────── */
-.svc-backdrop-shade {
-  background: linear-gradient(
-    180deg,
-    rgb(3 28 32 / 40%) 0%,
-    rgb(3 28 32 / 30%) 40%,
-    rgb(3 28 32 / 80%) 100%
-  );
-}
-
-@media (min-width: 768px) {
-  /* Photo in its own crisp, rounded frame on the right: no fade, no stretching. */
-  /* Exactly the second grid column: right edge on the content line, like the text on the left. */
-  .svc-backdrop {
-    --edge: calc((100% - min(100%, var(--container-width))) / 2 + var(--container-gutter));
-    inset: 112px var(--edge) 56px calc(50% + 1rem);
-    overflow: hidden;
-    border-radius: 26px;
-  }
-
-  .svc-backdrop-shade {
-    background: none;
-  }
-}
-
+/* ───────────── Service pages ───────────── */
 .svc-section {
   padding-block: var(--section-space);
 }
@@ -6298,17 +6274,133 @@
   }
 }
 
-/* Tablet: the copy keeps to its half so it never runs over the framed photo. */
-@media (min-width: 768px) and (max-width: 1023px) {
-  .svc-hero-surface .hero-copy {
-    max-width: calc(50% - 1.5rem);
-  }
+.hero-stats dt {
+  white-space: nowrap;
+}
 
-  .svc-hero-surface .hero-stats > div {
+/* Service hero: light canvas like the blog. Ink text, the photo is the only colour. */
+.svc-hero {
+  padding: 112px 0 clamp(40px, 5vw, 64px);
+}
+
+.svc-hero-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  align-items: center;
+  gap: clamp(32px, 5vw, 72px);
+}
+
+.svc-hero .svc-hero-copy {
+  max-width: 34rem;
+  text-shadow: none;
+}
+
+.svc-hero .svc-hero-eyebrow {
+  color: var(--forest);
+  font-weight: 600;
+}
+
+.svc-hero .svc-hero-title {
+  color: var(--ink);
+}
+
+.svc-hero .hero-lede {
+  color: var(--muted-foreground);
+}
+
+.svc-hero .hero-main-button {
+  border-color: transparent;
+  background: var(--forest);
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+  box-shadow: 0 10px 24px -14px oklch(0.36 0.07 195 / 60%);
+}
+
+.svc-hero .hero-main-button:hover {
+  background: var(--forest-deep);
+}
+
+.svc-hero .hero-location {
+  color: var(--ink);
+  text-decoration-color: oklch(0.25 0.035 190 / 30%);
+}
+
+.svc-hero .hero-location:hover {
+  text-decoration-color: var(--ink);
+}
+
+.svc-hero .hero-stats {
+  border-color: var(--border);
+  background: var(--card);
+  box-shadow: 0 12px 32px -24px oklch(0.25 0.035 190 / 35%);
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+
+.svc-hero .hero-stats > div + div {
+  border-left-color: var(--border);
+}
+
+.svc-hero .hero-stats dt {
+  color: var(--ink);
+}
+
+.svc-hero .hero-stats dd {
+  color: var(--muted-foreground);
+}
+
+.svc-hero-photo {
+  position: relative;
+  height: clamp(420px, calc(100svh - 200px), 600px);
+  overflow: hidden;
+  border-radius: 28px;
+  background: var(--sand);
+  isolation: isolate;
+}
+
+.svc-hero-photo img {
+  position: absolute;
+  inset: -4% 0 auto;
+  display: block;
+  height: 108%;
+  width: 100%;
+  object-fit: cover;
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  .svc-hero .hero-stats > div {
     padding-inline: 0.875rem;
   }
 }
 
-.hero-stats dt {
-  white-space: nowrap;
+/* Mobile: one column, same edges as the navbar; text first, the photo closes the screen. */
+@media (max-width: 767px) {
+  .svc-hero {
+    padding: 96px 0 20px;
+  }
+
+  .svc-hero-grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 16px;
+  }
+
+  .svc-hero .svc-hero-copy {
+    max-width: 26rem;
+    text-align: center;
+  }
+
+  .svc-hero-photo {
+    width: 100%;
+    max-width: 26rem;
+    /* Whatever the copy leaves on screen, so the whole hero fits in one view. */
+    height: clamp(128px, calc(100svh - 524px), 240px);
+    margin-inline: auto;
+    border-radius: 22px;
+  }
+}
+
+@media (max-width: 639px) {
+  .svc-hero-grid {
+    padding-inline: 32px;
+  }
 }

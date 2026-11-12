@@ -131,102 +131,99 @@ export function serviceHead(page: ServicePage) {
 
 const enter = (delay: number) => ({ style: { "--hero-delay": `${delay}s` } as CSSProperties });
 
-/** Same stage as the home hero: rounded dark card, photo, glass facts, CSS entrance. */
+/**
+ * Light hero, same family as the blog: ink text on the page canvas and the photo as the
+ * only colour, in its own rounded card. The video hero stays exclusive to the home.
+ */
 function ServiceHero({ page }: { page: ServicePage }) {
   const reduce = useReducedMotion();
-  const stageRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({ target: stageRef, offset: ["start start", "end start"] });
-  const imageY = useTransform(scrollYProgress, [0, 1], [0, 24]);
-  const stageScale = useTransform(scrollYProgress, [0, 1], [1, 0.96]);
+  const photoRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({ target: photoRef, offset: ["start start", "end start"] });
+  const imageY = useTransform(scrollYProgress, [0, 1], ["0%", "8%"]);
 
   return (
-    <section id="top" className="hero-surface svc-hero-surface">
-      <m.div
-        ref={stageRef}
-        className="hero-stage relative isolate"
-        style={reduce ? {} : { scale: stageScale }}
-      >
-        <m.div className="hero-backdrop svc-backdrop" style={reduce ? {} : { y: imageY }}>
-          <img
-            className="hero-backdrop-video"
+    <section id="top" className="svc-hero">
+      <div className="container-x svc-hero-grid">
+        <div className="hero-copy svc-hero-copy">
+          <p {...enter(0)} className="hero-in eyebrow svc-hero-eyebrow">
+            Vitalita, centro de fisioterapia
+          </p>
+          <h1 className="hero-title svc-hero-title" aria-label={page.h1Lines.join(" ")}>
+            {page.h1Lines.map((line, index) => (
+              <span
+                className={index === 0 ? "hero-title-line hero-title-soft" : "hero-title-line"}
+                key={line}
+              >
+                <span
+                  className="hero-line-in"
+                  style={{ "--hero-delay": `${0.12 + index * 0.12}s` } as CSSProperties}
+                >
+                  {line}
+                </span>
+              </span>
+            ))}
+          </h1>
+          <p {...enter(0.45)} className="hero-in hero-lede">
+            {page.lede}
+          </p>
+          <div {...enter(0.6)} className="hero-in hero-main-action">
+            <WhatsAppButton
+              origin="service"
+              size="lg"
+              className="hero-main-button"
+              hideIcon
+              ariaLabel="Agenda tu sesión. Abre opciones para agendar."
+            >
+              <>
+                <span>Agenda tu sesión</span>
+                <span className="hero-main-arrow">
+                  <ArrowUpRight aria-hidden />
+                </span>
+              </>
+            </WhatsAppButton>
+            <a
+              href={DIRECCION.mapsUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hero-location"
+              aria-label="Cómo llegar a Vitalita en Barranquilla"
+            >
+              <MapPin aria-hidden />
+              Cómo llegar
+            </a>
+          </div>
+          <dl {...enter(0.8)} className="hero-in hero-stats" aria-label="Detalles de la sesión">
+            <div>
+              <dt>
+                {GOOGLE_RATING.score}
+                <Star aria-hidden />
+              </dt>
+              <dd>en Google</dd>
+            </div>
+            <div>
+              <dt>{DATOS_SERVICIO.minutos} min</dt>
+              <dd>individual</dd>
+            </div>
+            <div>
+              <dt className="hero-session-name">{PRECIO_SESION.label.replace(" COP", "")}</dt>
+              <dd>desde, por sesión</dd>
+            </div>
+          </dl>
+        </div>
+
+        <div ref={photoRef} {...enter(0.2)} className="hero-in svc-hero-photo">
+          <m.img
             src={page.photo.src}
             alt=""
             fetchPriority="high"
             decoding="async"
-            style={page.photo.position ? { objectPosition: page.photo.position } : undefined}
+            style={{
+              ...(reduce ? {} : { y: imageY }),
+              ...(page.photo.position ? { objectPosition: page.photo.position } : {}),
+            }}
           />
-        </m.div>
-        <div className="hero-backdrop-shade svc-backdrop-shade" aria-hidden />
-
-        <div className="hero-stage-content relative z-10">
-          <div className="hero-copy">
-            <p {...enter(0)} className="hero-in eyebrow text-white/90">
-              Vitalita, centro de fisioterapia
-            </p>
-            <h1 className="hero-title text-white" aria-label={page.h1Lines.join(" ")}>
-              {page.h1Lines.map((line, index) => (
-                <span
-                  className={index === 0 ? "hero-title-line hero-title-soft" : "hero-title-line"}
-                  key={line}
-                >
-                  <span
-                    className="hero-line-in"
-                    style={{ "--hero-delay": `${0.12 + index * 0.12}s` } as CSSProperties}
-                  >
-                    {line}
-                  </span>
-                </span>
-              ))}
-            </h1>
-            <p {...enter(0.45)} className="hero-in hero-lede">
-              {page.lede}
-            </p>
-            <div {...enter(0.6)} className="hero-in hero-main-action">
-              <WhatsAppButton
-                origin="service"
-                size="lg"
-                className="hero-main-button"
-                hideIcon
-                ariaLabel="Agenda tu sesión. Abre opciones para agendar."
-              >
-                <>
-                  <span>Agenda tu sesión</span>
-                  <span className="hero-main-arrow">
-                    <ArrowUpRight aria-hidden />
-                  </span>
-                </>
-              </WhatsAppButton>
-              <a
-                href={DIRECCION.mapsUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hero-location"
-                aria-label="Cómo llegar a Vitalita en Barranquilla"
-              >
-                <MapPin aria-hidden />
-                Cómo llegar
-              </a>
-            </div>
-            <dl {...enter(0.8)} className="hero-in hero-stats" aria-label="Detalles de la sesión">
-              <div>
-                <dt>
-                  {GOOGLE_RATING.score}
-                  <Star aria-hidden />
-                </dt>
-                <dd>en Google</dd>
-              </div>
-              <div>
-                <dt>{DATOS_SERVICIO.minutos} min</dt>
-                <dd>individual</dd>
-              </div>
-              <div>
-                <dt className="hero-session-name">{PRECIO_SESION.label.replace(" COP", "")}</dt>
-                <dd>desde, por sesión</dd>
-              </div>
-            </dl>
-          </div>
         </div>
-      </m.div>
+      </div>
     </section>
   );
 }

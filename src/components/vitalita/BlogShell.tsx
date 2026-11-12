@@ -8,7 +8,7 @@ const loadMotionFeatures = () => import("@/lib/motion-features").then((mod) => m
 
 /**
  * Shared frame for inner pages: header, footer with booking CTA, sticky mobile CTA.
- * `blog` uses the light header over a light page; `service` starts on a dark hero like the home.
+ * `blog` uses the light header over a light page; `service` too: its hero is light.
  */
 export function BlogShell({
   children,
@@ -23,7 +23,7 @@ export function BlogShell({
         {variant === "blog" ? (
           <SiteHeader solid current="blog" />
         ) : (
-          <SiteHeader logoHref="/" current="servicios" />
+          <SiteHeader solid current="servicios" />
         )}
         <a href="#main-content" className="skip-link">
           Saltar al contenido
