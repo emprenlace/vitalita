@@ -1,6 +1,7 @@
 import { AnimatePresence, m, useReducedMotion } from "framer-motion";
 import { ArrowUpRight, Check, Lock } from "lucide-react";
-import { useState } from "react";
+import { useRef, useState } from "react";
+import { useNearViewport } from "@/lib/defer";
 import { PRECIO_SESION } from "@/config/site";
 import { cn } from "@/lib/utils";
 import { joinList } from "@/lib/whatsapp";
@@ -69,8 +70,12 @@ function BodyFigure({
   selected: string[];
   onToggle: (id: string) => void;
 }) {
+  // An SVG <image> can't be lazy-loaded, so it only gets its source near the viewport:
+  // the silhouette no longer competes with the hero on first load.
+  const figureRef = useRef<SVGSVGElement>(null);
+  const near = useNearViewport(figureRef, "800px");
   return (
-    <svg className="body-figure" viewBox="0 0 200 462" aria-hidden="true">
+    <svg ref={figureRef} className="body-figure" viewBox="0 0 200 462" aria-hidden="true">
       <defs>
         {/* Lifts the black silhouette into a soft teal relief on the dark card. */}
         <filter id="body-light" colorInterpolationFilters="sRGB">
@@ -84,13 +89,15 @@ function BodyFigure({
         </filter>
       </defs>
 
-      <image
-        className="body-figure-shape"
-        href="/images/body-silhouette.webp"
-        width="200"
-        height="462"
-        filter="url(#body-light)"
-      />
+      {near && (
+        <image
+          className="body-figure-shape"
+          href="/images/body-silhouette.webp"
+          width="200"
+          height="462"
+          filter="url(#body-light)"
+        />
+      )}
 
       {ZONES.map((zone) => {
         const active = selected.includes(zone.id);
