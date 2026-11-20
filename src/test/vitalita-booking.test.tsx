@@ -120,6 +120,13 @@ describe("Arma tu sesión", () => {
       cta_location: "hero",
     });
     expect(contact.event_id).toBe(contact.lead_ref);
+    // Puente temporal: el evento viejo sale igual, con el mismo event_id, para GTM actual.
+    expect(last("vitalita_whatsapp_click")).toMatchObject({
+      event_name: "ContactLegacy",
+      event_id: contact.lead_ref,
+      lead_quality: "A",
+      value: 150000,
+    });
     const userData = contact.user_data as Loose;
     expect(userData.em).toBe(sha256("laura@correo.com"));
     expect(userData.ph).toBe(sha256("573001234567"));
@@ -154,6 +161,7 @@ describe("Arma tu sesión", () => {
     expect(decodeURIComponent(opened[0]!)).toContain("Estoy averiguando para agendar");
     expect(last("vitalita_lead")).toMatchObject({ lead_quality: "C", value: 100000 });
     expect(events()).not.toContain("vitalita_lead_calificado");
+    expect(events()).not.toContain("vitalita_whatsapp_click");
   });
 
   it("no envía nada si el contacto tiene errores", async () => {

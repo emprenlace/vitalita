@@ -27,6 +27,7 @@ export type EventName =
   | "ServiceAreaNotice"
   | "LeadSubmit"
   | "Contact"
+  | "ContactLegacy"
   | "BookingDialogClose"
   | "AgencyClick";
 
@@ -68,6 +69,12 @@ const EVENT_KEYS: Record<EventName, string> = {
   ServiceAreaNotice: "form_fuera_de_zona",
   LeadSubmit: "lead",
   Contact: "lead_calificado",
+  /**
+   * PUENTE TEMPORAL: el nombre viejo de la conversión, para que las etiquetas de GTM que
+   * se activan con `vitalita_whatsapp_click` (Meta Contact y GA4 generate_lead) sigan
+   * midiendo mientras se configuran con `vitalita_lead_calificado`. Quitar al hacerlo.
+   */
+  ContactLegacy: "whatsapp_click",
   BookingDialogClose: "form_cerrado",
   AgencyClick: "agency_click",
 };

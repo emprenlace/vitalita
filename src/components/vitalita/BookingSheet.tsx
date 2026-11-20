@@ -243,6 +243,8 @@ export function BookingSheet({
     // Solo A y B son conversión para la pauta: mismo event_id que la API de Conversiones.
     if (isConversion(d.quality)) {
       track("Contact", params, { eventId: d.ref, userData: hashUserData(contact, city) });
+      // Puente temporal hacia el activador actual de GTM (ver ContactLegacy en analytics.ts).
+      track("ContactLegacy", params, { eventId: d.ref, userData: hashUserData(contact, city) });
     }
 
     const { fbp, fbc } = metaBrowserIds(attribution);

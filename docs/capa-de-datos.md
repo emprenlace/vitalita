@@ -28,6 +28,8 @@ Todos los eventos salen de `track()` en `src/lib/analytics.ts`. Ningún componen
 
 **Qué cambia frente a la versión 1:** antes, la conversión era `vitalita_whatsapp_click` y se disparaba en el primer toque, sin datos. Ahora se llama `vitalita_lead_calificado` y se dispara solo cuando la persona termina el formulario y viene esta semana o la próxima. Hacia Meta sigue saliendo el estándar `Contact`, así que la optimización de las campañas no cambia; en GTM hay que cambiar el activador al nombre nuevo el día que se publique. Cambia el volumen: menos eventos, pero de mejor calidad.
 
+**Puente temporal (desde la publicación):** cada lead A o B también envía `vitalita_whatsapp_click`, con los mismos parámetros y el mismo `event_id`. Así las etiquetas actuales de GTM (Meta `Contact` y GA4 `generate_lead`) siguen midiendo sin cambios. Cuando GTM pase a activarse con `vitalita_lead_calificado`, hay que quitar el puente (`ContactLegacy` en `src/lib/analytics.ts`) en el mismo momento; si no, las conversiones se cuentan doble.
+
 ### Valores de `step` y `answer` (`vitalita_form_paso`)
 
 | `step`          | `answer`                                             |
