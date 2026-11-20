@@ -24,6 +24,6 @@ Todos los datos editables (precio, dirección, horarios, preguntas frecuentes, t
 
 Configura `GTM_ID` o `META_PIXEL_ID` en `src/config/site.ts`. Si se configura GTM, el Pixel debe administrarse desde GTM para evitar duplicar eventos.
 
-Los eventos de la landing se envían al `dataLayer` con el prefijo `vitalita_`. Cada evento incluye `event_name`, `event_id`, `event_source`, `event_version` y `event_time`. Usa `vitalita_whatsapp_click` como evento personalizado para medir la intención de contacto; el campo `city_status` permite separar a quienes están en Barranquilla de quienes consultan desde otra ciudad. `cta_location`, `service_name`, `value`, `currency` y los UTM permitidos dan contexto a la conversión.
+Los eventos de la landing se envían al `dataLayer` con el prefijo `vitalita_`. Cada evento incluye `event_name`, `event_id`, `event_source`, `event_version` y `event_time`. La conversión es `vitalita_lead_calificado` (lead A o B del formulario, enviado a Meta como `Contact`); el detalle de todos los eventos está en `docs/capa-de-datos.md`; el campo `city_status` permite separar a quienes están en Barranquilla de quienes consultan desde otra ciudad. `cta_location`, `service_name`, `value`, `currency` y los UTM permitidos dan contexto a la conversión.
 
 Las zonas del cuerpo elegidas en el selector y otros datos sobre la salud no se envían al `dataLayer` ni a Meta: solo viajan dentro del mensaje de WhatsApp. Los parámetros se filtran con una lista permitida en `src/lib/analytics.ts`.

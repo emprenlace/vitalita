@@ -9,6 +9,7 @@ import { DATOS_SERVICIO, DIRECCION, HORARIO, PRECIO_SESION } from "@/config/site
 
 const PAGE: ServicePage = {
   path: "/presoterapia-barranquilla",
+  session: "piernas",
   metaTitle: "Presoterapia en Barranquilla | Vitalita",
   metaDescription: `Presoterapia para piernas y pies con fisioterapeuta en Barranquilla, dentro de una sesión de descarga muscular de ${DATOS_SERVICIO.duracion}, desde ${PRECIO_SESION.label}.`,
   label: "Presoterapia",

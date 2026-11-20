@@ -9,7 +9,13 @@ import {
 } from "framer-motion";
 import { Check } from "lucide-react";
 import { useEffect, useRef, useState, type PointerEvent } from "react";
-import { DATOS_SERVICIO, FLAGS, OPCIONES_SESION, PRECIO_SESION } from "@/config/site";
+import {
+  DATOS_SERVICIO,
+  FLAGS,
+  OPCIONES_SESION,
+  PRECIO_CUERPO_COMPLETO,
+  PRECIO_SESION,
+} from "@/config/site";
 import { cn } from "@/lib/utils";
 import { WhatsAppButton } from "./WhatsAppButton";
 
@@ -166,7 +172,7 @@ export function PricingSection() {
             Tu pase para <em>el alivio</em> del dolor.
           </h2>
           <p className="pass-lede">
-            Elige la zona que quieres tratar. Cada sesión, desde {PRECIO_SESION.label}.
+            Elige la zona que quieres tratar, o las dos en una sesión de cuerpo completo.
           </p>
         </div>
 
@@ -174,6 +180,30 @@ export function PricingSection() {
           {OPCIONES_SESION.map((option, index) => (
             <SessionPass key={option.id} option={option} index={index} />
           ))}
+        </div>
+
+        {/* Las dos zonas en una sesión: el mismo pase, en horizontal. */}
+        <div className="pass-full">
+          <div className="pass-full-main">
+            <h3 className="pass-full-title">Sesión de cuerpo completo</h3>
+            <p>Cuello, hombros, espalda, piernas y pies en una misma sesión.</p>
+          </div>
+          <div className="pass-full-stub">
+            <p className="pass-price">
+              <span className="sr-only">{PRECIO_CUERPO_COMPLETO.label}</span>
+              <span aria-hidden>{formatCOP(PRECIO_CUERPO_COMPLETO.value)}</span>
+              <small aria-hidden>{PRECIO_CUERPO_COMPLETO.currency}</small>
+            </p>
+            <WhatsAppButton
+              origin="pricing"
+              size="md"
+              className="pass-cta"
+              session="completo"
+              ariaLabel="Agendar sesión de cuerpo completo. Abre opciones para agendar."
+            >
+              Agendar
+            </WhatsAppButton>
+          </div>
         </div>
       </div>
     </section>

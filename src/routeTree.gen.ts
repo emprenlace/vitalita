@@ -12,8 +12,10 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as FisioterapiaDeportivaBarranquillaRouteImport } from './routes/fisioterapia-deportiva-barranquilla'
 import { Route as MasajesTerapeuticosBarranquillaRouteImport } from './routes/masajes-terapeuticos-barranquilla'
+import { Route as PoliticaDePrivacidadRouteImport } from './routes/politica-de-privacidad'
 import { Route as PresoterapiaBarranquillaRouteImport } from './routes/presoterapia-barranquilla'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
+import { Route as ApiLeadRouteImport } from './routes/api/lead'
 import { Route as BlogIndexRouteImport } from './routes/blog/index'
 import { Route as BlogSlugRouteImport } from './routes/blog/$slug'
 
@@ -34,6 +36,11 @@ const MasajesTerapeuticosBarranquillaRoute =
     path: '/masajes-terapeuticos-barranquilla',
     getParentRoute: () => rootRouteImport,
   } as any)
+const PoliticaDePrivacidadRoute = PoliticaDePrivacidadRouteImport.update({
+  id: '/politica-de-privacidad',
+  path: '/politica-de-privacidad',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PresoterapiaBarranquillaRoute =
   PresoterapiaBarranquillaRouteImport.update({
     id: '/presoterapia-barranquilla',
@@ -43,6 +50,11 @@ const PresoterapiaBarranquillaRoute =
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   id: '/sitemap.xml',
   path: '/sitemap.xml',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiLeadRoute = ApiLeadRouteImport.update({
+  id: '/api/lead',
+  path: '/api/lead',
   getParentRoute: () => rootRouteImport,
 } as any)
 const BlogIndexRoute = BlogIndexRouteImport.update({
@@ -60,8 +72,10 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/fisioterapia-deportiva-barranquilla': typeof FisioterapiaDeportivaBarranquillaRoute
   '/masajes-terapeuticos-barranquilla': typeof MasajesTerapeuticosBarranquillaRoute
+  '/politica-de-privacidad': typeof PoliticaDePrivacidadRoute
   '/presoterapia-barranquilla': typeof PresoterapiaBarranquillaRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/api/lead': typeof ApiLeadRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/blog/': typeof BlogIndexRoute
 }
@@ -69,8 +83,10 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/fisioterapia-deportiva-barranquilla': typeof FisioterapiaDeportivaBarranquillaRoute
   '/masajes-terapeuticos-barranquilla': typeof MasajesTerapeuticosBarranquillaRoute
+  '/politica-de-privacidad': typeof PoliticaDePrivacidadRoute
   '/presoterapia-barranquilla': typeof PresoterapiaBarranquillaRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/api/lead': typeof ApiLeadRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/blog': typeof BlogIndexRoute
 }
@@ -79,8 +95,10 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/fisioterapia-deportiva-barranquilla': typeof FisioterapiaDeportivaBarranquillaRoute
   '/masajes-terapeuticos-barranquilla': typeof MasajesTerapeuticosBarranquillaRoute
+  '/politica-de-privacidad': typeof PoliticaDePrivacidadRoute
   '/presoterapia-barranquilla': typeof PresoterapiaBarranquillaRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/api/lead': typeof ApiLeadRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/blog/': typeof BlogIndexRoute
 }
@@ -90,8 +108,10 @@ export interface FileRouteTypes {
     | '/'
     | '/fisioterapia-deportiva-barranquilla'
     | '/masajes-terapeuticos-barranquilla'
+    | '/politica-de-privacidad'
     | '/presoterapia-barranquilla'
     | '/sitemap.xml'
+    | '/api/lead'
     | '/blog/$slug'
     | '/blog/'
   fileRoutesByTo: FileRoutesByTo
@@ -99,8 +119,10 @@ export interface FileRouteTypes {
     | '/'
     | '/fisioterapia-deportiva-barranquilla'
     | '/masajes-terapeuticos-barranquilla'
+    | '/politica-de-privacidad'
     | '/presoterapia-barranquilla'
     | '/sitemap.xml'
+    | '/api/lead'
     | '/blog/$slug'
     | '/blog'
   id:
@@ -108,8 +130,10 @@ export interface FileRouteTypes {
     | '/'
     | '/fisioterapia-deportiva-barranquilla'
     | '/masajes-terapeuticos-barranquilla'
+    | '/politica-de-privacidad'
     | '/presoterapia-barranquilla'
     | '/sitemap.xml'
+    | '/api/lead'
     | '/blog/$slug'
     | '/blog/'
   fileRoutesById: FileRoutesById
@@ -118,8 +142,10 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   FisioterapiaDeportivaBarranquillaRoute: typeof FisioterapiaDeportivaBarranquillaRoute
   MasajesTerapeuticosBarranquillaRoute: typeof MasajesTerapeuticosBarranquillaRoute
+  PoliticaDePrivacidadRoute: typeof PoliticaDePrivacidadRoute
   PresoterapiaBarranquillaRoute: typeof PresoterapiaBarranquillaRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
+  ApiLeadRoute: typeof ApiLeadRoute
   BlogSlugRoute: typeof BlogSlugRoute
   BlogIndexRoute: typeof BlogIndexRoute
 }
@@ -147,6 +173,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MasajesTerapeuticosBarranquillaRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/politica-de-privacidad': {
+      id: '/politica-de-privacidad'
+      path: '/politica-de-privacidad'
+      fullPath: '/politica-de-privacidad'
+      preLoaderRoute: typeof PoliticaDePrivacidadRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/presoterapia-barranquilla': {
       id: '/presoterapia-barranquilla'
       path: '/presoterapia-barranquilla'
@@ -159,6 +192,13 @@ declare module '@tanstack/react-router' {
       path: '/sitemap.xml'
       fullPath: '/sitemap.xml'
       preLoaderRoute: typeof SitemapDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/lead': {
+      id: '/api/lead'
+      path: '/api/lead'
+      fullPath: '/api/lead'
+      preLoaderRoute: typeof ApiLeadRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/blog/': {
@@ -183,8 +223,10 @@ const rootRouteChildren: RootRouteChildren = {
   FisioterapiaDeportivaBarranquillaRoute:
     FisioterapiaDeportivaBarranquillaRoute,
   MasajesTerapeuticosBarranquillaRoute: MasajesTerapeuticosBarranquillaRoute,
+  PoliticaDePrivacidadRoute: PoliticaDePrivacidadRoute,
   PresoterapiaBarranquillaRoute: PresoterapiaBarranquillaRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
+  ApiLeadRoute: ApiLeadRoute,
   BlogSlugRoute: BlogSlugRoute,
   BlogIndexRoute: BlogIndexRoute,
 }

@@ -60,11 +60,9 @@ describe("Vitalita landing content", () => {
 
     fireEvent.click(bookingButton);
 
-    expect(screen.getByRole("dialog")).toHaveTextContent(
-      "Agendar mi Sesión de Descarga en Barranquilla",
-    );
+    expect(screen.getByRole("dialog")).toHaveTextContent("¿Qué quieres trabajar?");
     expect(dataLayer.at(-1)).toMatchObject({
-      event: "vitalita_booking_dialog_open",
+      event: "vitalita_form_abierto",
       cta_location: "techniques",
     });
   });
@@ -95,7 +93,7 @@ describe("Vitalita landing content", () => {
     // Campaign conversions depend on this: the hero click keeps cta_location "hero".
     fireEvent.click(bookingButton);
     expect(dataLayer.at(-1)).toMatchObject({
-      event: "vitalita_booking_dialog_open",
+      event: "vitalita_form_abierto",
       cta_location: "hero",
     });
     expect(document.querySelector(".hero-backdrop-video")).toHaveAttribute(
@@ -235,15 +233,19 @@ describe("Vitalita landing content", () => {
     expect(screen.getAllByText("50 minutos")).toHaveLength(2);
     expect(screen.getAllByText("Por un fisioterapeuta")).toHaveLength(2);
 
+    expect(screen.getByRole("heading", { name: "Sesión de cuerpo completo" })).toBeInTheDocument();
+    expect(screen.getByText("$150.000 COP")).toBeInTheDocument();
+
     fireEvent.click(screen.getByRole("button", { name: /Agendar sesión en piernas y pies/ }));
     expect(dataLayer.at(-1)).toMatchObject({
-      event: "vitalita_booking_dialog_open",
+      event: "vitalita_form_abierto",
       cta_location: "pricing",
+      service_id: "descarga_una_zona",
+      session_preset: true,
     });
     expect(JSON.stringify(dataLayer)).not.toContain("piernas");
-    expect(screen.getByRole("link", { name: /Estoy en Barranquilla/ })).toHaveAttribute(
-      "href",
-      expect.stringContaining(encodeURIComponent("piernas y pies")),
-    );
+    // La sesión ya viene elegida: el pase la muestra y la primera pregunta es el momento.
+    expect(screen.getByRole("dialog")).toHaveTextContent("Piernas y pies");
+    expect(screen.getByRole("dialog")).toHaveTextContent("¿Cuándo te gustaría venir?");
   });
 });

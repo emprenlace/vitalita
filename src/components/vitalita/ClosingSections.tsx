@@ -415,6 +415,9 @@ export function SiteFooter() {
 
           <div className="footer-bottom">
             <p>© {new Date().getFullYear()} Vitalita · Fisioterapia en Barranquilla</p>
+            <a href="/politica-de-privacidad" className="footer-agency">
+              Política de privacidad
+            </a>
             <a
               href={AGENCY_URL}
               target="_blank"
@@ -438,6 +441,13 @@ export function SiteFooter() {
 export function StickyCta() {
   const [show, setShow] = useState(false);
   const [hidden, setHidden] = useState(false);
+  // Al recargar a mitad de página, la barra aparece ya en su lugar, sin deslizarse:
+  // la transición se activa cuando el estado inicial ya se calculó.
+  const [ready, setReady] = useState(false);
+  useEffect(() => {
+    const id = window.setTimeout(() => setReady(true), 250);
+    return () => window.clearTimeout(id);
+  }, []);
   useEffect(() => {
     const on = () => setShow(window.scrollY > 500);
     on();
@@ -463,7 +473,7 @@ export function StickyCta() {
   }, []);
   return (
     <div
-      className={`sticky-cta fixed inset-x-0 bottom-0 z-40 border-t border-forest/10 bg-background/95 px-5 pt-3 pb-[calc(0.75rem+env(safe-area-inset-bottom))] backdrop-blur-md transition-transform duration-300 md:hidden ${show && !hidden ? "translate-y-0" : "translate-y-full"}`}
+      className={`sticky-cta fixed inset-x-0 bottom-0 z-40 border-t border-forest/10 bg-background/95 px-5 pt-3 pb-[calc(0.75rem+env(safe-area-inset-bottom))] backdrop-blur-md md:hidden ${ready ? "transition-transform duration-300" : ""} ${show && !hidden ? "translate-y-0" : "translate-y-full"}`}
     >
       <WhatsAppButton origin="sticky" block>
         Agendar mi sesión

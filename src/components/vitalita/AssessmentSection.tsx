@@ -2,7 +2,7 @@ import { AnimatePresence, m, useReducedMotion } from "framer-motion";
 import { ArrowUpRight, Check, Lock } from "lucide-react";
 import { useRef, useState } from "react";
 import { useNearViewport } from "@/lib/defer";
-import { PRECIO_SESION } from "@/config/site";
+import { PRECIO_CUERPO_COMPLETO } from "@/config/site";
 import { cn } from "@/lib/utils";
 import { joinList } from "@/lib/whatsapp";
 import { useVitalita } from "./AnalyticsProvider";
@@ -222,8 +222,8 @@ export function AssessmentSection() {
               )}
               {splitSessions && (
                 <p className="assessment-note">
-                  Cuello, hombros y espalda, y piernas y pies se trabajan en sesiones distintas,
-                  cada una desde {PRECIO_SESION.label}.
+                  Para trabajar juntas cuello, hombros y espalda, y piernas y pies, está la sesión
+                  de cuerpo completo por {PRECIO_CUERPO_COMPLETO.label}.
                 </p>
               )}
             </div>

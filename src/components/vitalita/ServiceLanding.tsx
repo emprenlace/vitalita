@@ -12,11 +12,13 @@ import {
   DATOS_SERVICIO,
   DIRECCION,
   GOOGLE_RATING,
+  PRECIO_CUERPO_COMPLETO,
   PRECIO_SESION,
   PUBLIC_URL,
   SERVICE_PAGES,
   SITE_URL,
 } from "@/config/site";
+import type { SesionId } from "@/config/site";
 import { cn } from "@/lib/utils";
 
 type Compare = {
@@ -63,6 +65,8 @@ export type ServicePage = {
   faq: { title: [string, string]; items: { q: string; a: string }[] };
   serviceName: string;
   serviceType: string;
+  /** Sesión que el botón principal deja preseleccionada en el formulario. */
+  session?: SesionId;
 };
 
 /** Head tags for a service page: canonical, Open Graph and its Service / FAQ / Breadcrumb data. */
@@ -88,6 +92,7 @@ export function serviceHead(page: ServicePage) {
           priceSpecification: {
             "@type": "PriceSpecification",
             minPrice: PRECIO_SESION.value,
+            maxPrice: PRECIO_CUERPO_COMPLETO.value,
             priceCurrency: PRECIO_SESION.currency,
           },
         },
@@ -169,6 +174,7 @@ function ServiceHero({ page }: { page: ServicePage }) {
           <div {...enter(0.6)} className="hero-in hero-main-action">
             <WhatsAppButton
               origin="service"
+              {...(page.session ? { session: page.session } : {})}
               size="lg"
               className="hero-main-button"
               hideIcon

@@ -118,8 +118,13 @@
     border-color: var(--color-border);
   }
   html {
-    scroll-behavior: smooth;
+    /* Sin scroll-behavior: smooth (ver src/lib/smooth-anchors.ts): al recargar,
+       el navegador animaba la vuelta a la posición y la página saltaba. */
     scroll-padding-top: calc(var(--header-h) + 12px);
+    /* Safari anclaba el scroll a elementos que entran con animación y corría la
+       página unos píxeles al recargar. Las imágenes tienen medidas fijas, así que
+       el anclaje no hace falta. */
+    overflow-anchor: none;
   }
   body {
     background-color: var(--color-background);
@@ -2041,14 +2046,16 @@
   background: oklch(0.3 0.055 195);
   padding: 22px;
   color: #fff;
+  /* El hover usa `translate`, no `transform`: framer-motion anima el transform de la
+     entrada y una transición CSS sobre él la repetía al terminar (salto al recargar). */
   transition:
-    transform 400ms cubic-bezier(0.16, 1, 0.3, 1),
+    translate 400ms cubic-bezier(0.16, 1, 0.3, 1),
     box-shadow 400ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 @media (hover: hover) {
   .pattern-step:hover {
-    transform: translateY(-6px);
+    translate: 0 -6px;
     box-shadow: 0 24px 48px rgb(7 50 52 / 18%);
   }
 
@@ -2347,7 +2354,7 @@
   }
 
   .pattern-step:hover {
-    transform: none;
+    translate: none;
   }
 }
 
@@ -6403,4 +6410,1022 @@
   .svc-hero-grid {
     padding-inline: 32px;
   }
+}
+
+/* ---------- Pase de cuerpo completo (sección de precios) ----------
+   El mismo pase de las dos zonas, en horizontal: ticket blanco + talón oscuro, con las
+   muescas sobre la perforación vertical. En celular se apila como los otros pases. */
+.pass-full {
+  --notch: 18px;
+  --pass-radius: 32px;
+  display: grid;
+  max-width: 1100px;
+  grid-template-columns: minmax(0, 1fr) minmax(300px, 38%);
+  margin: 28px auto 0;
+  filter: drop-shadow(0 24px 40px rgb(7 50 52 / 12%));
+}
+
+.pass-full-main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 6px;
+  border-radius: var(--pass-radius) 0 0 var(--pass-radius);
+  background: #fff;
+  padding: 26px clamp(26px, 3vw, 40px);
+  -webkit-mask:
+    radial-gradient(circle var(--notch) at 100% 0, transparent 98%, #000) top / 100% 51% no-repeat,
+    radial-gradient(circle var(--notch) at 100% 100%, transparent 98%, #000) bottom / 100% 51%
+      no-repeat;
+  mask:
+    radial-gradient(circle var(--notch) at 100% 0, transparent 98%, #000) top / 100% 51% no-repeat,
+    radial-gradient(circle var(--notch) at 100% 100%, transparent 98%, #000) bottom / 100% 51%
+      no-repeat;
+}
+
+/* Perforación: línea punteada en el borde del ticket, entre las muescas. */
+.pass-full-main {
+  position: relative;
+}
+
+.pass-full-main::after {
+  content: "";
+  position: absolute;
+  top: calc(var(--notch) + 8px);
+  right: 0;
+  bottom: calc(var(--notch) + 8px);
+  border-right: 2px dashed oklch(0.45 0.08 195 / 30%);
+}
+
+@media (max-width: 899px) {
+  .pass-full-main::after {
+    top: auto;
+    right: calc(var(--notch) + 10px);
+    bottom: 0;
+    left: calc(var(--notch) + 10px);
+    border-right: 0;
+    border-bottom: 2px dashed oklch(0.45 0.08 195 / 30%);
+  }
+}
+
+.pass-full-title {
+  color: var(--ink);
+  font-size: var(--size-h3);
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.pass-full-main p {
+  color: var(--muted-foreground);
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+.pass-full-stub {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  border-radius: 0 var(--pass-radius) var(--pass-radius) 0;
+  background:
+    radial-gradient(80% 60% at 100% 0%, rgb(25 145 146 / 45%), transparent 65%),
+    oklch(0.27 0.045 195);
+  padding: 22px clamp(22px, 2.6vw, 34px);
+  color: #fff;
+  -webkit-mask:
+    radial-gradient(circle var(--notch) at 0 0, transparent 98%, #000) top / 100% 51% no-repeat,
+    radial-gradient(circle var(--notch) at 0 100%, transparent 98%, #000) bottom / 100% 51%
+      no-repeat;
+  mask:
+    radial-gradient(circle var(--notch) at 0 0, transparent 98%, #000) top / 100% 51% no-repeat,
+    radial-gradient(circle var(--notch) at 0 100%, transparent 98%, #000) bottom / 100% 51%
+      no-repeat;
+}
+
+.pass-full-stub .pass-price {
+  margin: 0;
+  font-size: clamp(2rem, 1.6rem + 1vw, 2.5rem);
+}
+
+.pass-full-stub .pass-cta {
+  min-height: 48px;
+  padding-inline: 22px;
+  background: #fff;
+  color: var(--forest-deep);
+}
+
+.pass-full-stub .pass-cta:hover {
+  background: rgb(255 255 255 / 90%);
+}
+
+@media (max-width: 899px) {
+  .pass-full {
+    --notch: 22px;
+    max-width: 560px;
+    grid-template-columns: minmax(0, 1fr);
+    margin-top: 20px;
+  }
+
+  .pass-full-main {
+    border-radius: var(--pass-radius) var(--pass-radius) 0 0;
+    padding: 20px 20px 18px;
+    -webkit-mask:
+      radial-gradient(circle var(--notch) at 0 100%, transparent 98%, #000) left / 51% 100%
+        no-repeat,
+      radial-gradient(circle var(--notch) at 100% 100%, transparent 98%, #000) right / 51% 100%
+        no-repeat;
+    mask:
+      radial-gradient(circle var(--notch) at 0 100%, transparent 98%, #000) left / 51% 100%
+        no-repeat,
+      radial-gradient(circle var(--notch) at 100% 100%, transparent 98%, #000) right / 51% 100%
+        no-repeat;
+  }
+
+  .pass-full-stub {
+    border-radius: 0 0 var(--pass-radius) var(--pass-radius);
+    padding: 16px 20px 18px;
+    -webkit-mask:
+      radial-gradient(circle var(--notch) at 0 0, transparent 98%, #000) left / 51% 100% no-repeat,
+      radial-gradient(circle var(--notch) at 100% 0, transparent 98%, #000) right / 51% 100%
+        no-repeat;
+    mask:
+      radial-gradient(circle var(--notch) at 0 0, transparent 98%, #000) left / 51% 100% no-repeat,
+      radial-gradient(circle var(--notch) at 100% 0, transparent 98%, #000) right / 51% 100%
+        no-repeat;
+  }
+}
+
+/* ---------- Arma tu sesión (formulario de agenda) ----------
+   Hoja desde abajo en celular, tarjeta centrada en computador. Una pregunta por pantalla;
+   arriba, el pase se va llenando con cada respuesta. Solo se animan transform y opacity. */
+.bk-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 70;
+  background: rgb(6 28 30 / 55%);
+}
+
+.bk-overlay[data-state="open"] {
+  animation: bk-fade-in 240ms ease-out both;
+}
+
+.bk-overlay[data-state="closed"] {
+  animation: bk-fade-out 200ms ease-in both;
+}
+
+.bk-sheet {
+  --bk-muted: oklch(0.36 0.035 195);
+  --bk-empty: oklch(0.45 0.03 195);
+  --bk-line: oklch(0.3 0.04 195 / 20%);
+  --bk-teal: oklch(0.5 0.09 195);
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  z-index: 71;
+  /* Una sola altura en todos los pasos: la hoja no crece ni se encoge al avanzar. */
+  display: flex;
+  height: min(684px, calc(100svh - 48px));
+  width: min(480px, calc(100% - 32px));
+  flex-direction: column;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  border-radius: 28px;
+  background: oklch(0.96 0.014 195);
+  padding: 14px 24px 26px;
+  box-shadow: 0 40px 90px rgb(6 28 30 / 28%);
+  color: var(--ink);
+  transform: translate(-50%, -50%);
+  outline: none;
+}
+
+.bk-sheet[data-state="open"] {
+  animation: bk-card-in 360ms var(--ease-out) both;
+}
+
+.bk-sheet[data-state="closed"] {
+  animation: bk-card-out 200ms ease-in both;
+}
+
+.bk-progress {
+  height: 4px;
+  margin-top: 6px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: oklch(0.45 0.08 195 / 18%);
+}
+
+.bk-progress span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--bk-teal);
+  transform-origin: left center;
+  transition: transform 420ms var(--ease-out);
+}
+
+/* La cabecera (volver, paso, cerrar) queda fija arriba si el contenido se desplaza. */
+.bk-top {
+  position: sticky;
+  top: -14px;
+  z-index: 3;
+  display: grid;
+  grid-template-columns: 40px minmax(0, 1fr) 40px;
+  align-items: center;
+  margin: -14px calc(var(--bk-pad-x, 24px) * -1) 0;
+  background: oklch(0.96 0.014 195);
+  padding: 14px var(--bk-pad-x, 24px) 4px;
+}
+
+.bk-icon {
+  display: inline-flex;
+  height: 40px;
+  width: 40px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  color: var(--ink);
+  transition: background-color 160ms ease;
+}
+
+.bk-icon:hover {
+  background: oklch(0.25 0.035 190 / 6%);
+}
+
+.bk-icon svg {
+  height: 18px;
+  width: 18px;
+}
+
+.bk-icon.is-empty {
+  pointer-events: none;
+}
+
+.bk-count {
+  max-width: none;
+  color: var(--ink);
+  font-size: 13px;
+  font-weight: 600;
+  text-align: center;
+}
+
+/* Pase de sesión dentro del formulario: ticket blanco + talón oscuro, como en precios. */
+.bk-ticket {
+  --notch: 11px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 128px;
+  margin-top: 14px;
+  filter: drop-shadow(0 12px 24px rgb(7 50 52 / 16%));
+}
+
+.bk-ticket-main {
+  position: relative;
+  min-width: 0;
+  border-radius: 20px 0 0 20px;
+  background: #fff;
+  padding: 13px 16px 14px;
+  -webkit-mask:
+    radial-gradient(circle var(--notch) at 100% 0, transparent 98%, #000) top / 100% 51% no-repeat,
+    radial-gradient(circle var(--notch) at 100% 100%, transparent 98%, #000) bottom / 100% 51%
+      no-repeat;
+  mask:
+    radial-gradient(circle var(--notch) at 100% 0, transparent 98%, #000) top / 100% 51% no-repeat,
+    radial-gradient(circle var(--notch) at 100% 100%, transparent 98%, #000) bottom / 100% 51%
+      no-repeat;
+}
+
+.bk-ticket-main::after {
+  content: "";
+  position: absolute;
+  top: calc(var(--notch) + 6px);
+  right: 0;
+  bottom: calc(var(--notch) + 6px);
+  border-right: 2px dashed oklch(0.45 0.08 195 / 28%);
+}
+
+.bk-ticket-kicker {
+  color: var(--forest);
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.bk-ticket-title {
+  margin-top: 1px;
+  overflow: hidden;
+  color: var(--ink);
+  font-family: var(--font-display);
+  font-size: 17px;
+  font-weight: 600;
+  line-height: 1.25;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  animation: bk-land 380ms var(--ease-out) both;
+}
+
+.bk-ticket-title.is-empty {
+  color: var(--bk-empty);
+  font-weight: 500;
+  animation: none;
+}
+
+.bk-ticket-fields {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.bk-ticket-fields dt {
+  color: var(--bk-muted);
+  font-size: 11.5px;
+}
+
+.bk-ticket-fields dd {
+  overflow: hidden;
+  color: var(--ink);
+  font-size: 13.5px;
+  font-weight: 600;
+  line-height: 1.3;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  animation: bk-land 380ms var(--ease-out) both;
+}
+
+.bk-ticket-fields dd.is-empty {
+  color: var(--bk-empty);
+  font-weight: 400;
+  animation: none;
+}
+
+.bk-ticket-stub {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-radius: 0 20px 20px 0;
+  background:
+    radial-gradient(90% 70% at 100% 0%, rgb(25 145 146 / 50%), transparent 70%),
+    oklch(0.27 0.045 195);
+  padding: 12px 14px 12px 16px;
+  color: #fff;
+  -webkit-mask:
+    radial-gradient(circle var(--notch) at 0 0, transparent 98%, #000) top / 100% 51% no-repeat,
+    radial-gradient(circle var(--notch) at 0 100%, transparent 98%, #000) bottom / 100% 51%
+      no-repeat;
+  mask:
+    radial-gradient(circle var(--notch) at 0 0, transparent 98%, #000) top / 100% 51% no-repeat,
+    radial-gradient(circle var(--notch) at 0 100%, transparent 98%, #000) bottom / 100% 51%
+      no-repeat;
+}
+
+.bk-ticket-from {
+  color: rgb(110 231 220);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.bk-ticket-price {
+  margin-top: 2px;
+  font-family:
+    -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue",
+    "DM Sans Variable", sans-serif;
+  font-size: 25px;
+  font-variant-numeric: tabular-nums;
+  font-weight: 300;
+  letter-spacing: -0.03em;
+  line-height: 1;
+}
+
+.bk-ticket-price small {
+  display: block;
+  margin-top: 4px;
+  color: rgb(255 255 255 / 65%);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+
+/* Sello al enviar: el mismo gesto del pase de precios. */
+.bk-stamp {
+  position: absolute;
+  top: 9px;
+  right: 16px;
+  border: 2px solid var(--bk-teal);
+  border-radius: 8px;
+  padding: 2px 8px;
+  color: var(--bk-teal);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  line-height: 1.2;
+  text-align: center;
+  text-transform: uppercase;
+  opacity: 0;
+  pointer-events: none;
+  transform: rotate(-10deg) scale(1.8);
+  transition:
+    opacity 180ms ease,
+    transform 420ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.bk-ticket.is-done .bk-stamp {
+  opacity: 0.95;
+  transform: rotate(-10deg) scale(1);
+  transition-delay: 200ms;
+}
+
+.bk-title-soft {
+  color: var(--forest);
+  font-weight: 500;
+}
+
+/* Animaciones: las opciones entran escalonadas y la marca de la elegida aparece con un pulso. */
+.bk-options .bk-option {
+  animation: bk-rise 420ms var(--ease-out) both;
+  animation-delay: calc(var(--i, 0) * 55ms + 80ms);
+}
+
+.bk-option.is-on .bk-option-mark svg {
+  animation: bk-pop 360ms cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+.bk-option.is-on .bk-option-price {
+  color: var(--forest);
+}
+
+@keyframes bk-rise {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+}
+
+@keyframes bk-pop {
+  from {
+    transform: scale(0.4);
+  }
+}
+
+/* Opción de momento: hoja de calendario con el primer día real. */
+.bk-option.is-date {
+  min-height: 72px;
+  grid-template-columns: 52px minmax(0, 1fr) 32px;
+  gap: 14px;
+  padding: 10px 14px 10px 10px;
+}
+
+.bk-date {
+  display: flex;
+  height: 54px;
+  width: 52px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border-radius: 14px;
+  background: oklch(0.9 0.045 195);
+  transition:
+    background-color 200ms ease,
+    color 200ms ease;
+}
+
+.bk-date span {
+  color: var(--forest-deep);
+  font-size: 11.5px;
+  font-weight: 600;
+  line-height: 1;
+}
+
+.bk-date strong {
+  margin-top: 3px;
+  color: var(--ink);
+  font-family:
+    -apple-system, BlinkMacSystemFont, "SF Pro Display", "Helvetica Neue", "DM Sans Variable",
+    sans-serif;
+  font-size: 22px;
+  font-variant-numeric: tabular-nums;
+  font-weight: 500;
+  line-height: 1;
+}
+
+.bk-option.is-on .bk-date {
+  background: var(--bk-teal);
+}
+
+.bk-option.is-on .bk-date span,
+.bk-option.is-on .bk-date strong {
+  color: #fff;
+}
+
+/* "Solo estoy averiguando": presente, pero sin el peso de las otras dos. */
+.bk-option.is-soft {
+  min-height: 52px;
+  grid-template-columns: minmax(0, 1fr) 32px;
+  border-color: transparent;
+  background: oklch(0.3 0.04 195 / 8%);
+  padding: 10px 14px 10px 18px;
+}
+
+.bk-option.is-soft .bk-option-text strong {
+  color: var(--bk-muted);
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.bk-option.is-soft .bk-option-mark {
+  background: transparent;
+}
+
+/* Campos con ícono. */
+.bk-input {
+  position: relative;
+  display: block;
+  min-width: 0;
+  flex: 1 1 auto;
+}
+
+.bk-input > svg {
+  position: absolute;
+  top: 50%;
+  left: 15px;
+  height: 18px;
+  width: 18px;
+  color: var(--bk-muted);
+  pointer-events: none;
+  transform: translateY(-50%);
+  transition: color 160ms ease;
+}
+
+.bk-field .bk-input input {
+  padding-left: 44px;
+}
+
+.bk-input:focus-within > svg {
+  color: var(--forest);
+}
+
+.bk-pass-change {
+  margin-top: 8px;
+  color: var(--forest);
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.bk-body {
+  /* Ocupa el alto fijo de la hoja: la nota de ubicación queda siempre al pie. */
+  display: flex;
+  flex: 1 0 auto;
+  flex-direction: column;
+  margin-top: 18px;
+  animation: bk-step 360ms var(--ease-out) both;
+}
+
+.bk-title {
+  color: var(--ink);
+  font-family: var(--font-display);
+  font-size: clamp(1.375rem, 1.2rem + 0.6vw, 1.5rem);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+  outline: none;
+}
+
+.bk-lede {
+  margin-top: 6px;
+  color: var(--bk-muted);
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+.bk-options {
+  display: grid;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.bk-option {
+  display: grid;
+  min-height: 68px;
+  grid-template-columns: minmax(0, 1fr) auto 32px;
+  align-items: center;
+  gap: 12px;
+  border: 1.5px solid var(--bk-line);
+  border-radius: 18px;
+  background: #fff;
+  padding: 12px 14px 12px 18px;
+  text-align: left;
+  transition:
+    border-color 160ms ease,
+    background-color 160ms ease,
+    transform 160ms ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.bk-option.is-session {
+  min-height: 0;
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-areas:
+    "title price"
+    "detail detail";
+  gap: 2px 12px;
+  padding: 14px 18px;
+}
+
+.bk-option-title {
+  grid-area: title;
+  color: var(--ink);
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.bk-option.is-session .bk-option-price {
+  grid-area: price;
+}
+
+.bk-option-detail {
+  grid-area: detail;
+  color: var(--bk-muted);
+  font-size: 13.5px;
+  line-height: 1.4;
+}
+
+.bk-option.is-compact {
+  min-height: 56px;
+  grid-template-columns: minmax(0, 1fr) 32px;
+}
+
+.bk-option:active {
+  transform: scale(0.985);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .bk-option:hover {
+    border-color: oklch(0.45 0.08 195 / 60%);
+  }
+}
+
+.bk-option-text {
+  display: grid;
+  gap: 2px;
+}
+
+.bk-option-text strong {
+  color: var(--ink);
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.bk-option-text span {
+  color: var(--bk-muted);
+  font-size: 13.5px;
+  line-height: 1.4;
+}
+
+.bk-option-price {
+  color: var(--ink);
+  font-size: 15px;
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+}
+
+.bk-option-mark {
+  display: inline-flex;
+  height: 32px;
+  width: 32px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  background: oklch(0.9 0.045 195);
+  color: var(--forest-deep);
+  transition:
+    background-color 160ms ease,
+    color 160ms ease;
+}
+
+.bk-option-mark svg {
+  height: 16px;
+  width: 16px;
+}
+
+.bk-option.is-on {
+  border-color: var(--bk-teal);
+  background: oklch(0.95 0.03 195);
+}
+
+.bk-option.is-on .bk-option-mark {
+  background: var(--bk-teal);
+  color: #fff;
+}
+
+.bk-note {
+  margin-top: auto;
+  padding-top: 14px;
+  color: var(--bk-muted);
+  font-size: 13.5px;
+  line-height: 1.5;
+}
+
+.bk-link {
+  color: var(--forest);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.bk-form {
+  display: grid;
+  gap: 12px;
+}
+
+.bk-form .bk-lede {
+  margin-top: -8px;
+}
+
+.bk-field label {
+  display: block;
+  margin-bottom: 6px;
+  color: var(--ink);
+  font-size: 13.5px;
+  font-weight: 600;
+}
+
+.bk-field input,
+.bk-dial {
+  height: 48px;
+  width: 100%;
+  border: 1.5px solid var(--bk-line);
+  border-radius: 14px;
+  background: #fff;
+  color: var(--ink);
+  font-size: 16px;
+  transition:
+    border-color 160ms ease,
+    box-shadow 160ms ease;
+}
+
+.bk-field input {
+  padding: 0 14px;
+}
+
+.bk-field input:focus,
+.bk-dial:focus-within {
+  border-color: var(--forest);
+  outline: none;
+  box-shadow: 0 0 0 3px oklch(0.45 0.08 195 / 16%);
+}
+
+.bk-phone {
+  display: flex;
+  gap: 8px;
+}
+
+.bk-dial {
+  position: relative;
+  display: inline-flex;
+  width: 92px;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  font-weight: 500;
+}
+
+.bk-dial select {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.bk-dial svg {
+  height: 14px;
+  width: 14px;
+  color: var(--muted-foreground);
+}
+
+.bk-error {
+  display: none;
+  margin-top: 6px;
+  color: oklch(0.5 0.18 27);
+  font-size: 13px;
+}
+
+.bk-field.is-bad input {
+  border-color: oklch(0.55 0.2 27 / 70%);
+}
+
+.bk-field.is-bad .bk-error {
+  display: block;
+}
+
+.bk-trap {
+  position: absolute;
+  left: -9999px;
+  height: 1px;
+  width: 1px;
+  opacity: 0;
+}
+
+.bk-primary {
+  display: inline-flex;
+  min-height: 48px;
+  justify-self: start;
+  align-items: center;
+  gap: 14px;
+  border-radius: 999px;
+  background: var(--forest);
+  padding: 0 7px 0 22px;
+  color: #fff;
+  font-size: 15px;
+  font-weight: 600;
+  transition:
+    background-color 200ms ease,
+    transform 160ms ease;
+}
+
+.bk-primary:hover {
+  background: var(--forest-deep);
+}
+
+.bk-primary:active {
+  transform: scale(0.98);
+}
+
+.bk-primary-arrow {
+  display: inline-flex;
+  height: 34px;
+  width: 34px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  background: #fff;
+  color: var(--forest-deep);
+}
+
+.bk-primary-arrow svg {
+  height: 16px;
+  width: 16px;
+  transition: transform 300ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.bk-primary:hover .bk-primary-arrow svg {
+  transform: translateX(2px);
+}
+
+.bk-form .bk-primary {
+  margin-top: 6px;
+}
+
+.bk-legal {
+  color: var(--bk-muted);
+  font-size: 12.5px;
+  line-height: 1.5;
+}
+
+.bk-legal a {
+  color: var(--ink);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.bk-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.bk-secondary {
+  min-height: 44px;
+  border-radius: 999px;
+  padding: 0 16px;
+  color: var(--forest);
+  font-size: 15px;
+  font-weight: 600;
+  transition: background-color 160ms ease;
+}
+
+.bk-secondary:hover {
+  background: oklch(0.45 0.08 195 / 7%);
+}
+
+@media (max-width: 639px) {
+  .bk-sheet {
+    --bk-pad-x: 20px;
+    top: auto;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    /* svh: no cambia cuando abre el teclado ni cuando Safari oculta sus barras. */
+    height: min(690px, calc(100svh - 12px));
+    border-radius: 28px 28px 0 0;
+    padding: 14px var(--bk-pad-x) calc(18px + env(safe-area-inset-bottom));
+    transform: none;
+  }
+
+  .bk-sheet[data-state="open"] {
+    animation: bk-sheet-in 420ms var(--ease-out) both;
+  }
+
+  .bk-sheet[data-state="closed"] {
+    animation: bk-sheet-out 240ms ease-in both;
+  }
+
+  .bk-ticket {
+    grid-template-columns: minmax(0, 1fr) 118px;
+  }
+
+  .bk-ticket-stub {
+    padding-inline: 16px 10px;
+  }
+
+  .bk-ticket-price {
+    font-size: 21px;
+  }
+}
+
+@keyframes bk-fade-in {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes bk-fade-out {
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes bk-card-in {
+  from {
+    opacity: 0;
+    transform: translate(-50%, calc(-50% + 16px)) scale(0.98);
+  }
+}
+
+@keyframes bk-card-out {
+  to {
+    opacity: 0;
+    transform: translate(-50%, calc(-50% + 10px)) scale(0.98);
+  }
+}
+
+@keyframes bk-sheet-in {
+  from {
+    transform: translateY(100%);
+  }
+}
+
+@keyframes bk-sheet-out {
+  to {
+    transform: translateY(100%);
+  }
+}
+
+@keyframes bk-step {
+  from {
+    opacity: 0;
+    transform: translateX(14px);
+  }
+}
+
+@keyframes bk-land {
+  from {
+    opacity: 0;
+    transform: translateY(5px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bk-overlay,
+  .bk-sheet,
+  .bk-body,
+  .bk-options .bk-option,
+  .bk-option-mark svg,
+  .bk-ticket-title,
+  .bk-ticket dd {
+    animation-duration: 1ms !important;
+  }
+
+  .bk-progress span {
+    transition: none;
+  }
+}
+
+/* ---------- Política de privacidad ---------- */
+.legal-page {
+  max-width: 820px;
+  padding-bottom: var(--section-space);
+}
+
+.legal-title {
+  font-size: clamp(2rem, 1.5rem + 1.6vw, 2.75rem);
+}
+
+.legal-body {
+  font-size: 17px;
 }

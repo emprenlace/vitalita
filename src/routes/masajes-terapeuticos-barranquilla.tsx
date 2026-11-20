@@ -5,7 +5,13 @@ import {
   serviceHead,
   type ServicePage,
 } from "@/components/vitalita/ServiceLanding";
-import { DATOS_SERVICIO, DIRECCION, HORARIO, PRECIO_SESION } from "@/config/site";
+import {
+  DATOS_SERVICIO,
+  DIRECCION,
+  HORARIO,
+  PRECIO_CUERPO_COMPLETO,
+  PRECIO_SESION,
+} from "@/config/site";
 
 const PAGE: ServicePage = {
   path: "/masajes-terapeuticos-barranquilla",
@@ -32,7 +38,8 @@ const PAGE: ServicePage = {
         </p>
         <p className="pattern-lede svc-lede">
           Cada sesión se enfoca en una zona: <strong>cuello, hombros y espalda</strong>, o{" "}
-          <strong>piernas y pies</strong>. Las técnicas de la valoración están incluidas.{" "}
+          <strong>piernas y pies</strong>, o en las dos con la sesión de{" "}
+          <strong>cuerpo completo</strong>. Las técnicas de la valoración están incluidas.{" "}
           <a href="/blog/descarga-muscular-vs-masaje-descontracturante" className="svc-inline-link">
             Descarga vs. masaje descontracturante
           </a>
@@ -103,7 +110,7 @@ const PAGE: ServicePage = {
       },
       {
         q: "¿Cuánto cuesta y cuánto dura?",
-        a: `La sesión es individual, dura ${DATOS_SERVICIO.duracion} y cuesta desde ${PRECIO_SESION.label}. Cada sesión se enfoca en una zona: cuello, hombros y espalda, o piernas y pies.`,
+        a: `La sesión es individual, dura ${DATOS_SERVICIO.duracion} y cuesta desde ${PRECIO_SESION.label}. Cada sesión se enfoca en una zona: cuello, hombros y espalda, o piernas y pies. La sesión de cuerpo completo trabaja las dos y cuesta ${PRECIO_CUERPO_COMPLETO.label}.`,
       },
       {
         q: "¿Duele?",

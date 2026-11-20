@@ -1,6 +1,7 @@
 import { cva, type VariantProps } from "class-variance-authority";
 import { ArrowUpRight } from "lucide-react";
 import type { ReactNode } from "react";
+import type { SesionId } from "@/config/site";
 import { cn } from "@/lib/utils";
 import type { ButtonOrigin } from "@/lib/whatsapp";
 import { useVitalita } from "./AnalyticsProvider";
@@ -28,6 +29,8 @@ type Props = VariantProps<typeof cta> & {
   ariaLabel?: string;
   /** Zones written into the WhatsApp message only (never sent to analytics). */
   zones?: string[];
+  /** Preselecciona la sesión en el formulario. */
+  session?: SesionId;
   onClick?: () => void;
 };
 
@@ -40,6 +43,7 @@ export function WhatsAppButton({
   hideIcon,
   ariaLabel,
   zones,
+  session,
   onClick,
 }: Props) {
   const { openBooking } = useVitalita();
@@ -48,7 +52,7 @@ export function WhatsAppButton({
       type="button"
       onClick={() => {
         onClick?.();
-        openBooking(origin, zones);
+        openBooking(origin, zones, session);
       }}
       className={cn(cta({ size, block }), className)}
       aria-label={

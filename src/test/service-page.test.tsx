@@ -15,21 +15,13 @@ describe("service pages", () => {
     );
 
     fireEvent.click(screen.getByRole("button", { name: /Agenda tu sesión/ }));
-    expect(screen.getByRole("dialog")).toHaveTextContent(
-      "Agendar mi Sesión de Descarga en Barranquilla",
-    );
+    expect(screen.getByRole("dialog")).toHaveTextContent("¿Qué quieres trabajar?");
     expect(dataLayer.at(-1)).toMatchObject({
-      event: "vitalita_booking_dialog_open",
+      event: "vitalita_form_abierto",
       cta_location: "service",
+      session_preset: false,
     });
-
-    fireEvent.click(screen.getByRole("link", { name: /Estoy en Barranquilla/ }));
-    expect(dataLayer.at(-1)).toMatchObject({
-      event: "vitalita_whatsapp_click",
-      cta_location: "service",
-      city_status: "barranquilla",
-      value: 100000,
-      currency: "COP",
-    });
+    // La conversión ya no se dispara al abrir: solo al terminar el formulario.
+    expect(JSON.stringify(dataLayer)).not.toContain("vitalita_lead_calificado");
   });
 });

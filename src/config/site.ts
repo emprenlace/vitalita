@@ -127,6 +127,58 @@ export const OPCIONES_SESION = [
   },
 ] as const;
 
+/**
+ * Lo que se puede agendar desde el formulario: dos servicios, uno con dos zonas.
+ * `serviceId` es lo único que viaja a la analítica (el producto, nunca la zona del cuerpo).
+ */
+export const SESIONES = [
+  {
+    id: "superior",
+    serviceId: "descarga_una_zona",
+    titulo: "Cuello, hombros y espalda",
+    detalle: "50 minutos de descarga",
+    mensaje: "Sesión de Descarga Muscular en cuello, hombros y espalda",
+    precio: 100000,
+  },
+  {
+    id: "piernas",
+    serviceId: "descarga_una_zona",
+    titulo: "Piernas y pies",
+    detalle: "Con presoterapia",
+    mensaje: "Sesión de Descarga Muscular en piernas y pies",
+    precio: 100000,
+  },
+  {
+    id: "completo",
+    serviceId: "descarga_cuerpo_completo",
+    titulo: "Cuerpo completo",
+    detalle: "Las dos zonas en una sesión",
+    mensaje: "Sesión de Descarga Muscular de cuerpo completo",
+    precio: 150000,
+  },
+] as const;
+
+export type SesionId = (typeof SESIONES)[number]["id"];
+
+export const PRECIO_CUERPO_COMPLETO = {
+  value: 150000,
+  currency: "COP",
+  label: "$150.000 COP",
+};
+
+/**
+ * Responsable del tratamiento de datos (Ley 1581 de 2012). Lo que está vacío lo debe
+ * confirmar la clínica antes de publicar el formulario.
+ */
+export const RESPONSABLE_DATOS = {
+  nombre: "Vitalita Centro de Fisioterapia",
+  razonSocial: "",
+  nit: "",
+  correo: "",
+  telefono: "301 237 6079",
+  actualizada: "19 de noviembre de 2026",
+};
+
 /** Flags de contenido pendiente de confirmación. */
 export const FLAGS = {
   cuposLimitados: false, // «Cupos limitados por semana»
@@ -174,7 +226,7 @@ export type Faq = { q: string; a: string; confirmed: boolean };
 export const FAQS: Faq[] = [
   {
     q: "¿Qué incluye la sesión de descarga?",
-    a: "Atención personalizada para aliviar tensiones musculares, favorecer la recuperación y mejorar tu bienestar, con técnicas seleccionadas según tus necesidades. Cada sesión se enfoca en una zona: cuello, hombros y espalda, o piernas y pies.",
+    a: "Atención personalizada para aliviar tensiones musculares, favorecer la recuperación y mejorar tu bienestar, con técnicas seleccionadas según tus necesidades. Cada sesión se enfoca en una zona: cuello, hombros y espalda, o piernas y pies. Si quieres trabajar las dos, está la sesión de cuerpo completo por $150.000.",
     confirmed: true,
   },
   { q: "¿Cuánto dura?", a: "La sesión dura 50 minutos.", confirmed: true },

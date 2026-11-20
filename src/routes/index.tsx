@@ -27,6 +27,7 @@ import {
   FRESHA_URL,
   INSTAGRAM_URL,
   OPCIONES_SESION,
+  PRECIO_CUERPO_COMPLETO,
   PRECIO_SESION,
   PUBLIC_URL,
   SITE_URL,
@@ -70,17 +71,25 @@ const LOCAL_BUSINESS_SCHEMA = {
     "Ventosas",
     "Evaluación funcional",
   ].map((name) => ({ "@type": "MedicalTherapy", name })),
-  makesOffer: OPCIONES_SESION.map((option) => ({
-    "@type": "Offer",
-    name: `${option.titulo} (${DATOS_SERVICIO.duracion})`,
-    price: PRECIO_SESION.value,
-    priceCurrency: PRECIO_SESION.currency,
-    priceSpecification: {
-      "@type": "PriceSpecification",
-      minPrice: PRECIO_SESION.value,
+  makesOffer: [
+    ...OPCIONES_SESION.map((option) => ({
+      "@type": "Offer",
+      name: `${option.titulo} (${DATOS_SERVICIO.duracion})`,
+      price: PRECIO_SESION.value,
       priceCurrency: PRECIO_SESION.currency,
+      priceSpecification: {
+        "@type": "PriceSpecification",
+        minPrice: PRECIO_SESION.value,
+        priceCurrency: PRECIO_SESION.currency,
+      },
+    })),
+    {
+      "@type": "Offer",
+      name: "Sesión de cuerpo completo",
+      price: PRECIO_CUERPO_COMPLETO.value,
+      priceCurrency: PRECIO_CUERPO_COMPLETO.currency,
     },
-  })),
+  ],
   priceRange: PRECIO_SESION.fromLabel,
   address: {
     "@type": "PostalAddress",
