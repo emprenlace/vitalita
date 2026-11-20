@@ -2,10 +2,12 @@
  * Vitalita · Recibe los leads de "Arma tu sesión" y los guarda en esta hoja de Google.
  *
  * Instalación (una sola vez):
- * 1. Crea una hoja de Google para la clínica → Extensiones → Apps Script → pega este archivo.
- * 2. Implementar → Nueva implementación → Aplicación web.
- *    Ejecutar como: tú. Quién tiene acceso: cualquier usuario.
- * 3. Copia la URL que termina en /exec y guárdala en Vercel como LEADS_SHEET_URL.
+ * 1. En la hoja: Extensiones → Apps Script → borra lo que haya y pega este archivo → Guardar.
+ * 2. Elige la función "prepararHoja" y toca Ejecutar (pide permisos la primera vez):
+ *    crea la pestaña Leads con sus columnas y la lista de estados.
+ * 3. Implementar → Nueva implementación → tipo Aplicación web.
+ *    Ejecutar como: yo. Quién tiene acceso: cualquier usuario.
+ * 4. Copia la URL que termina en /exec y guárdala en Vercel como LEADS_SHEET_URL.
  *
  * - Una fila por lead. La columna "estado_cita" la llena la clínica
  *   (Agendó, Asistió, Canceló, No respondió): con ella sabemos qué campañas traen pacientes.
@@ -28,14 +30,7 @@ function doPost(e) {
     const data = JSON.parse((e.postData && e.postData.contents) || '{}');
     if (!data.ref || !data.whatsapp) return salida({ ok: false, error: 'faltan datos' });
 
-    const libro = SpreadsheetApp.getActiveSpreadsheet();
-    const hoja = libro.getSheetByName(HOJA) || libro.insertSheet(HOJA);
-    if (hoja.getLastRow() === 0) {
-      hoja.getRange(1, 1, 1, COLUMNAS.length).setValues([COLUMNAS]).setFontWeight('bold');
-      hoja.setFrozenRows(1);
-      const regla = SpreadsheetApp.newDataValidation().requireValueInList(ESTADOS, true).build();
-      hoja.getRange(2, COLUMNAS.indexOf('estado_cita') + 1, 1000, 1).setDataValidation(regla);
-    }
+    const hoja = prepararHoja();
 
     // Como texto: un valor que empieza por + = - @ (p. ej. "+57300…") Sheets lo tomaría como fórmula.
     const texto = (v) => {
@@ -68,6 +63,19 @@ function doPost(e) {
   } finally {
     lock.releaseLock();
   }
+}
+
+/** Crea (o completa) la pestaña Leads: encabezados, primera fila fija y lista de estados. */
+function prepararHoja() {
+  const libro = SpreadsheetApp.getActiveSpreadsheet();
+  const hoja = libro.getSheetByName(HOJA) || libro.insertSheet(HOJA, 0);
+  if (hoja.getLastRow() === 0) {
+    hoja.getRange(1, 1, 1, COLUMNAS.length).setValues([COLUMNAS]).setFontWeight('bold');
+    hoja.setFrozenRows(1);
+    const regla = SpreadsheetApp.newDataValidation().requireValueInList(ESTADOS, true).build();
+    hoja.getRange(2, COLUMNAS.indexOf('estado_cita') + 1, 2000, 1).setDataValidation(regla);
+  }
+  return hoja;
 }
 
 function salida(obj) {
