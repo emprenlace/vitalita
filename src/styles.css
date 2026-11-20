@@ -7220,14 +7220,6 @@
   display: block;
 }
 
-.bk-trap {
-  position: absolute;
-  left: -9999px;
-  height: 1px;
-  width: 1px;
-  opacity: 0;
-}
-
 .bk-primary {
   display: inline-flex;
   min-height: 48px;

@@ -109,7 +109,6 @@ export function BookingSheet({
   // Los errores se muestran después del primer intento de envío, no al salir del campo:
   // si aparecen al tocar el botón, empujan el botón y el toque se pierde.
   const [shown, setShown] = useState({ name: false, phone: false, email: false });
-  const [honeypot, setHoneypot] = useState("");
   const [result, setResult] = useState<{ ref: string; url: string; first: string } | null>(null);
   // La referencia se fija al abrir: así el enlace a WhatsApp está listo antes del toque.
   const [refCode, setRefCode] = useState("");
@@ -130,7 +129,6 @@ export function BookingSheet({
     setCity("barranquilla");
     setShown({ name: false, phone: false, email: false });
     setResult(null);
-    setHoneypot("");
     setRefCode(makeRefCode());
   }, [request]);
 
@@ -223,7 +221,7 @@ export function BookingSheet({
 
   /** Capa de datos + base de la clínica. Va en el mismo toque, antes de salir a WhatsApp. */
   const sendLead = (d: NonNullable<typeof draft>) => {
-    if (!request || !chosen || !timing || honeypot) return;
+    if (!request || !chosen || !timing) return;
     const params = {
       ...base(),
       city_status: city,
@@ -624,17 +622,6 @@ export function BookingSheet({
                     Revisa el correo.
                   </p>
                 </div>
-
-                {/* Trampa para robots: oculto para las personas. */}
-                <input
-                  className="bk-trap"
-                  name="empresa"
-                  tabIndex={-1}
-                  autoComplete="off"
-                  aria-hidden
-                  value={honeypot}
-                  onChange={(e) => setHoneypot(e.target.value)}
-                />
 
                 {draft ? (
                   <a

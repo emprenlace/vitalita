@@ -149,6 +149,8 @@ describe("Arma tu sesión", () => {
     });
 
     expect(await screen.findByText(/Listo, Laura/)).toBeInTheDocument();
+    // Sin campos ocultos: el autocompletado del navegador (que llena "empresa") bloqueaba la medición.
+    expect(document.querySelector(".bk-sheet input[name='empresa']")).toBeNull();
   });
 
   it("un lead C (solo averiguando) llega a WhatsApp pero no es conversión", async () => {
