@@ -18,6 +18,7 @@ import {
   type CSSProperties,
   type FormEvent,
   type KeyboardEvent,
+  type TouchEvent,
 } from "react";
 import { DIRECCION, SESIONES, type SesionId } from "@/config/site";
 import { metaBrowserIds, type Attribution } from "@/lib/attribution";
@@ -89,6 +90,28 @@ function openWhatsAppUrl(url: string) {
   else window.location.href = url;
 }
 
+const isIOS = () =>
+  typeof navigator !== "undefined" &&
+  (/iP(hone|ad|od)/.test(navigator.userAgent) ||
+    (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1));
+
+/**
+ * Enfoca un campo sin que Safari (iOS) desplace la página para mostrarlo: el campo se
+ * corre fuera de vista un instante, se enfoca y vuelve a su lugar. Es la técnica de
+ * React Aria. El acomodo lo hace después la hoja, por dentro (ver useKeyboardInset).
+ */
+function focusWithoutPageScroll(input: HTMLElement) {
+  if (!isIOS()) {
+    input.focus();
+    return;
+  }
+  input.style.transform = "translateY(-2000px)";
+  input.focus({ preventScroll: true });
+  requestAnimationFrame(() => {
+    input.style.transform = "";
+  });
+}
+
 export function BookingSheet({
   request,
   attribution,
@@ -116,6 +139,7 @@ export function BookingSheet({
   // web queda donde estaba); en computador, en otra pestaña.
   const [touch, setTouch] = useState(false);
   const finishTimer = useRef<number | undefined>(undefined);
+  const sheetRef = useRef<HTMLDivElement>(null);
   const headingRef = useRef<HTMLHeadingElement>(null);
   const nameRef = useRef<HTMLInputElement>(null);
   const advanceTimer = useRef<number | undefined>(undefined);
@@ -131,6 +155,50 @@ export function BookingSheet({
     setResult(null);
     setRefCode(makeRefCode());
   }, [request]);
+
+  /**
+   * Teclado en celular: la hoja no se mueve. Se le suma abajo un espacio del alto del
+   * teclado (--kb) y su contenido se desliza por dentro, una vez y suave, para dejar el
+   * campo activo encima del teclado.
+   */
+  useEffect(() => {
+    const vv = window.visualViewport;
+    if (!open || !vv) return;
+    let raf = 0;
+    const onResize = () => {
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(() => {
+        const sheet = sheetRef.current;
+        if (!sheet) return;
+        const kb = Math.max(0, Math.round(window.innerHeight - vv.height - vv.offsetTop));
+        sheet.style.setProperty("--kb", `${kb > 80 ? kb : 0}px`);
+        const field = document.activeElement?.closest?.(".bk-field");
+        if (!field || kb <= 80 || !sheet.contains(field)) return;
+        const f = field.getBoundingClientRect();
+        const s = sheet.getBoundingClientRect();
+        const visibleBottom = vv.offsetTop + vv.height - 16;
+        const header = s.top + 64;
+        if (f.bottom > visibleBottom) {
+          sheet.scrollBy({ top: f.bottom - visibleBottom, behavior: "smooth" });
+        } else if (f.top < header) {
+          sheet.scrollBy({ top: f.top - header, behavior: "smooth" });
+        }
+      });
+    };
+    vv.addEventListener("resize", onResize);
+    return () => {
+      cancelAnimationFrame(raf);
+      vv.removeEventListener("resize", onResize);
+    };
+  }, [open]);
+
+  /** Toque en un campo (iOS): enfocar sin que Safari mueva la página. */
+  const onFieldTouchEnd = (e: TouchEvent<HTMLFormElement>) => {
+    const t = e.target;
+    if (!(t instanceof HTMLInputElement) || document.activeElement === t || !isIOS()) return;
+    e.preventDefault();
+    focusWithoutPageScroll(t);
+  };
 
   useEffect(() => {
     setTouch(window.matchMedia?.("(pointer: coarse)").matches ?? false);
@@ -313,7 +381,8 @@ export function BookingSheet({
   const nextOnEnter = (next: string) => (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key !== "Enter") return;
     e.preventDefault();
-    document.getElementById(next)?.focus();
+    const el = document.getElementById(next);
+    if (el) focusWithoutPageScroll(el);
   };
 
   const update = (k: keyof Contact) => (v: string) => setContact((c) => ({ ...c, [k]: v }));
@@ -324,6 +393,7 @@ export function BookingSheet({
       <DialogPrimitive.Portal>
         <DialogPrimitive.Overlay className="bk-overlay" />
         <DialogPrimitive.Content
+          ref={sheetRef}
           className="bk-sheet"
           aria-describedby={undefined}
           onOpenAutoFocus={(e) => e.preventDefault()}
@@ -523,7 +593,7 @@ export function BookingSheet({
             )}
 
             {step === "contact" && (
-              <form className="bk-form" onSubmit={submit} noValidate>
+              <form className="bk-form" onSubmit={submit} onTouchEnd={onFieldTouchEnd} noValidate>
                 <DialogPrimitive.Title
                   id="bk-q"
                   ref={headingRef}

@@ -7315,7 +7315,9 @@
     /* svh: no cambia cuando abre el teclado ni cuando Safari oculta sus barras. */
     height: min(690px, calc(100svh - 12px));
     border-radius: 28px 28px 0 0;
-    padding: 14px var(--bk-pad-x) calc(18px + env(safe-area-inset-bottom));
+    /* --kb: alto del teclado abierto (lo pone BookingSheet); da espacio para que el
+       contenido se deslice por dentro y el campo activo quede encima del teclado. */
+    padding: 14px var(--bk-pad-x) calc(18px + env(safe-area-inset-bottom) + var(--kb, 0px));
     transform: none;
   }
 
